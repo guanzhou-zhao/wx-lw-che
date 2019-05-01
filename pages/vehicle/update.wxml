@@ -1,0 +1,103 @@
+<!--pages/vehicle/update.wxml-->
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-cells__title">请谨慎更新：</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">车牌号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="***" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">型号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="**** ****" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">轮毂里程</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="轮毂里程" />
+        </view>
+        <view class="weui-cell__ft">
+          <view class="weui-vcode-btn">拍照</view>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">仪表盘里程</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="仪表盘里程" />
+        </view>
+        <view class="weui-cell__ft">
+          <view class="weui-vcode-btn">拍照</view>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">保养公里数</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="保养公里数" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">COF日期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+            <view class="weui-input">{{date}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">DOC日期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+            <view class="weui-input">{{date}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">路税日期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+            <view class="weui-input">{{date}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">RUC里程</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">四轮定位里程</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="showTopTips">确定</button>
+    </view>
+  </view>
+</view>
