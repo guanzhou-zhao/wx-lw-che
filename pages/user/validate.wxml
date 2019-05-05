@@ -1,0 +1,3 @@
+<!--pages/user/validate.wxml-->
+<button bindtap="getOpenIdTap">获取用户唯一标识openid</button>
+openid:{{openid}}

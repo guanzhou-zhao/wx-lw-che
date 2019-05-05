@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/user/validate",
     "pages/che/che",
     "pages/info/info",
     "pages/gohome/gohome",
