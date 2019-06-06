@@ -5,11 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    accounts: ["中通", "Rosa", "奔驰20", "奔驰12", "海狮", "Alpha"],
-    accountIndex: 0,
+    models: ["中通", "Rosa", "奔驰20", "奔驰12", "海狮", "Alpha"],
+    modelIndex: 0,
 
-    cofDate: "2016-09-01",
-    docDate: "2016-06-01",
+    cofDate: "2018-09-01",
+    docDate: "2018-09-01",
     rucDate: "2018-09-01"
   },
 
@@ -68,11 +68,12 @@ Page({
   onShareAppMessage: function() {
 
   },
-  bindAccountChange: function(e) {
+  bindModelChange: function(e) {
     console.log('picker account 发生选择改变，携带值为', e.detail.value);
 
     this.setData({
-      accountIndex: e.detail.value
+      modelIndex: e.detail.value,
+      model: this.data.models[e.detail.value]
     })
   },
   bindCofDateChange: function(e) {
@@ -88,6 +89,26 @@ Page({
   bindRucDateChange: function (e) {
     this.setData({
       rucDate: e.detail.value
+    })
+  },
+  bindPlateChange: function (e) {
+    this.setData({
+      plate: e.detail.value.toUpperCase()
+    })
+  },
+  bindRucNumChange: function (e) {
+    this.setData({
+      rucNum: e.detail.value
+    })
+  },
+  bindMtNumChange: function (e) {
+    this.setData({
+      mtNum: e.detail.value
+    })
+  },
+  bindAllignmentNumChange: function (e) {
+    this.setData({
+      allignmentNum: e.detail.value
     })
   }
 })

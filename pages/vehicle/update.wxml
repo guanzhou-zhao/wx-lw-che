@@ -8,7 +8,7 @@
           <view class="weui-label">车牌号</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="***" />
+          <input bindchange="bindPlateChange" class="weui-input" value="{{plate}}"/>
         </view>
       </view>
       <view class="weui-cell weui-cell_select">
@@ -16,8 +16,8 @@
           <view class="weui-label">车型</view>
         </view>
         <view class="weui-cell__bd">
-          <picker bindchange="bindAccountChange" value="{{accountIndex}}" range="{{accounts}}">
-            <view class="weui-select">{{accounts[accountIndex]}}</view>
+          <picker bindchange="bindModelChange" value="{{modelIndex}}" range="{{models}}">
+            <view class="weui-select">{{models[modelIndex]}}</view>
           </picker>
         </view>
       </view>
@@ -26,7 +26,7 @@
           <view class="weui-label">RUC里程</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="" />
+          <input value="{{rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
         </view>
       </view>
       <!-- <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -56,7 +56,7 @@
           <view class="weui-label">保养公里数</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="保养公里数" />
+          <input value="{{mtNum}}" bindchange="bindMtNumChange" class="weui-input" placeholder="" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -64,7 +64,7 @@
           <view class="weui-label">四轮定位里程</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="" />
+          <input value="{{allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -72,7 +72,7 @@
           <view class="weui-label">COF日期</view>
         </view>
         <view class="weui-cell__bd">
-          <picker mode="date" value="{{cofDate}}" start="2015-09-01" end="2017-09-01" bindchange="bindCofDateChange">
+          <picker mode="date" value="{{cofDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindCofDateChange">
             <view class="weui-input">{{cofDate}}</view>
           </picker>
         </view>
@@ -82,7 +82,7 @@
           <view class="weui-label">DOC日期</view>
         </view>
         <view class="weui-cell__bd">
-          <picker mode="date" value="{{docDate}}" start="2015-09-01" end="2017-09-01" bindchange="bindDocDateChange">
+          <picker mode="date" value="{{docDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindDocDateChange">
             <view class="weui-input">{{docDate}}</view>
           </picker>
         </view>
@@ -92,7 +92,7 @@
           <view class="weui-label">路税日期</view>
         </view>
         <view class="weui-cell__bd">
-          <picker mode="date" value="{{rucDate}}" start="2015-09-01" end="2017-09-01" bindchange="bindRucDateChange">
+          <picker mode="date" value="{{rucDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindRucDateChange">
             <view class="weui-input">{{rucDate}}</view>
           </picker>
         </view>
