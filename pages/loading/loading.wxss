@@ -1,0 +1,10 @@
+/* pages/loading/loading.wxss */
+
+.loading {
+  width: 128rpx;
+  height: 128rpx;
+  margin-top: 200rpx;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

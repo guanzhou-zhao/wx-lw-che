@@ -1,13 +1,15 @@
 {
   "pages": [
-    "pages/user/validate",
+    "pages/loading/loading",
+    "pages/admin/admin",
     "pages/che/che",
+    "pages/register/register",
+    "pages/user/validate",
     "pages/info/info",
     "pages/gohome/gohome",
     "pages/index/index",
     "pages/tuan/shangtuan",
     "pages/logs/logs",
-    "pages/admin/admin",
     "pages/vehicle/update"
   ],
   "window": {

@@ -1,1 +1,5 @@
 /* pages/admin/admin.wxss */
+
+.approved-by {
+  color: antiquewhite;
+}

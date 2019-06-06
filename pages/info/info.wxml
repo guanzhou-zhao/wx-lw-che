@@ -1,17 +1,15 @@
-<!--pages/info/info.wxml-->
 <view class="page">
-  <view class="page_bd">
-    <view class="userinfo">
-      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
-      <view class="usermotto">
-        <text class="user-motto">{{motto}}</text>
-      </view>
+    <view class="page__hd">
+        <view class="page__title">工具和消息</view>
     </view>
-
-
-  </view>
+    <view class="page__bd">
+        <view class="weui-grids">
+            <block wx:for="{{grids}}" >
+                <navigator url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="../images/icon_tabbar.png" />
+                    <view class="weui-grid__label">{{item.name}}</view>
+                </navigator>
+            </block>
+        </view>
+    </view>
 </view>

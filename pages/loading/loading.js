@@ -1,5 +1,4 @@
-// pages/info/info.js
-//获取应用实例
+// pages/loading/loading.js
 const app = getApp()
 Page({
 
@@ -7,16 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    grids: [
-      {
-        url: '/pages/admin/admin',
-        name: '用户管理'
-      },
-      {
-        url: '/pages/vehicle/update',
-        name: '车列表维护'
-      }
-    ]
+
   },
 
   /**

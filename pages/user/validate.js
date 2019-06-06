@@ -73,10 +73,6 @@ Page({
     var that = this
     wx.cloud.callFunction({
       name: 'getOpenId',
-      data: {
-        a: '1',
-        b: '2'
-      },
       success: function (res) {
         that.setData({
           openid: res.result.openid
