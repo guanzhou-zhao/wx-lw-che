@@ -13,7 +13,7 @@ Page({
         name: '用户管理'
       },
       {
-        url: '/pages/vehicle/update',
+        url: '/pages/vehicle/add',
         name: '车列表维护'
       }
     ]

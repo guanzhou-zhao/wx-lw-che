@@ -10,7 +10,8 @@
     "pages/index/index",
     "pages/tuan/shangtuan",
     "pages/logs/logs",
-    "pages/vehicle/update"
+    "pages/vehicle/update",
+    "pages/vehicle/add"
   ],
   "window": {
     "navigationBarTextStyle": "black",
