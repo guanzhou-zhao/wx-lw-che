@@ -1,0 +1,9 @@
+/* pages/vehicle/list.wxss */
+
+._page__hd {
+  padding: 15px;
+}
+
+._inline {
+  display: inline;
+}

@@ -31,7 +31,7 @@ App({
       that.globalData.userInfo = res.result.userInfo
       if (res.result.isAuthUser) {
         wx.switchTab({
-          url: '/pages/che/che'
+          url: '/pages/info/info'
         })
       } else {
         wx.redirectTo({

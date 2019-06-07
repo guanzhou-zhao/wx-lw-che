@@ -1,4 +1,6 @@
 // pages/vehicle/update.js
+wx.cloud.init()
+const db = wx.cloud.database()
 Page({
 
   /**
@@ -9,7 +11,7 @@ Page({
     modelIndex: 0,
 
     plate: '',
-    model: '',
+    model: '中通',
     rucNum: 0,
     mtNum: 0,
     allignmentNum: 0,
@@ -118,11 +120,49 @@ Page({
   },
   bindAdd: function (e) {
     if (this.data.plate.trim().length < 1) {
+      submitErrorMsg + '请认真填写车牌号'
       wx.showToast({
         title: '请认真填写车牌号',
         icon: 'none',
         duration: 3000
       });
+    } else {
+      var che = {
+        plate: this.data.plate,
+        model: this.data.model,
+        rucNum: Number(this.data.rucNum),
+        mtNum: Number(this.data.mtNum),
+        allignmentNum: Number(this.data.allignmentNum),
+        cofDate: new Date(this.data.cofDate),
+        docDate: new Date(this.data.docDate),
+        rucDate: new Date(this.data.rucDate)
+      }
+
+      db.collection('che').add({
+        data: che,
+        success(res) {
+          console.log("vehicle.add.js add success: res" + JSON.stringify(res))
+          che._id = res._id
+            // url: '/pages/vehicle/list?newChe=' + JSON.stringify(che),
+          wx.navigateBack({
+            delta: 1,
+            success(s) {
+              console.log('add.js navigateBack s & this' + JSON.stringify(s) + '-----' + JSON.stringify(this))
+            }
+          })
+        },
+        fail(res) {
+          var msg = '添加车辆信息失败！'   
+          if (res.errMsg.indexOf('duplicate key') > -1) {
+            msg +=' 已添加车牌相同的车辆'
+          }
+          wx.showToast({
+            title: msg,
+            icon: 'none',
+            duration: 3000
+          });     
+        }
+      })
     }
   }
 })

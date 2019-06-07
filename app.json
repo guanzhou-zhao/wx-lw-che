@@ -11,7 +11,8 @@
     "pages/tuan/shangtuan",
     "pages/logs/logs",
     "pages/vehicle/update",
-    "pages/vehicle/add"
+    "pages/vehicle/add",
+    "pages/vehicle/list"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -25,12 +26,12 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/che/che",
-        "text": "车管理"
-      },
-      {
         "pagePath": "pages/info/info",
         "text": "工具和消息"
+      },
+      {
+        "pagePath": "pages/che/che",
+        "text": "车管理"
       }
     ]
   },

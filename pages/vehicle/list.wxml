@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="_page__hd">
+    <view class="page__title">车列表
+      <navigator class="_inline" url="/pages/vehicle/add" hover-class="navigator-hover">
+        <button class="weui-btn mini-btn" type="primary" size="mini">增加车辆</button>
+      </navigator>
+
+    </view>
+  </view>
+  <view class="page__bd">
+    <view wx:for="{{cheList}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
+      <navigator url="/pages/index/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+          <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">{{item.plate}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">{{item.model}}</view>
+      </navigator>
+    </view>
+  </view>
+</view>
