@@ -3,7 +3,7 @@ wx.cloud.init()
 const db = wx.cloud.database()
 App({
   onShow: function() {
-    console.log("app.js onshow()" + JSON.stringify(this.globalData))
+    console.log("app.js onshow() this.globalData" + JSON.stringify(this.globalData))
 
   },
   onLaunch: function() {
@@ -29,6 +29,10 @@ App({
 
       that.globalData.validateUserResult = res.result
       that.globalData.userInfo = res.result.userInfo
+      that.globalData.liteUserInfo = {
+        nickName: res.result.userInfo.nickName,
+        avatarUrl: res.result.userInfo.avatarUrl
+      }
       if (res.result.isAuthUser) {
         wx.switchTab({
           url: '/pages/info/info'

@@ -29,16 +29,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log('list.js onLoad this.query' + JSON.stringify(this.query))
+
     var that = this
-    db.collection('che').get({
+    wx.cloud.callFunction({
+      name: 'listChe',
       success(res) {
-        console.log("vehicle.list.js onload() che.get() res" + JSON.stringify(res))
+        console.log('vehicle.list.js onShow() ' + JSON.stringify(res))
         that.setData({
-          cheList: res.data
+          cheList: res.result.cheList
         })
+      },
+      fail(res) {
+        console.log('fail to get che list' + JSON.stringify(res))
       }
     })
+    
   },
 
   /**

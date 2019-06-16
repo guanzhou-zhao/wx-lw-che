@@ -21,6 +21,24 @@
           </picker>
         </view>
       </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">轮毂里程</view>
+        </view>
+        <view class="weui-cell__bd data-changed">
+          <input value="{{wheelNum}}" bindchange="bindWheelNumChange" class="weui-input" />
+        </view>
+
+      </view>
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">仪表盘里程</view>
+        </view>
+        <view class="weui-cell__bd data-changed">
+          <input value="{{digitNum}}" bindchange="bindDigitNumChange" class="weui-input" />
+        </view>
+
+      </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">RUC里程</view>
@@ -29,28 +47,6 @@
           <input value="{{rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
         </view>
       </view>
-      <!-- <view class="weui-cell weui-cell_input weui-cell_vcode">
-        <view class="weui-cell__hd">
-          <view class="weui-label">轮毂里程</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="轮毂里程" />
-        </view>
-        <view class="weui-cell__ft">
-          <view class="weui-vcode-btn">拍照</view>
-        </view>
-      </view>
-      <view class="weui-cell weui-cell_input weui-cell_vcode">
-        <view class="weui-cell__hd">
-          <view class="weui-label">仪表盘里程</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="仪表盘里程" />
-        </view>
-        <view class="weui-cell__ft">
-          <view class="weui-vcode-btn">拍照</view>
-        </view>
-      </view> -->
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">保养公里数</view>

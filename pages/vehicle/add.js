@@ -1,4 +1,5 @@
 // pages/vehicle/update.js
+const app = getApp()
 wx.cloud.init()
 const db = wx.cloud.database()
 Page({
@@ -12,6 +13,8 @@ Page({
 
     plate: '',
     model: '中通',
+    wheelNum: 0,
+    digitNum: 0,
     rucNum: 0,
     mtNum: 0,
     allignmentNum: 0,
@@ -24,7 +27,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**
@@ -113,6 +115,16 @@ Page({
       mtNum: e.detail.value
     })
   },
+  bindWheelNumChange: function (e) {
+    this.setData({
+      wheelNum: e.detail.value
+    })
+  },
+  bindDigitNumChange: function (e) {
+    this.setData({
+      digitNum: e.detail.value
+    })
+  },
   bindAllignmentNumChange: function (e) {
     this.setData({
       allignmentNum: e.detail.value
@@ -130,39 +142,42 @@ Page({
       var che = {
         plate: this.data.plate,
         model: this.data.model,
+        wheelNum: Number(this.data.wheelNum),
+        digitNum: Number(this.data.digitNum),
         rucNum: Number(this.data.rucNum),
         mtNum: Number(this.data.mtNum),
         allignmentNum: Number(this.data.allignmentNum),
-        cofDate: new Date(this.data.cofDate),
-        docDate: new Date(this.data.docDate),
-        rucDate: new Date(this.data.rucDate)
+        cofDate: this.data.cofDate,
+        docDate: this.data.docDate,
+        rucDate: this.data.rucDate
       }
-
-      db.collection('che').add({
-        data: che,
+      wx.cloud.callFunction({
+        name: 'addChe',
+        data: { 
+          che
+        },
         success(res) {
-          console.log("vehicle.add.js add success: res" + JSON.stringify(res))
-          che._id = res._id
-            // url: '/pages/vehicle/list?newChe=' + JSON.stringify(che),
           wx.navigateBack({
             delta: 1,
             success(s) {
-              console.log('add.js navigateBack s & this' + JSON.stringify(s) + '-----' + JSON.stringify(this))
+              console.log('addChe success, navigateBack to che list')
             }
           })
         },
         fail(res) {
-          var msg = '添加车辆信息失败！'   
+          console.log('vehicle.add.js call addChe() fail' + JSON.stringify(res))
+          var msg = '添加车辆信息失败！'
           if (res.errMsg.indexOf('duplicate key') > -1) {
-            msg +=' 已添加车牌相同的车辆'
+            msg += ' 已添加车牌相同的车辆'
           }
           wx.showToast({
             title: msg,
             icon: 'none',
             duration: 3000
-          });     
+          });  
         }
       })
+      
     }
   }
 })

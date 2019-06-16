@@ -9,7 +9,7 @@
   </view>
   <view class="page__bd">
     <view wx:for="{{cheList}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
-      <navigator url="/pages/index/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="/pages/vehicle/update?che={{item.cheString}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
           <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>

@@ -1,1 +1,7 @@
-/* pages/vehicle/update.wxss */
+_margin-bottom{
+    margin-bottom: 25px;
+}
+
+.data-changed {
+  background-color:  palegreen;
+}

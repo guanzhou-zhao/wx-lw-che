@@ -3,103 +3,106 @@
   <view class="page__bd">
     <view class="weui-cells__title">更新车辆信息：</view>
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">车牌号</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input bindchange="bindPlateChange" class="weui-input" value="{{plate}}"/>
+      <view class="_margin-bottom">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">车牌号</view>
+          </view>
+          <view class="weui-cell__bd {{cheObject.plate != updatedChe.plate ? 'data-changed' : ''}}">
+            <input bindchange="bindPlateChange" class="weui-input" value="{{updatedChe.plate}}" />
+          </view>
+
         </view>
       </view>
       <view class="weui-cell weui-cell_select">
         <view class="weui-cell__hd weui-cell__hd_in-select-after">
           <view class="weui-label">车型</view>
         </view>
-        <view class="weui-cell__bd">
+        <view class="weui-cell__bd {{cheObject.model != updatedChe.model ? 'data-changed' : ''}}">
           <picker bindchange="bindModelChange" value="{{modelIndex}}" range="{{models}}">
             <view class="weui-select">{{models[modelIndex]}}</view>
           </picker>
         </view>
       </view>
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">RUC里程</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input value="{{rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
-        </view>
-      </view>
-      <!-- <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
         <view class="weui-cell__hd">
           <view class="weui-label">轮毂里程</view>
         </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="轮毂里程" />
-        </view>
-        <view class="weui-cell__ft">
-          <view class="weui-vcode-btn">拍照</view>
+        <view class="weui-cell__bd {{cheObject.wheelNum != updatedChe.wheelNum ? 'data-changed' : ''}}">
+          <input value="{{updatedChe.wheelNum}}" bindchange="bindWheelNumChange" class="weui-input" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input weui-cell_vcode">
         <view class="weui-cell__hd">
           <view class="weui-label">仪表盘里程</view>
         </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="仪表盘里程" />
+        <view class="weui-cell__bd {{cheObject.digitNum != updatedChe.digitNum ? 'data-changed' : ''}}">
+          <input value="{{updatedChe.digitNum}}" bindchange="bindDigitNumChange" class="weui-input" />
         </view>
-        <view class="weui-cell__ft">
-          <view class="weui-vcode-btn">拍照</view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">RUC里程</view>
         </view>
-      </view> -->
+        <view class="weui-cell__bd {{cheObject.rucNum != updatedChe.rucNum ? 'data-changed' : ''}}">
+          <input value="{{updatedChe.rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
+        </view>
+
+      </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">保养公里数</view>
         </view>
-        <view class="weui-cell__bd">
-          <input value="{{mtNum}}" bindchange="bindMtNumChange" class="weui-input" placeholder="" />
+        <view class="weui-cell__bd {{cheObject.mtNum != updatedChe.mtNum ? 'data-changed' : ''}}">
+          <input value="{{updatedChe.mtNum}}" bindchange="bindMtNumChange" class="weui-input" placeholder="" />
         </view>
+
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">四轮定位里程</view>
         </view>
-        <view class="weui-cell__bd">
-          <input value="{{allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
+        <view class="weui-cell__bd {{cheObject.allignmentNum != updatedChe.allignmentNum ? 'data-changed' : ''}}">
+          <input value="{{updatedChe.allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
         </view>
+
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">COF日期</view>
         </view>
-        <view class="weui-cell__bd">
-          <picker mode="date" value="{{cofDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindCofDateChange">
-            <view class="weui-input">{{cofDate}}</view>
+        <view class="weui-cell__bd {{cheObject.cofDate != updatedChe.cofDate ? 'data-changed' : ''}}">
+          <picker mode="date" value="{{updatedChe.cofDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindCofDateChange">
+            <view class="weui-input">{{updatedChe.cofDate}}</view>
           </picker>
         </view>
+
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">DOC日期</view>
         </view>
-        <view class="weui-cell__bd">
-          <picker mode="date" value="{{docDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindDocDateChange">
-            <view class="weui-input">{{docDate}}</view>
+        <view class="weui-cell__bd {{cheObject.docDate != updatedChe.docDate ? 'data-changed' : ''}}">
+          <picker mode="date" value="{{updatedChe.docDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindDocDateChange">
+            <view class="weui-input">{{updatedChe.docDate}}</view>
           </picker>
         </view>
+
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">路税日期</view>
         </view>
-        <view class="weui-cell__bd">
-          <picker mode="date" value="{{rucDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindRucDateChange">
-            <view class="weui-input">{{rucDate}}</view>
+        <view class="weui-cell__bd {{cheObject.rucDate != updatedChe.rucDate ? 'data-changed' : ''}}">
+          <picker mode="date" value="{{updatedChe.rucDate}}" start="2015-09-01" end="2050-09-01" bindchange="bindRucDateChange">
+            <view class="weui-input">{{updatedChe.rucDate}}</view>
           </picker>
         </view>
+
       </view>
     </view>
     <view class="weui-btn-area">
-      <button class="weui-btn" type="primary" bindtap="showTopTips">确定</button>
+      <button class="weui-btn" type="primary" bindtap="bindUpdate">更新</button>
     </view>
   </view>
 </view>
