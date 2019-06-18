@@ -1,11 +1,10 @@
 {
   "pages": [
     "pages/loading/loading",
-    "pages/admin/admin",
+    "pages/user/admin",
     "pages/che/che",
-    "pages/register/register",
-    "pages/user/validate",
-    "pages/info/info",
+    "pages/user/register",
+    "pages/tools/index",
     "pages/gohome/gohome",
     "pages/index/index",
     "pages/tuan/shangtuan",
@@ -26,13 +25,13 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/info/info",
-        "text": "工具和消息"
+        "pagePath": "pages/che/che",
+        "text": "出团（用车）"
       },
       {
-        "pagePath": "pages/che/che",
-        "text": "车管理"
-      }
+        "pagePath": "pages/tools/index",
+        "text": "工具和消息"
+      } 
     ]
   },
   "sitemapLocation": "sitemap.json"

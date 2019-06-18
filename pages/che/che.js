@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabs: ["大车", "Rosa", "小车"],
+    tabs: ["车记录", "图片", "操作"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0

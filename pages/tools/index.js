@@ -9,7 +9,7 @@ Page({
   data: {
     grids: [
       {
-        url: '/pages/admin/admin',
+        url: '/pages/user/admin',
         name: '用户管理'
       },
       {

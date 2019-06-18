@@ -35,11 +35,11 @@ App({
       }
       if (res.result.isAuthUser) {
         wx.switchTab({
-          url: '/pages/info/info'
+          url: '/pages/che/che'
         })
       } else {
         wx.redirectTo({
-          url: '/pages/register/register'
+          url: '/pages/user/register'
         })
       }
     })
