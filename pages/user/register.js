@@ -32,7 +32,7 @@ Page({
     }
     if (app.globalData.validateUserResult.isAuthUser) {
       wx.redirectTo({
-        url: '/pages/che/che',
+        url: '/pages/main/yongche',
       })
     }
 

@@ -35,7 +35,7 @@ App({
       }
       if (res.result.isAuthUser) {
         wx.switchTab({
-          url: '/pages/che/che'
+          url: '/pages/main/yongche'
         })
       } else {
         wx.redirectTo({

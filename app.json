@@ -1,17 +1,15 @@
 {
   "pages": [
     "pages/loading/loading",
-    "pages/user/admin",
-    "pages/che/che",
-    "pages/user/register",
+    "pages/main/yongche",
     "pages/tools/index",
-    "pages/gohome/gohome",
-    "pages/index/index",
-    "pages/tuan/shangtuan",
-    "pages/logs/logs",
-    "pages/vehicle/update",
+    "pages/user/register",
+    "pages/user/admin",
     "pages/vehicle/add",
-    "pages/vehicle/list"
+    "pages/vehicle/list",
+    "pages/vehicle/update",
+    "pages/gohome/gohome",
+    "pages/logs/logs"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -25,7 +23,7 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/che/che",
+        "pagePath": "pages/main/yongche",
         "text": "出团（用车）"
       },
       {

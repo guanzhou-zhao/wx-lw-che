@@ -1,9 +1,0 @@
-/**index.wxss**/
-.weui-form-preview {
-    margin-bottom: 15px;
-}
-
-.btn-margin {
-  margin-top: 35px;
-  margin-bottom: 15px;
-}
