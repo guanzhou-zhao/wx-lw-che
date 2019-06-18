@@ -88,10 +88,31 @@ Page({
     wx.cloud.callFunction({
       name: 'updateChe',
       data: {
-        updatedChe: this.data.updatedChe
+        updatedChe: this.data.updatedChe,
+        changeLog: this.data.changeLog
       },
       success (res) {
         console.log('vehicle.update.js call update车 success ' + JSON.stringify(res))
+
+        wx.showToast({
+          title: '完成更新',
+          icon: 'none',
+          duration: 3000,
+          complete() {
+            (new Promise((resolve, reject) => {
+              setTimeout(()=> {
+                resolve(0)
+              }, 2000)
+            })).then(()=> {
+              wx.navigateBack({
+                delta: 1,
+                success(s) {
+                  console.log('updateChe success, navigateBack to che list')
+                }
+              })
+            })
+          }
+        });
       },
       fail (res) {
         console.log('vehicle.update.js call updateChe fail ' + res)
@@ -111,7 +132,7 @@ Page({
     } else {
       this.setData({
         'changeLog.model': {
-          msg: `型号从"${this.data.cheObject.model}}"改变为"${this.data.models[e.detail.value]}"`
+          msg: `型号从"${this.data.cheObject.model}"改变为"${this.data.models[e.detail.value]}"`
         }
       })
     }
@@ -125,7 +146,7 @@ Page({
     } else {
       this.setData({
         'changeLog.cofDate': {
-          msg: `COF日期从"${this.data.cheObject.cofDate}}"改变为"${e.detail.value}"`
+          msg: `COF日期从"${this.data.cheObject.cofDate}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -139,7 +160,7 @@ Page({
     } else {
       this.setData({
         'changeLog.docDate': {
-          msg: `Doc日期从"${this.data.cheObject.docDate}}"改变为"${e.detail.value}"`
+          msg: `Doc日期从"${this.data.cheObject.docDate}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -153,7 +174,7 @@ Page({
     } else {
       this.setData({
         'changeLog.rucDate': {
-          msg: `Ruc日期从"${this.data.cheObject.rucDate}}"改变为"${e.detail.value}"`
+          msg: `Ruc日期从"${this.data.cheObject.rucDate}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -167,7 +188,7 @@ Page({
     } else {
       this.setData({
         'changeLog.plate': {
-          msg: `plate从"${this.data.cheObject.plate}}"改变为"${e.detail.value}"`
+          msg: `plate从"${this.data.cheObject.plate}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -181,7 +202,7 @@ Page({
     } else {
       this.setData({
         'changeLog.rucNum': {
-          msg: `ruc里程从"${this.data.cheObject.rucNum}}"改变为"${e.detail.value}"`
+          msg: `ruc里程从"${this.data.cheObject.rucNum}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -195,7 +216,7 @@ Page({
     } else {
       this.setData({
         'changeLog.mtNum': {
-          msg: `保养里程从"${this.data.cheObject.mtNum}}"改变为"${e.detail.value}"`
+          msg: `保养里程从"${this.data.cheObject.mtNum}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -209,7 +230,7 @@ Page({
     } else {
       this.setData({
         'changeLog.wheelNum': {
-          msg: `轮毂里程从"${this.data.cheObject.wheelNum}}"改变为"${e.detail.value}"`
+          msg: `轮毂里程从"${this.data.cheObject.wheelNum}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -223,7 +244,7 @@ Page({
     } else {
       this.setData({
         'changeLog.digitNum': {
-          msg: `仪表盘里程从"${this.data.cheObject.digitNum}}"改变为"${e.detail.value}"`
+          msg: `仪表盘里程从"${this.data.cheObject.digitNum}"改变为"${e.detail.value}"`
         }
       })
     }
@@ -237,7 +258,7 @@ Page({
     } else {
       this.setData({
         'changeLog.allignmentNum': {
-          msg: `四轮定位里程从"${this.data.cheObject.allignmentNum}}"改变为"${e.detail.value}"`
+          msg: `四轮定位里程从"${this.data.cheObject.allignmentNum}"改变为"${e.detail.value}"`
         }
       })
     }

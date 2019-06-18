@@ -42,7 +42,7 @@
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
-          <view class="weui-label">RUC里程</view>
+          <view class="weui-label">RUC公里数</view>
         </view>
         <view class="weui-cell__bd {{cheObject.rucNum != updatedChe.rucNum ? 'data-changed' : ''}}">
           <input value="{{updatedChe.rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
