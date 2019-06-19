@@ -14,14 +14,28 @@
           <!--pages/tuan/shangtuan.wxml-->
           <view class="page">
             <view class="page__bd">
+              <view class="weui-cells__title">如输入78，然后点选LWQ178：</view>
+              <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input">
+                  <view class="weui-cell__hd">
+                    <view class="weui-label">搜索车牌</view>
+                  </view>
+                  <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput='bindPlateFilterInput' value='{{filterInput}}' />
+                  </view>
+                </view>
+              </view>
+              <view wx:for="{{filteredCheList}}" wx:key="{{index}}" >
+      <button bindtap='bindCheButtonClick' data-plate='{{item.plate}}' class="weui-btn mini-btn float-left" type="{{plateSelected==item.plate ? primary : default}}" size="mini">{{item.plate}}</button>
+              </view>
               <view class="weui-cells__title">上团需更新如下信息：</view>
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_input">
                   <view class="weui-cell__hd">
-                    <view class="weui-label">团号</view>
+                    <view class="weui-label">备注</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入团号" />
+                    <input class="weui-input" placeholder="请输入团号或其它用途" />
                   </view>
                 </view>
                 <view class="weui-cell weui-cell_input">
