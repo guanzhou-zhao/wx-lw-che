@@ -23,17 +23,18 @@ exports.main = async(event, context) => {
   var addRecordResponse
   var cheId = event.updatedChe._id
   var changeLog = event.changeLog
-  var records = []
+  var updatedChe = event.updatedChe
+  var cheObject = event.cheObject
+  var changes = []
   var changeLogKeys = Object.keys(changeLog)
   var isCheChanged = false
   for (var key of changeLogKeys) {
     if (!!changeLog[key]) {
       isCheChanged = true
-      records.push({
-        category: recordCategory[key],
-        msg: changeLog[key].msg,
-        createdBy: wxContext.OPENID,
-        createdAt: new Date()
+      changes.push({
+        key,
+        newValue: updatedChe[key],
+        oldValue: cheObject[key]
       })
     }
   }
@@ -51,7 +52,10 @@ exports.main = async(event, context) => {
     
     await db.collection('record').add({
       data: {
-        records
+        category: 'update',
+        openid: wxContext.OPENID,
+        timeAt: new Date(),
+        changes
       }
     }).then(res => {
       addRecordResponse = res
@@ -61,7 +65,7 @@ exports.main = async(event, context) => {
   }
 
   return {
-    records,
+    changes,
     updateResponse,
     addRecordResponse,
     event,

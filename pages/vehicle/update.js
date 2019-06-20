@@ -88,6 +88,7 @@ Page({
     wx.cloud.callFunction({
       name: 'updateChe',
       data: {
+        cheObject: this.data.cheObject,
         updatedChe: this.data.updatedChe,
         changeLog: this.data.changeLog
       },
