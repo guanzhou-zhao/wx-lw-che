@@ -14,7 +14,11 @@ Page({
     sliderLeft: 0,
 
     filterInput: '',
-    filteredCheList: []
+    filteredCheList: [],
+    tuanNum: '',
+    otherUse: '',
+    wheelNum: '',
+    digitNum: ''
   },
 
   /**
@@ -109,11 +113,15 @@ Page({
   },
 
   bindCheButtonClick: function(e) {
+    var dataset = e.currentTarget.dataset
     this.setData({
-      plateSelected: e.currentTarget.dataset.plate,
-      filterInput: e.currentTarget.dataset.plate
+      plateSelected: dataset.plate,
+      filterInput: dataset.plate,
+      cheSelected: dataset.che,
+      wheelNum: dataset.che.wheelNum,
+      digitNum: dataset.che.digitNum
     })
-
+    
     this.bindPlateFilterInput({ detail: { value: e.currentTarget.dataset.plate}})
   },
 
@@ -127,5 +135,59 @@ Page({
         return pv
       }, [])
     })
+  },
+
+  bindTuanNumInput: function(e) {
+    this.setData({
+      tuanNum: e.detail.value.trim()
+    })
+  },
+
+  bindOtherUseInput: function(e) {
+    this.setData({
+      otherUse: e.detail.value.trim()
+    })
+  },
+
+  bindWheelNumInput: function(e) {
+    this.setData({
+      wheelNum: e.detail.value.trim()
+    })
+  },
+
+  bindDigitNumInput: function(e) {
+    this.setData({
+      digitNum: e.detail.value.trim()
+    })
+  },
+
+  bindUseButtonTap: function(e) {
+    var data = this.data
+    if (!data.plateSelected) {
+      wx.showToast({
+        title: '请先选辆车',
+        icon: 'none',
+        duration: 2500
+      })
+    } else if ((data.tuanNum.length > 0 && data.otherUse.length > 0) || (data.tuanNum.length < 1 && data.otherUse.length < 1)) {
+      wx.showToast({
+        title: '团号或其它用途必须且只能填一个',
+        icon: 'none',
+        duration: 3000
+      })
+    } else if (data.wheelNum.length < 1 || data.digitNum.length < 1){
+      wx.showToast({
+        title: '两个里程都必须填',
+        icon: 'none',
+        duration: 3000
+      })
+    } else {
+      //更新数据库 che.status
+      //  1. 在车列表可以看到车的status，谁，什么时间开始用的
+      //  2. 其他人上团选车的时候可以显示谁在开
+      //更新数据库 添加 record
+      //  1. 在车记录列表显示，谁，什么时间，用途，更新里程与否。
+
+    }
   }
 })

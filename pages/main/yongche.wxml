@@ -14,7 +14,8 @@
           <!--pages/tuan/shangtuan.wxml-->
           <view class="page">
             <view class="page__bd">
-              <view class="weui-cells__title">如输入78，然后点选LWQ178：</view>
+              <view wx:if='{{plateSelected}}' class="weui-cells__title che-selected">已选择车： {{plateSelected}}</view>
+              <view wx:else class="weui-cells__title">如输入78，然后点选LWQ178：</view>
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_input">
                   <view class="weui-cell__hd">
@@ -26,16 +27,24 @@
                 </view>
               </view>
               <view wx:for="{{filteredCheList}}" wx:key="{{index}}" >
-      <button bindtap='bindCheButtonClick' data-plate='{{item.plate}}' class="weui-btn mini-btn float-left" type="{{plateSelected==item.plate ? primary : default}}" size="mini">{{item.plate}}</button>
+      <button bindtap='bindCheButtonClick' data-che='{{item}}' data-plate='{{item.plate}}' class="weui-btn mini-btn float-left" type="{{plateSelected==item.plate ? primary : default}}" size="mini">{{item.plate}}</button>
               </view>
               <view class="weui-cells__title">上团需更新如下信息：</view>
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_input">
                   <view class="weui-cell__hd">
-                    <view class="weui-label">备注</view>
+                    <view class="weui-label">团号</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入团号或其它用途" />
+                    <input bindinput='bindTuanNumInput' class="weui-input" value='{{tuanNum}}' placeholder="输入团号" />
+                  </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                  <view class="weui-cell__hd">
+                    <view class="weui-label">其它用途</view>
+                  </view>
+                  <view class="weui-cell__bd">
+                    <input bindinput='bindOtherUseInput' class="weui-input" value='{{otherUse}}' placeholder="请输入用途" />
                   </view>
                 </view>
                 <view class="weui-cell weui-cell_input">
@@ -43,7 +52,7 @@
                     <view class="weui-label">轮毂里程</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入轮毂里程" />
+                    <input class="weui-input" bindinput='bindWheelNumInput' value='{{wheelNum}}' placeholder="请输入轮毂里程" />
                   </view>
                 </view>
                 <view class="weui-cell weui-cell_input">
@@ -51,13 +60,13 @@
                     <view class="weui-label">仪表盘里程</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入仪表盘里程" />
+                    <input class="weui-input" bindinput='bindDigitNumInput' value="{{digitNum}}" placeholder="请输入仪表盘里程" />
                   </view>
                 </view>
               </view>
               <!--<view class="weui-cells__tips">底部说明文字底部说明文字</view>-->
               <view class="weui-btn-area">
-                <button class="weui-btn" type="primary" bindtap="showTopTips">确定</button>
+                <button class="weui-btn" type="primary" bindtap="bindUseButtonTap">开始用车</button>
               </view>
             </view>
           </view>

@@ -1,3 +1,7 @@
 /* .float-left {
   float: left;
 } */
+
+.che-selected {
+  color: #07C160;
+}
