@@ -187,7 +187,19 @@ Page({
       //  2. 其他人上团选车的时候可以显示谁在开
       //更新数据库 添加 record
       //  1. 在车记录列表显示，谁，什么时间，用途，更新里程与否。
-
+      wx.cloud.callFunction({
+        name: 'yongche',
+        data: {
+          cheSelected: data.cheSelected,
+          tuanNum: data.tuanNum,
+          otherUse: data.otherUse,
+          wheelNum: data.wheelNum,
+          digitNum: data.digitNum                
+        },
+        success(res) {
+          console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
+        }
+      })    
     }
   }
 })
