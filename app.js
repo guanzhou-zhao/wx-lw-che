@@ -25,14 +25,17 @@ App({
     wx.cloud.callFunction({
       name: 'validateUser'
     }).then(res => {
+      /**
+       * 认证用户
+       * 调用云函数 validateUser 验证用户
+       * res.result = {isAppliedUser, userInfo, isAuthUser}
+       */
+
       console.log('app.js validateUser() ' + JSON.stringify(res.result))
 
       that.globalData.validateUserResult = res.result
       that.globalData.userInfo = res.result.userInfo
-      that.globalData.liteUserInfo = {
-        nickName: res.result.userInfo.nickName,
-        avatarUrl: res.result.userInfo.avatarUrl
-      }
+   
       if (res.result.isAuthUser) {
         wx.switchTab({
           url: '/pages/main/yongche'
