@@ -20,10 +20,11 @@ Page({
    */
   onLoad: function(options) {
     console.log("register.js onload  " + JSON.stringify(app.globalData.validateUserResult))
+
     this.setData({
       ...app.globalData.validateUserResult,
     })
-    if (app.globalData.validateUserResult.userInfo) {
+    if (app.globalData.validateUserResult.isAppliedUser) {
       this.setData({
         msg: app.globalData.validateUserResult.userInfo.msg,
         hasUserInfo: true,
@@ -88,17 +89,14 @@ Page({
   },
   getUserInfo: function(e) {
     app.globalData.userInfo = {
-      ...app.globalData.userInfo,
       ...e.detail.userInfo
     }
     this.setData({
       userInfo: {
-        ...this.data.userInfo,
         ...e.detail.userInfo
       },
       hasUserInfo: true
     })
-    console.log("register.js getUserInfo() this.data: " + JSON.stringify(this.data))
   },
   getAuth: function(e) {
     var that = this
@@ -124,10 +122,7 @@ Page({
         var toastMsg = '新留言已提交'
         if (res.result.newUser.hasOwnProperty('_id')) {
           this.setData({
-            userInfo: {
-              ...this.data.userInfo,
-              _id: res.result.newUser._id
-            }
+            'userInfo._id': res.result.newUser._id
           })
           toastMsg = '申请已提交'
         }
@@ -144,10 +139,7 @@ Page({
   },
   setMsg: function(e) {
     this.setData({
-      userInfo: {
-        ...this.data.userInfo,
-        msg: e.detail.value
-      }
+      'userInfo.msg': e.detail.value
     })
   }
 })

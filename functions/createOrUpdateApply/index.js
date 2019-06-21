@@ -23,7 +23,7 @@ exports.main = async(event, context) => {
     await db.collection('user').add({
       data: {
         ...event.myUserInfo,
-        ...event.userInfo
+        openId: wxContext.OPENID
       }
     }).then(res => {
       newUser = res

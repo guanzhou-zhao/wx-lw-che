@@ -7,15 +7,18 @@ cloud.init()
 exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
   const db = cloud.database()
-  var validateResult = {}
+  var validateResult = {
+    isAppliedUser: false
+  }
   await db.collection('user').where({
-    openId: wxContext.OPENID,
-    tag: 'Y'
+    openId: wxContext.OPENID
   }).get().then(res => {
-    validateResult.isAppliedUser = res.data.length > 0
-    validateResult.userInfo = res.data[0]
+    if (res.data.length > 0) {
+      validateResult.isAppliedUser = true
+        validateResult.userInfo = res.data[0]
 
-    validateResult.isAuthUser = (validateResult.userInfo.tag && validateResult.userInfo.tag == 'Y')
+      validateResult.isAuthUser = (validateResult.userInfo.tag && validateResult.userInfo.tag == 'Y')
+    }
 
   })
 

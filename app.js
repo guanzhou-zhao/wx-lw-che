@@ -13,10 +13,22 @@ App({
     wx.setStorageSync('logs', logs)
 
     this.validateUser()
+    this.getAllUsers()
   },
   globalData: {
     userInfo: null,
     isAuthUser: false
+  },
+  getAllUsers: function() {
+    var that = this
+    wx.cloud.callFunction({
+      name: 'listUser'
+    }).then((res)=>{
+      that.globalData.allUsers = res.result.users.reduce((pv, cv)=> {
+        pv[cv.openId] = cv
+        return pv
+      }, {})
+    })
   },
   validateUser: function() {
     var that = this
