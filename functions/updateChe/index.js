@@ -53,6 +53,7 @@ exports.main = async(event, context) => {
     await db.collection('record').add({
       data: {
         category: 'update',
+        cheid: cheId,
         openid: wxContext.OPENID,
         timeAt: new Date(),
         changes
