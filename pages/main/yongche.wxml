@@ -26,25 +26,23 @@
                   </view>
                 </view>
               </view>
-              <view wx:for="{{filteredCheList}}" wx:key="{{index}}" >
-      <button bindtap='bindCheButtonClick' data-che='{{item}}' data-plate='{{item.plate}}' class="weui-btn mini-btn float-left" type="{{plateSelected==item.plate ? primary : default}}" size="mini">{{item.plate}}</button>
+              <view wx:for="{{filteredCheList}}" wx:key="{{index}}">
+                <button bindtap='bindCheButtonClick' data-che='{{item}}' data-plate='{{item.plate}}' class="weui-btn mini-btn float-left" type="{{plateSelected==item.plate ? primary : default}}" size="mini">{{item.plate}}</button>
               </view>
               <view class="weui-cells__title">上团需更新如下信息：</view>
               <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_input">
-                  <view class="weui-cell__hd">
-                    <view class="weui-label">团号</view>
-                  </view>
-                  <view class="weui-cell__bd">
-                    <input bindinput='bindTuanNumInput' class="weui-input" value='{{tuanNum}}' placeholder="输入团号" />
+                <view class="weui-cell weui-cell_switch">
+                  <view class="weui-cell__bd">如非上团，请 switch-off</view>
+                  <view class="weui-cell__ft">
+                    <switch checked bindchange='bindSwitchChange'/>
                   </view>
                 </view>
                 <view class="weui-cell weui-cell_input">
                   <view class="weui-cell__hd">
-                    <view class="weui-label">其它用途</view>
+                    <view class="weui-label">{{isTuan ? '团号' : '其它用途'}}</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <input bindinput='bindOtherUseInput' class="weui-input" value='{{otherUse}}' placeholder="请输入用途" />
+                    <input bindinput='bindCategoryInput' class="weui-input" value='{{category}}' placeholder="请输入{{isTuan ? '团号' : '用途'}}" />
                   </view>
                 </view>
                 <view class="weui-cell weui-cell_input">

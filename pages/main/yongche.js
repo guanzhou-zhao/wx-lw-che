@@ -15,6 +15,7 @@ Page({
 
     filterInput: '',
     filteredCheList: [],
+    isTuan: true,
     tuanNum: '',
     otherUse: '',
     wheelNum: '',
@@ -53,7 +54,6 @@ Page({
     wx.cloud.callFunction({
       name: 'listChe',
       success(res) {
-        console.log(res.result.cheList)
         var cheList = res.result.cheList
         var modelList = cheList.reduce((pv, che) => {
           if (pv.findIndex((e) => e == che.model) < 0) {
@@ -137,15 +137,15 @@ Page({
     })
   },
 
-  bindTuanNumInput: function(e) {
+  bindSwitchChange: function(e) {
     this.setData({
-      tuanNum: e.detail.value.trim()
+      isTuan: e.detail.value
     })
   },
 
-  bindOtherUseInput: function(e) {
+  bindCategoryInput: function(e) {
     this.setData({
-      otherUse: e.detail.value.trim()
+      category: e.detail.value.trim()
     })
   },
 
@@ -169,9 +169,9 @@ Page({
         icon: 'none',
         duration: 2500
       })
-    } else if ((data.tuanNum.length > 0 && data.otherUse.length > 0) || (data.tuanNum.length < 1 && data.otherUse.length < 1)) {
+    } else if (data.category.trim().length < 1) {
       wx.showToast({
-        title: '团号或其它用途必须且只能填一个',
+        title: `请输入${data.isTuan ? '团号' : '用途'}`,
         icon: 'none',
         duration: 3000
       })
@@ -187,17 +187,21 @@ Page({
       //  2. 其他人上团选车的时候可以显示谁在开
       //更新数据库 添加 record
       //  1. 在车记录列表显示，谁，什么时间，用途，更新里程与否。
+      console.log(`main.yongche.js call yongche --- --`)
       wx.cloud.callFunction({
         name: 'yongche',
         data: {
           cheSelected: data.cheSelected,
-          tuanNum: data.tuanNum,
-          otherUse: data.otherUse,
+          isTuan: data.isTuan,
+          category: data.category,
           wheelNum: data.wheelNum,
           digitNum: data.digitNum                
         },
         success(res) {
           console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
+        },
+        fail(res) {
+          console.log(`main.yongche.js call yongche fail -- ${JSON.stringify(res)}`)
         }
       })    
     }

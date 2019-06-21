@@ -18,7 +18,9 @@ exports.main = async (event, context) => {
       statusDetail: {
         driverId: wxContext.OPENID,
         timeAt: new Date()
-      }
+      },
+      updatedAt: new Date(),
+      updatedBy: wxContext.OPENID
     }
   }).then((res)=>{
     yongcheResponse = res
@@ -28,13 +30,23 @@ exports.main = async (event, context) => {
 
   await db.collection('record').add({
     data: {
-      category: event.tuanNum.length>0 ? '上团' : event.otherUse,
-      createdBy: wxContext.OPENID,
-      createdAt: new Date(),
-      wheelNum: event.wheelNum,
-      digitNum: event.digitNum,
-      lastWheelNum: cheSelected.wheelNum,
-      lastDigitNum: cheSelected.digitNum
+      category: event.isTuan ? 'tuan' : 'others',
+      categoryDetail: event.category,//团号或其它用途
+      cheid: cheSelected._id,
+      openid: wxContext.OPENID,
+      timeAt: new Date(),
+      changes: [
+        {
+          key: 'wheelNum',
+          newValue: event.wheelNum,
+          oldValue: cheSelected.wheelNum
+        },
+        {
+          key: 'digitNum',
+          newValue: event.digitNum,
+          oldValue: cheSelected.digitNum
+        }
+      ]
     }
   }).then((res) => {
     addRecordResponse = res
