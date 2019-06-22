@@ -42,7 +42,7 @@
                     <view class="weui-label">{{isTuan ? '团号' : '其它用途'}}</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <input bindinput='bindCategoryInput' class="weui-input" value='{{category}}' placeholder="请输入{{isTuan ? '团号' : '用途'}}" />
+                    <input bindinput='bindUseDetailInput' class="weui-input" value='{{useDetail}}' placeholder="请输入{{isTuan ? '团号' : '用途'}}" />
                   </view>
                 </view>
                 <view class="weui-cell weui-cell_input">

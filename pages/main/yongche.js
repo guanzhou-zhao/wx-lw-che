@@ -13,11 +13,11 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
 
+    cheSelected: null,
     filterInput: '',
     filteredCheList: [],
     isTuan: true,
-    tuanNum: '',
-    otherUse: '',
+    useDetail: '',
     wheelNum: '',
     digitNum: ''
   },
@@ -26,7 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
+
     var that = this;
     wx.getSystemInfo({
       success: function(res) {
@@ -55,15 +55,16 @@ Page({
       name: 'listChe',
       success(res) {
         var cheList = res.result.cheList
-        var modelList = cheList.reduce((pv, che) => {
-          if (pv.findIndex((e) => e == che.model) < 0) {
-            pv.push(che.model)
-          }
-          return pv
-        }, [])
-        
+        if (that.data.cheSelected) {
+          var tempChe = cheList.find((c) => {
+            return c._id == that.data.cheSelected._id
+          })
+          that.setData({
+            cheSelected: tempChe
+          })
+        }
+
         that.setData({
-          modelList,
           cheList
         })
       }
@@ -121,14 +122,18 @@ Page({
       wheelNum: dataset.che.wheelNum,
       digitNum: dataset.che.digitNum
     })
-    
-    this.bindPlateFilterInput({ detail: { value: e.currentTarget.dataset.plate}})
+
+    this.bindPlateFilterInput({
+      detail: {
+        value: e.currentTarget.dataset.plate
+      }
+    })
   },
 
   bindPlateFilterInput: function(e) {
     var filter = e.detail.value.trim()
     this.setData({
-      filteredCheList: this.data.cheList.reduce((pv, che)=> {
+      filteredCheList: this.data.cheList.reduce((pv, che) => {
         if (filter.length > 0 && che.plate.includes(filter)) {
           pv.push(che)
         }
@@ -143,9 +148,9 @@ Page({
     })
   },
 
-  bindCategoryInput: function(e) {
+  bindUseDetailInput: function(e) {
     this.setData({
-      category: e.detail.value.trim()
+      useDetail: e.detail.value.trim()
     })
   },
 
@@ -169,13 +174,13 @@ Page({
         icon: 'none',
         duration: 2500
       })
-    } else if (data.category.trim().length < 1) {
+    } else if (data.useDetail.trim().length < 1) {
       wx.showToast({
         title: `请输入${data.isTuan ? '团号' : '用途'}`,
         icon: 'none',
         duration: 3000
       })
-    } else if (data.wheelNum.length < 1 || data.digitNum.length < 1){
+    } else if (data.wheelNum.length < 1 || data.digitNum.length < 1) {
       wx.showToast({
         title: '两个里程都必须填',
         icon: 'none',
@@ -193,9 +198,10 @@ Page({
         data: {
           cheSelected: data.cheSelected,
           isTuan: data.isTuan,
-          category: data.category,
+          useDetail: data.useDetail,
           wheelNum: data.wheelNum,
-          digitNum: data.digitNum                
+          digitNum: data.digitNum,
+          user: app.globalData.userInfo
         },
         success(res) {
           console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
@@ -203,7 +209,7 @@ Page({
         fail(res) {
           console.log(`main.yongche.js call yongche fail -- ${JSON.stringify(res)}`)
         }
-      })    
+      })
     }
   }
 })

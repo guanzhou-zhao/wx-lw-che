@@ -3,22 +3,84 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 const db = cloud.database()
-// 云函数入口函数
+const DAYS_30 = 1000 * 60 * 60 * 24 * 30
+const RUC_2000 = 2000
+const MT_3000 = 3000
+const ALIGN_5000 = 5000
+/**
+ * 开始用车时：
+ * 1. 添加用车记录record
+ * 2. 更新数据库 che 使用状态
+ * 3. 更新数据库 user 用车状态
+ */
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
   var yongcheResponse
-  var addRecordResponse
+  var userUpdateResponse
   var cheSelected = event.cheSelected
-  await db.collection('che').doc(cheSelected._id).update({
+  
+  /**
+   * 判断 ruc, rucDate, cofDate, mtNum保养, allimentNum四轮定位, docDate
+   *  1. 在record中save isWrong
+   *  2. 在record中save whatIsWrongList 列出anything wrong
+   */
+  var isWrong = false
+  var errorMsgList = []
+  var today = new Date()
+  if ((cheSelected.rucNum - event.wheelNum) < RUC_2000) {
+    isWrong = true
+    errorMsgList.push(`RUC里程少于${RUC_2000}km`)
+  }
+  if ((cheSelected.mtNum - event.digitNum) < RUC_2000) {
+    isWrong = true
+    errorMsgList.push(`保养里程少于${RUC_2000}km`)
+  }
+  if ((cheSelected.allignmentNum - event.digitNum) < RUC_2000) {
+    isWrong = true
+    errorMsgList.push(`四轮定位里程少于${RUC_2000}km`)
+  }
+  if ((cheSelected.rucDate - today) < DAYS_30) {
+    isWrong = true
+    errorMsgList.push(`路税日期少于${DAYS_30}天`)
+  }
+  if ((cheSelected.cofDate - today) < DAYS_30) {
+    isWrong = true
+    errorMsgList.push(`COF日期少于${DAYS_30}天`)
+  }
+  if ((cheSelected.docDate - today) < DAYS_30) {
+    isWrong = true
+    errorMsgList.push(`DOC日期少于${DAYS_30}天`)
+  }
+
+  var addedRecord = await db.collection('record').add({
+    data: {
+      isTuan: event.isTuan,
+      useDetail: event.useDetail,//团号或其它用途
+      cheId: cheSelected._id,
+      openId: wxContext.OPENID,
+      timeAt: new Date(),
+      wheelNum: event.wheelNum,
+      digitNum: event.digitNum,
+      isWrong,
+      errorMsgList
+    }
+  })
+
+  /**
+   * 更新车
+   */
+  var usingDetailList = cheSelected.usingDetailList ? cheSelected.usingDetailList : []
+  usingDetailList.push({
+    recordId: addedRecord._id,
+    openId: wxContext.OPENID
+  })
+await db.collection('che').doc(cheSelected._id).update({
     data: {
       wheelNum: event.wheelNum,
       digitNum: event.digitNum,
-      status: 'tuan',
-      statusDetail: {
-        driverId: wxContext.OPENID,
-        timeAt: new Date()
-      },
+      isInUse: true,
+      usingDetailList,
       updatedAt: new Date(),
       updatedBy: wxContext.OPENID
     }
@@ -28,30 +90,25 @@ exports.main = async (event, context) => {
     yongcheResponse = err
   })
 
-  await db.collection('record').add({
+  /**
+   * 更新 user
+   */
+  var drivingDetailList = event.user.drivingDetailList ? event.user.drivingDetailList : []
+  drivingDetailList.push({
+    recordId: addedRecord._id,
+    cheId: cheSelected._id
+  })
+  await db.collection('user').doc(event.user._id).update({
     data: {
-      category: event.isTuan ? 'tuan' : 'others',
-      categoryDetail: event.category,//团号或其它用途
-      cheid: cheSelected._id,
-      openid: wxContext.OPENID,
-      timeAt: new Date(),
-      changes: [
-        {
-          key: 'wheelNum',
-          newValue: event.wheelNum,
-          oldValue: cheSelected.wheelNum
-        },
-        {
-          key: 'digitNum',
-          newValue: event.digitNum,
-          oldValue: cheSelected.digitNum
-        }
-      ]
+      isDriving: true,
+      drivingDetailList,
+      updatedAt: new Date(),
+      updatedBy: wxContext.OPENID
     }
   }).then((res) => {
-    addRecordResponse = res
+    userUpdateResponse = res
   }).catch((err) => {
-    addRecordResponse = err
+    userUpdateResponse = err
   })
 
   return {
@@ -60,6 +117,7 @@ exports.main = async (event, context) => {
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,
     yongcheResponse,
-    addRecordResponse
+    userUpdateResponse,
+    addedRecord
   }
 }
