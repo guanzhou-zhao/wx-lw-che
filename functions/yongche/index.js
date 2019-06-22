@@ -40,17 +40,17 @@ exports.main = async (event, context) => {
     isWrong = true
     errorMsgList.push(`四轮定位里程少于${RUC_2000}km`)
   }
-  if ((cheSelected.rucDate - today) < DAYS_30) {
+  if ((new Date(cheSelected.rucDate) - today) < DAYS_30) {
     isWrong = true
-    errorMsgList.push(`路税日期少于${DAYS_30}天`)
+    errorMsgList.push(`路税日期少于30天`)
   }
-  if ((cheSelected.cofDate - today) < DAYS_30) {
+  if ((new Date(cheSelected.cofDate) - today) < DAYS_30) {
     isWrong = true
-    errorMsgList.push(`COF日期少于${DAYS_30}天`)
+    errorMsgList.push(`COF日期少于30天`)
   }
-  if ((cheSelected.docDate - today) < DAYS_30) {
+  if ((new Date(cheSelected.docDate) - today) < DAYS_30) {
     isWrong = true
-    errorMsgList.push(`DOC日期少于${DAYS_30}天`)
+    errorMsgList.push(`DOC日期少于30天`)
   }
 
   var addedRecord = await db.collection('record').add({

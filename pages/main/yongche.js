@@ -54,6 +54,7 @@ Page({
     wx.cloud.callFunction({
       name: 'listChe',
       success(res) {
+        console.log(`main.yongche.js onshow() `)
         var cheList = res.result.cheList
         if (that.data.cheSelected) {
           var tempChe = cheList.find((c) => {
