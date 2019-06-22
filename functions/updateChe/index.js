@@ -39,6 +39,15 @@ exports.main = async(event, context) => {
     }
   }
   if (isCheChanged) {
+    if (updatedChe.rucDate) {
+      updatedChe.rucDate = new Date(updatedChe.rucDate)
+    }
+    if (updatedChe.cofDate) {
+      updatedChe.cofDate = new Date(updatedChe.cofDate)
+    }
+    if (updatedChe.docDate) {
+      updatedChe.docDate = new Date(updatedChe.docDate)
+    }
     delete event.updatedChe._id
     await db.collection('che').doc(cheId).update({
       data: {
