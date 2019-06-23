@@ -53,27 +53,29 @@ exports.main = async (event, context) => {
     errorMsgList.push(`DOC日期少于30天`)
   }
 
+  var newRecord = {
+    isTuan: event.isTuan,
+    useDetail: event.useDetail,//团号或其它用途
+    cheId: cheSelected._id,
+    openId: wxContext.OPENID,
+    timeAt: new Date(),
+    wheelNum: event.wheelNum,
+    digitNum: event.digitNum,
+    isWrong,
+    errorMsgList
+  }
   var addedRecord = await db.collection('record').add({
-    data: {
-      isTuan: event.isTuan,
-      useDetail: event.useDetail,//团号或其它用途
-      cheId: cheSelected._id,
-      openId: wxContext.OPENID,
-      timeAt: new Date(),
-      wheelNum: event.wheelNum,
-      digitNum: event.digitNum,
-      isWrong,
-      errorMsgList
-    }
+    data: newRecord
   })
+  newRecord._id = addedRecord._id
 
   /**
    * 更新车
    */
   var usingDetailList = cheSelected.usingDetailList ? cheSelected.usingDetailList : []
   usingDetailList.push({
-    recordId: addedRecord._id,
-    openId: wxContext.OPENID
+    record: newRecord,
+    user: event.user
   })
 await db.collection('che').doc(cheSelected._id).update({
     data: {
@@ -95,8 +97,8 @@ await db.collection('che').doc(cheSelected._id).update({
    */
   var drivingDetailList = event.user.drivingDetailList ? event.user.drivingDetailList : []
   drivingDetailList.push({
-    recordId: addedRecord._id,
-    cheId: cheSelected._id
+    record: newRecord,
+    che: cheSelected
   })
   await db.collection('user').doc(event.user._id).update({
     data: {
