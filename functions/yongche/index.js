@@ -72,7 +72,8 @@ exports.main = async (event, context) => {
   /**
    * 更新车
    */
-  var usingDetailList = cheSelected.usingDetailList ? cheSelected.usingDetailList : []
+  var realTimeChe = await db.collection('che').doc(cheSelected._id).get()
+  var usingDetailList = realTimeChe.data.usingDetailList ? cheSelected.usingDetailList : []
   usingDetailList.push({
     record: newRecord,
     user: event.user
@@ -95,7 +96,8 @@ await db.collection('che').doc(cheSelected._id).update({
   /**
    * 更新 user
    */
-  var drivingDetailList = event.user.drivingDetailList ? event.user.drivingDetailList : []
+  var realTimeUser = await db.collection('user').doc(event.user._id).get()
+  var drivingDetailList = realTimeUser.data.drivingDetailList ? event.user.drivingDetailList : []
   drivingDetailList.push({
     record: newRecord,
     che: cheSelected
@@ -120,6 +122,7 @@ await db.collection('che').doc(cheSelected._id).update({
     unionid: wxContext.UNIONID,
     yongcheResponse,
     userUpdateResponse,
-    addedRecord
+    addedRecord,
+    realTimeChe
   }
 }
