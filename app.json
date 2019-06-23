@@ -8,6 +8,7 @@
     "pages/vehicle/add",
     "pages/vehicle/list",
     "pages/vehicle/update",
+    "pages/vehicle/che",
     "pages/gohome/gohome",
     "pages/logs/logs"
   ],
