@@ -78,17 +78,22 @@ exports.main = async (event, context) => {
     record: newRecord,
     user: event.user
   })
+  var dataForUpdateChe = {
+    wheelNum: event.wheelNum,
+    digitNum: event.digitNum,
+    isInUse: true,
+    usingDetailList,
+    updatedAt: new Date(),
+    updatedBy: wxContext.OPENID
+  }
 await db.collection('che').doc(cheSelected._id).update({
-    data: {
-      wheelNum: event.wheelNum,
-      digitNum: event.digitNum,
-      isInUse: true,
-      usingDetailList,
-      updatedAt: new Date(),
-      updatedBy: wxContext.OPENID
-    }
+  data: dataForUpdateChe
   }).then((res)=>{
     yongcheResponse = res
+    realTimeChe = {
+      ...realTimeChe,
+      ...dataForUpdateChe
+    }
   }).catch((err)=>{
     yongcheResponse = err
   })
@@ -102,15 +107,20 @@ await db.collection('che').doc(cheSelected._id).update({
     record: newRecord,
     che: cheSelected
   })
+  var dataForUpdateUser = {
+    isDriving: true,
+    drivingDetailList,
+    updatedAt: new Date(),
+    updatedBy: wxContext.OPENID
+  }
   await db.collection('user').doc(event.user._id).update({
-    data: {
-      isDriving: true,
-      drivingDetailList,
-      updatedAt: new Date(),
-      updatedBy: wxContext.OPENID
-    }
+    data: dataForUpdateUser
   }).then((res) => {
     userUpdateResponse = res
+    realTimeUser = {
+      ...realTimeUser,
+      ...dataForUpdateUser
+    }
   }).catch((err) => {
     userUpdateResponse = err
   })
@@ -123,6 +133,7 @@ await db.collection('che').doc(cheSelected._id).update({
     yongcheResponse,
     userUpdateResponse,
     addedRecord,
-    realTimeChe
+    realTimeChe: realTimeChe.data,
+    realTimeUser: realTimeUser.data
   }
 }

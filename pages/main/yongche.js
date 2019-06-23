@@ -1,42 +1,30 @@
 const app = getApp()
-var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 wx.cloud.init()
-
+const moment = require('../../utils/moment.min.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    tabs: ["车记录", "图片", "操作"],
-    activeIndex: 0,
-    sliderOffset: 0,
-    sliderLeft: 0,
-
     cheSelected: null,
     filterInput: '',
     filteredCheList: [],
     isTuan: true,
-    useDetail: '',
+    category: '',
     wheelNum: '',
-    digitNum: ''
+    digitNum: '',
+
+    moment,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
-    var that = this;
-    wx.getSystemInfo({
-      success: function(res) {
-        that.setData({
-          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
-          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
-        });
-      }
-    });
-
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
   },
 
   /**
@@ -48,9 +36,38 @@ Page({
 
   /**
    * 生命周期函数--监听页面显示
+   * -1. 检查 userInfo，看是否正在用车
+   *    -a. 如果正在用车，列出正在用的车辆，显示选车button
+   *    -b. 如果没有用车，不显示选车button,直接显示用车上团的form
+   * 2. 用车上团的form 提交后，更新正在用车的list, 隐藏选车button，重置选车的data
+   * 3. 点击正在用车list中的车辆，跳转的车辆vehicle.che.wxml，其中显示车辆记录，图片，和操作（比如下团，长传图片等的操作）
+   * 4. 选车的form中要有取消按钮，点击后隐藏form
+   * 
+   * user {isDriving:true, drivingDetailList:[{cheId, record: {}}] }
    */
   onShow: function() {
     var that = this
+    // call getUser to get latest user data
+    wx.cloud.callFunction({
+      name: 'getUser',
+      data: {
+        userId: app.globalData.userInfo._id
+      },
+      success(res) {
+        var user = res.result.data
+        if (user.drivingDetailList && user.drivingDetailList.length > 0) {
+          for (var i = 0; i < user.drivingDetailList.length; i++) {
+            user.drivingDetailList[i].record.timeAtFormat = moment(user.drivingDetailList[i].record.timeAt).format('D MMM YYYY h:m A')
+          }
+        }
+        console.log('formated user' + JSON.stringify(user))
+        that.setData({
+          userInfo: user
+        })
+        app.globalData.userInfo = user
+      }
+    })
+
     wx.cloud.callFunction({
       name: 'listChe',
       success(res) {
@@ -107,13 +124,6 @@ Page({
 
   },
 
-  tabClick: function(e) {
-    this.setData({
-      sliderOffset: e.currentTarget.offsetLeft,
-      activeIndex: e.currentTarget.id
-    });
-  },
-
   bindCheButtonClick: function(e) {
     var dataset = e.currentTarget.dataset
     this.setData({
@@ -149,9 +159,9 @@ Page({
     })
   },
 
-  bindUseDetailInput: function(e) {
+  bindCategoryInput: function(e) {
     this.setData({
-      useDetail: e.detail.value.trim()
+      category: e.detail.value.trim()
     })
   },
 
@@ -168,6 +178,7 @@ Page({
   },
 
   bindUseButtonTap: function(e) {
+    var that = this
     var data = this.data
     if (!data.plateSelected) {
       wx.showToast({
@@ -175,7 +186,7 @@ Page({
         icon: 'none',
         duration: 2500
       })
-    } else if (data.useDetail.trim().length < 1) {
+    } else if (data.category.trim().length < 1) {
       wx.showToast({
         title: `请输入${data.isTuan ? '团号' : '用途'}`,
         icon: 'none',
@@ -199,13 +210,20 @@ Page({
         data: {
           cheSelected: data.cheSelected,
           isTuan: data.isTuan,
-          useDetail: data.useDetail,
+          category: data.category,
           wheelNum: data.wheelNum,
           digitNum: data.digitNum,
           user: app.globalData.userInfo
         },
         success(res) {
           console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
+          /**
+           * 1. 点击‘开始用车’按钮，添加record记录，更新che,user 成功
+           * 2. Loading 和显示所有此车的记录
+           */
+          that.setData({
+            userInfo: res.result.realTimeUser
+          })
         },
         fail(res) {
           console.log(`main.yongche.js call yongche fail -- ${JSON.stringify(res)}`)
