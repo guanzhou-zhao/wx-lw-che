@@ -12,10 +12,13 @@
           <view>{{userInfo.nickName}}</view>
           <view style="font-size: 13px;color: #888888;">{{userInfo.msg}}</view>
         </view>
+        <view class="weui-cell__bd">
+          <button bindtap='bindSearchCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{showForm?'关闭表单':'搜索车'}}</button>
+        </view>
       </view>
     </view>
 
-    <view wx:if="{{!hasRecord}}">
+    <view wx:if="{{showForm}}">
       <view wx:if='{{plateSelected}}' class="weui-cells__title che-selected">已选择车： {{plateSelected}}</view>
       <view wx:else class="weui-cells__title">如输入78，然后点选LWQ178：</view>
       <view class="weui-cells weui-cells_after-title">

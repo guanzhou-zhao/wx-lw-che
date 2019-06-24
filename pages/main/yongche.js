@@ -25,20 +25,29 @@ Page({
     this.setDataForUserInfo(app.globalData.userInfo)
   },
 
-  setDataForUserInfo: function(userInfo) {
+  bindSearchCheTap: function(e) {
+      this.setData({
+        showForm: !this.data.showForm
+      })
 
+  },
+
+  setDataForUserInfo: function(userInfo) {
     var hasRecord = false
+    var showForm = true
     if (userInfo.drivingDetailList && userInfo.drivingDetailList.length > 0) {
       hasRecord = true
     }
     if (hasRecord) {
+      showForm = false
       for (var i=0; i<userInfo.drivingDetailList.length; i++) {
         userInfo.drivingDetailList[i].record.timeAtFormat = moment(userInfo.drivingDetailList[i].record.timeAt).format('D MMM YYYY h:m A')
       }
     }
     this.setData({
       userInfo,
-      hasRecord
+      hasRecord,
+      showForm
     })
   },
   /**
