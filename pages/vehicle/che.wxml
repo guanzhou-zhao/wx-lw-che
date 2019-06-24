@@ -11,21 +11,32 @@
       </view>
       <view class="weui-tab__panel">
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-          
+
+          <view wx:for="{{records}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
+        <view class="weui-panel">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.user.nickName}} </view>
+              <view class="weui-media-box__desc">
+                轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}},
+                <view wx:if="{{item.isWrong}}" wx:for="{{item.errorMsgList}}" wx:key="{{index}}" wx:for-item="errorMsg">
+                  {{errorMsg}}{{item.errorMsgList.length != index+1 ? ',': ''}}
+                </view>
+              </view>
+              <view class="weui-media-box__info">
+                <view class="weui-media-box__info__meta">{{item.isTuan?'团号:':'用途:'}}{{item.category}}</view>
+                <view class="weui-media-box__info__meta">{{item.timeAtFormat}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
           
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-          <view class="weui-cells weui-cells_after-title">
-            <navigator url="/pages/index/index" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-              <view class="weui-cell__hd">
-                <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
-              </view>
-              <view class="weui-cell__bd">99</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access">在基督城宿舍</view>
-            </navigator>
-          </view>
+         
         </view>
       </view>
     </view>

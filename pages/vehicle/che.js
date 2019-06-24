@@ -1,18 +1,59 @@
-// pages/vehicle/che.js
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+const app = getApp()
+wx.cloud.init()
+const allUsers = app.globalData.allUsers
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    tabs: ["记录", "图片", "操作"],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
+   * 1. 根据cheId 从record中加载出所有此车的记录
    */
   onLoad: function (options) {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+        });
+      }
+    });
+    console.log(`allUsers ${JSON.stringify(app.globalData.allUsers)}`)
+    wx.cloud.callFunction({
+      name: 'getRecord',
+      data: {
+        cheId: options.cheId
+      },
+      success(res) {
+        var records = res.result.data.reduce((pv, cv)=> {
+          cv.user = app.globalData.allUsers[cv.openId]
+          pv.push(cv)
+          return pv
+        },[])
+        
+        that.setData({
+          records
+        })
+      },
+      fail: console.error
+    })
+  },
 
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
   },
 
   /**
