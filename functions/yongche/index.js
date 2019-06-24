@@ -13,13 +13,12 @@ const ALIGN_5000 = 5000
  * 2. 更新数据库 che 使用状态
  * 3. 更新数据库 user 用车状态
  */
-exports.main = async (event, context) => {
+exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
 
-  var yongcheResponse
   var userUpdateResponse
   var cheSelected = event.cheSelected
-  
+
   /**
    * 判断 ruc, rucDate, cofDate, mtNum保养, allimentNum四轮定位, docDate
    *  1. 在record中save isWrong
@@ -55,7 +54,7 @@ exports.main = async (event, context) => {
 
   var newRecord = {
     isTuan: event.isTuan,
-    useDetail: event.useDetail,//团号或其它用途
+    category: event.category, //团号或其它用途
     cheId: cheSelected._id,
     openId: wxContext.OPENID,
     timeAt: new Date(),
@@ -72,8 +71,9 @@ exports.main = async (event, context) => {
   /**
    * 更新车
    */
-  var realTimeChe = await db.collection('che').doc(cheSelected._id).get()
-  var usingDetailList = realTimeChe.data.usingDetailList ? cheSelected.usingDetailList : []
+  var getRealTimeChe = await db.collection('che').doc(cheSelected._id).get()
+  var realTimeChe = getRealTimeChe.data
+  var usingDetailList = realTimeChe.usingDetailList ? cheSelected.usingDetailList : []
   usingDetailList.push({
     record: newRecord,
     user: event.user
@@ -86,23 +86,19 @@ exports.main = async (event, context) => {
     updatedAt: new Date(),
     updatedBy: wxContext.OPENID
   }
-await db.collection('che').doc(cheSelected._id).update({
-  data: dataForUpdateChe
-  }).then((res)=>{
-    yongcheResponse = res
-    realTimeChe = {
-      ...realTimeChe,
-      ...dataForUpdateChe
-    }
-  }).catch((err)=>{
-    yongcheResponse = err
+  var yongcheResponse = await db.collection('che').doc(cheSelected._id).update({
+    data: dataForUpdateChe
   })
-
+  realTimeChe = {
+    ...realTimeChe,
+    ...dataForUpdateChe
+  }
   /**
    * 更新 user
    */
-  var realTimeUser = await db.collection('user').doc(event.user._id).get()
-  var drivingDetailList = realTimeUser.data.drivingDetailList ? event.user.drivingDetailList : []
+  var getRealTimeUser = await db.collection('user').doc(event.user._id).get()
+  var realTimeUser = getRealTimeUser.data
+  var drivingDetailList = realTimeUser.drivingDetailList ? event.user.drivingDetailList : []
   drivingDetailList.push({
     record: newRecord,
     che: cheSelected
@@ -113,17 +109,13 @@ await db.collection('che').doc(cheSelected._id).update({
     updatedAt: new Date(),
     updatedBy: wxContext.OPENID
   }
-  await db.collection('user').doc(event.user._id).update({
+  var userUpdateResponse = await db.collection('user').doc(event.user._id).update({
     data: dataForUpdateUser
-  }).then((res) => {
-    userUpdateResponse = res
-    realTimeUser = {
-      ...realTimeUser,
-      ...dataForUpdateUser
-    }
-  }).catch((err) => {
-    userUpdateResponse = err
   })
+  realTimeUser = {
+    ...realTimeUser,
+    ...dataForUpdateUser
+  }
 
   return {
     event,
@@ -133,7 +125,7 @@ await db.collection('che').doc(cheSelected._id).update({
     yongcheResponse,
     userUpdateResponse,
     addedRecord,
-    realTimeChe: realTimeChe.data,
-    realTimeUser: realTimeUser.data
+    realTimeChe,
+    realTimeUser,
   }
 }

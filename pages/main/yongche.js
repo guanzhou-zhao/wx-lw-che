@@ -22,11 +22,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      userInfo: app.globalData.userInfo
-    })
+    this.setDataForUserInfo(app.globalData.userInfo)
   },
 
+  setDataForUserInfo: function(userInfo) {
+
+    var hasRecord = false
+    if (userInfo.drivingDetailList && userInfo.drivingDetailList.length > 0) {
+      hasRecord = true
+    }
+    if (hasRecord) {
+      for (var i=0; i<userInfo.drivingDetailList.length; i++) {
+        userInfo.drivingDetailList[i].record.timeAtFormat = moment(userInfo.drivingDetailList[i].record.timeAt).format('D MMM YYYY h:m A')
+      }
+    }
+    this.setData({
+      userInfo,
+      hasRecord
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -54,17 +68,8 @@ Page({
         userId: app.globalData.userInfo._id
       },
       success(res) {
-        var user = res.result.data
-        if (user.drivingDetailList && user.drivingDetailList.length > 0) {
-          for (var i = 0; i < user.drivingDetailList.length; i++) {
-            user.drivingDetailList[i].record.timeAtFormat = moment(user.drivingDetailList[i].record.timeAt).format('D MMM YYYY h:m A')
-          }
-        }
-        console.log('formated user' + JSON.stringify(user))
-        that.setData({
-          userInfo: user
-        })
-        app.globalData.userInfo = user
+        var userInfo = res.result.data
+        that.setDataForUserInfo(userInfo)
       }
     })
 
@@ -213,7 +218,7 @@ Page({
           category: data.category,
           wheelNum: data.wheelNum,
           digitNum: data.digitNum,
-          user: app.globalData.userInfo
+          user: that.data.userInfo
         },
         success(res) {
           console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
@@ -221,9 +226,7 @@ Page({
            * 1. 点击‘开始用车’按钮，添加record记录，更新che,user 成功
            * 2. Loading 和显示所有此车的记录
            */
-          that.setData({
-            userInfo: res.result.realTimeUser
-          })
+          that.setDataForUserInfo(res.result.realTimeUser)
         },
         fail(res) {
           console.log(`main.yongche.js call yongche fail -- ${JSON.stringify(res)}`)
