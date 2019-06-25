@@ -42,7 +42,7 @@
                 <view class="weui-cell__bd">
                   <view class="weui-uploader">
                     <view class="weui-uploader__hd">
-                      <view class="weui-uploader__title">图片上传</view>
+                      <view class="weui-uploader__title">图片上传(最多3张）</view>
                     </view>
                     <view class="weui-uploader__bd">
                       <view class="weui-uploader__files" id="uploaderFiles">
@@ -65,7 +65,7 @@
             <view class="weui-cells weui-cells_after-title">
               <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                  <input class="weui-input" placeholder="请图片描述" />
+                  <input bindinput='bindImageDescInput' class="weui-input" value="{{imageDesc}}" placeholder="请描述图片" />
                 </view>
               </view>
             </view>
