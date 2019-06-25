@@ -11,32 +11,71 @@
       </view>
       <view class="weui-tab__panel">
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-
           <view wx:for="{{records}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
-        <view class="weui-panel">
-          <view class="weui-panel__bd">
-            <view class="weui-media-box weui-media-box_text">
-              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.user.nickName}} </view>
-              <view class="weui-media-box__desc">
-                轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}},
-                <view wx:if="{{item.isWrong}}" wx:for="{{item.errorMsgList}}" wx:key="{{index}}" wx:for-item="errorMsg">
-                  {{errorMsg}}{{item.errorMsgList.length != index+1 ? ',': ''}}
+            <view class="weui-panel">
+              <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.user.nickName}} </view>
+                  <view class="weui-media-box__desc">
+                    轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}},
+                    <view wx:if="{{item.isWrong}}" wx:for="{{item.errorMsgList}}" wx:key="{{index}}" wx:for-item="errorMsg">
+                      {{errorMsg}}{{item.errorMsgList.length != index+1 ? ',': ''}}
+                    </view>
+                  </view>
+                  <view class="weui-media-box__info">
+                    <view class="weui-media-box__info__meta">{{item.isTuan?'团号:':'用途:'}}{{item.category}}</view>
+                    <view class="weui-media-box__info__meta">{{item.timeAtFormat}}</view>
+                  </view>
                 </view>
-              </view>
-              <view class="weui-media-box__info">
-                <view class="weui-media-box__info__meta">{{item.isTuan?'团号:':'用途:'}}{{item.category}}</view>
-                <view class="weui-media-box__info__meta">{{item.timeAtFormat}}</view>
               </view>
             </view>
           </view>
         </view>
-      </view>
-        </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-          
+          <view class="weui-btn-area">
+              <button class="weui-btn" type="primary" size="mini" bindtap="bindShowImageFormTap">{{showImageUploadForm?'关闭表单':'上传图片'}}</button>
+            </view>
+          <view wx:if="{{showImageUploadForm}}" class="image-upload-form">
+            <view class="weui-cells__title">图片上传表单</view>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell">
+                <view class="weui-cell__bd">
+                  <view class="weui-uploader">
+                    <view class="weui-uploader__hd">
+                      <view class="weui-uploader__title">图片上传</view>
+                    </view>
+                    <view class="weui-uploader__bd">
+                      <view class="weui-uploader__files" id="uploaderFiles">
+                        <block wx:for="{{files}}" wx:key="*this">
+                          <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                          </view>
+                        </block>
+                      </view>
+                      <view class="weui-uploader__input-box">
+                        <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+
+            </view>
+            <view class="weui-cells__title">图片描述</view>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请图片描述" />
+                </view>
+              </view>
+            </view>
+            <view class="weui-btn-area">
+              <button class="weui-btn" type="primary" bindtap="bindImageUploadTap">确定</button>
+            </view>
+          </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-         
+
         </view>
       </view>
     </view>
