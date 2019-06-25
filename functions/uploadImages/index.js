@@ -25,10 +25,14 @@ exports.main = async (event, context) => {
       timeAt: new Date()
     })
   }
-  
-  return await db.collection('che').doc(event.cheId).update({
+
+  var addImagesToChe =  await db.collection('che').doc(event.cheId).update({
     data: {
       images
     }
   })
+  return {
+    addImagesToChe,
+    images
+  }
 }

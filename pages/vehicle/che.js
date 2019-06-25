@@ -92,12 +92,21 @@ Page({
               files: [],
               imageDesc: ''
             })
+            that.setDataForImages(res.result.images)
           },
           fail: console.error
         })
       })
     }
 
+  },
+  setDataForImages: function(images) {
+    var hasImages= images ?images.length > 0 : false
+    this.setData({
+      images,
+      hasImages,
+      showImageUploadForm: !hasImages
+    })
   },
   bindImageDescInput: function(e) {
     this.setData({
@@ -173,7 +182,20 @@ Page({
     /**
      * getChe for tab 1 图片tab
      */
-    
+    wx.cloud.callFunction({
+      name: 'getChe',
+      data: {
+        cheId: that.data.cheId
+      },
+      success(res) {
+        var che = res.result.data
+        that.setData({
+          che
+        })
+        that.setDataForImages(che.images)
+      },
+      fail: console.error
+    })
   },
 
   tabClick: function(e) {

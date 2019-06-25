@@ -33,8 +33,8 @@
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
           <view class="weui-btn-area">
-              <button class="weui-btn" type="primary" size="mini" bindtap="bindShowImageFormTap">{{showImageUploadForm?'关闭表单':'上传图片'}}</button>
-            </view>
+            <button class="weui-btn" type="primary" size="mini" bindtap="bindShowImageFormTap">{{showImageUploadForm?'关闭表单':'上传图片'}}</button>
+          </view>
           <view wx:if="{{showImageUploadForm}}" class="image-upload-form">
             <view class="weui-cells__title">图片上传表单</view>
             <view class="weui-cells weui-cells_after-title">
@@ -71,6 +71,15 @@
             </view>
             <view class="weui-btn-area">
               <button class="weui-btn" type="primary" bindtap="bindImageUploadTap">确定</button>
+            </view>
+          </view>
+          <view wx:if="{{hasImages}}">
+            <view wx:for="{{images}}" wx:key="{{*this}}">
+              <view class="weui-flex">
+                <view class="weui-flex__item">
+                  <view class="placeholder">weui</view>
+                </view>
+              </view>
             </view>
           </view>
         </view>
