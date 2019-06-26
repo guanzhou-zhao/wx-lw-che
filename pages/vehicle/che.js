@@ -101,12 +101,31 @@ Page({
 
   },
   setDataForImages: function(images) {
+
     var hasImages= images ?images.length > 0 : false
-    this.setData({
-      images,
-      hasImages,
-      showImageUploadForm: !hasImages
-    })
+    var imageFileIDs = images.reduce((pv, cv)=> {
+      pv.push(cv.fileID)
+      return pv
+    }, [])
+    wx.cloud.getTempFileURL({
+      fileList: imageFileIDs,
+    }).then((res)=>{
+      console.log(JSON.stringify(res))
+      var fileList = res.fileList
+      for(var i=0; i<fileList.length; i++) {
+        console.log(fileList[i].errMsg + (images[i].fileID == fileList[i].fileID))
+        images[i].tempFileURL = fileList[i].tempFileURL
+        images[i].uploadBy = app.globalData.allUsers[images[i].openId].nickName
+      }
+
+      
+      this.setData({
+        images,
+        hasImages,
+        showImageUploadForm: !hasImages
+      })
+    }).catch(console.error)
+    
   },
   bindImageDescInput: function(e) {
     this.setData({
@@ -146,7 +165,8 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      cheId: options.cheId
+      cheId: options.cheId,
+      userInfo: app.globalData.userInfo
     })
     var that = this;
     wx.getSystemInfo({

@@ -73,15 +73,15 @@
               <button class="weui-btn" type="primary" bindtap="bindImageUploadTap">确定</button>
             </view>
           </view>
-          <view wx:if="{{hasImages}}">
-            <view wx:for="{{images}}" wx:key="{{*this}}">
-              <view class="weui-flex">
-                <view class="weui-flex__item">
-                  <view class="placeholder">weui</view>
-                </view>
-              </view>
+          <view class="weui-uploader__files">
+            <view wx:if="{{hasImages}}" wx:for="{{images}}" wx:key="{{this}}" wx:for-item="image" class="weui-uploader__file">
+
+                  <image class="weui-uploader__img" src="{{image.tempFileURL}}" />
+                  <view class="img_desc">{{image.imageDesc}}</view>
+                  <view class="upload_by">{{image.uploadBy}}</view>
+                
             </view>
-          </view>
+            </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
 
