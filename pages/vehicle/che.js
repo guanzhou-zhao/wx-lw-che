@@ -54,9 +54,9 @@ Page({
         promise = new Promise((resolve, reject) => {
           wx.compressImage({
             src: files[i], // 图片路径
-            quality: 50, // 压缩质量
+            quality: 5, // 压缩质量
             success(res) {
-              console.log('compressed response' + JSON.stringify(res))
+              console.log('5% compressed response' + JSON.stringify(res))
               var tempFilePath = res.tempFilePath
               cloudPath = tempFilePath.slice(tempFilePath.lastIndexOf('/')+1)
               wx.cloud.uploadFile({
