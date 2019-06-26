@@ -42,12 +42,12 @@
                 <view class="weui-cell__bd">
                   <view class="weui-uploader">
                     <view class="weui-uploader__hd">
-                      <view class="weui-uploader__title">图片上传(最多3张）</view>
+                      <view class="weui-uploader__title">图片上传(最多3张，长按移除）</view>
                     </view>
                     <view class="weui-uploader__bd">
                       <view class="weui-uploader__files" id="uploaderFiles">
                         <block wx:for="{{files}}" wx:key="*this">
-                          <view class="weui-uploader__file" bindtap="previewUploadingImage" id="{{item}}">
+                          <view class="weui-uploader__file" bindtap="previewUploadingImage" bindlongpress='longtapUploadingImage' id="{{item}}" data-idx="{{index}}">
                             <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
                           </view>
                         </block>

@@ -100,6 +100,12 @@ Page({
     }
 
   },
+  longtapUploadingImage: function(e) {
+    this.data.files.splice(e.currentTarget.dataset.idx, 1)
+    this.setData({
+      files: this.data.files
+    })
+  },
   previewUploadingImage: function(e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
