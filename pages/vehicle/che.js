@@ -13,7 +13,7 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
 
-    showImageUploadForm: true,
+    showImageUploadForm: false,
     files: [],
     imageDesc: ''
   },
@@ -100,6 +100,12 @@ Page({
     }
 
   },
+  previewImage: function(e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.imagesUrls // 需要预览的图片http链接列表
+    })
+  },
   setDataForImages: function(images) {
 
     var hasImages= images ?images.length > 0 : false
@@ -112,8 +118,10 @@ Page({
     }).then((res)=>{
       console.log(JSON.stringify(res))
       var fileList = res.fileList
+      var imagesUrls = []
       for(var i=0; i<fileList.length; i++) {
         console.log(fileList[i].errMsg + (images[i].fileID == fileList[i].fileID))
+        imagesUrls.push(fileList[i].tempFileURL)
         images[i].tempFileURL = fileList[i].tempFileURL
         images[i].uploadBy = app.globalData.allUsers[images[i].openId].nickName
       }
@@ -121,6 +129,7 @@ Page({
       
       this.setData({
         images,
+        imagesUrls,
         hasImages,
         showImageUploadForm: !hasImages
       })
@@ -156,7 +165,7 @@ Page({
   previewImage: function(e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+      urls: this.data.imagesUrls // 需要预览的图片http链接列表
     })
   },
   /**

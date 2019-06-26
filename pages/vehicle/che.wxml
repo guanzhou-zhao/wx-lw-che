@@ -74,7 +74,7 @@
             </view>
           </view>
           <view class="weui-uploader__files">
-            <view wx:if="{{hasImages}}" wx:for="{{images}}" wx:key="{{this}}" wx:for-item="image" class="weui-uploader__file">
+            <view wx:if="{{hasImages}}" wx:for="{{images}}" wx:key="{{this}}" wx:for-item="image" bindtap="previewImage" id="{{image.tempFileURL}}" class="weui-uploader__file">
 
                   <image class="weui-uploader__img" src="{{image.tempFileURL}}" />
                   <view class="img_desc">{{image.imageDesc}}</view>
