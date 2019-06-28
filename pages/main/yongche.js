@@ -227,12 +227,11 @@ Page({
       wx.cloud.callFunction({
         name: 'yongche',
         data: {
-          cheSelected: data.cheSelected,
+          cheId: data.cheSelected._id,
           isTuan: data.isTuan,
           category: data.category,
           wheelNum: data.wheelNum,
-          digitNum: data.digitNum,
-          user: that.data.userInfo
+          digitNum: data.digitNum
         },
         success(res) {
           console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
@@ -240,7 +239,7 @@ Page({
            * 1. 点击‘开始用车’按钮，添加record记录，更新che,user 成功
            * 2. Loading 和显示所有此车的记录
            */
-          that.setDataForUserInfo(res.result.realTimeUser)
+          //that.setDataForUserInfo(res.result.realTimeUser)
         },
         fail(res) {
           console.log(`main.yongche.js call yongche fail -- ${JSON.stringify(res)}`)
