@@ -68,10 +68,9 @@ exports.main = async(event, context) => {
     isWrong,
     errorMsgList
   }
-  var addedRecord = await db.collection('record').add({
+  await db.collection('record').add({
     data: newRecord
   })
-  newRecord._id = addedRecord._id
 
   /**
    * 更新车
@@ -83,18 +82,9 @@ exports.main = async(event, context) => {
     updatedAt: new Date(),
     updatedBy: event.userInfo.openId
   }
-  var yongcheResponse = await db.collection('che').doc(cheSelected._id).update({
+  await db.collection('che').doc(cheSelected._id).update({
     data: dataForUpdateChe
   })
-  realTimeChe = {
-    ...cheSelected,
-    ...dataForUpdateChe
-  }
 
-  return {
-    event,
-    yongcheResponse,
-    newRecord,
-    realTimeChe
-  }
+  return await db.collection('record').where({openId: event.userInfo.openId}).get()
 }

@@ -15,6 +15,8 @@ Page({
     wheelNum: '',
     digitNum: '',
 
+    showForm: false, // by default, don't show form
+
     moment,
   },
 
@@ -22,7 +24,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setDataForUserInfo(app.globalData.userInfo)
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
   },
 
   bindSearchCheTap: function(e) {
@@ -31,22 +35,21 @@ Page({
       })
 
   },
+  /**
+   * 1. if records.length < 0, showForm true
+   */
+  setDataForRecords: function(records) {
+    var showForm = false
 
-  setDataForUserInfo: function(userInfo) {
-    var hasRecord = false
-    var showForm = true
-    if (userInfo.drivingDetailList && userInfo.drivingDetailList.length > 0) {
-      hasRecord = true
-    }
-    if (hasRecord) {
-      showForm = false
-      for (var i=0; i<userInfo.drivingDetailList.length; i++) {
-        userInfo.drivingDetailList[i].record.timeAtFormat = moment(userInfo.drivingDetailList[i].record.timeAt).format('D MMM YYYY h:m A')
+    if (records.length > 0) {
+      for (var i=0; i<records.length; i++) {
+        records[i].timeAtFormat = moment(records[i].timeAt).format('D MMM YYYY h:m A')
       }
+    } else {
+      showForm = true
     }
     this.setData({
-      userInfo,
-      hasRecord,
+      records,
       showForm
     })
   },
@@ -75,15 +78,12 @@ Page({
    */
   onShow: function() {
     var that = this
-    // call getUser to get latest user data
+
+    // call listRecord to get records of this user.
     wx.cloud.callFunction({
-      name: 'getUser',
-      data: {
-        userId: app.globalData.userInfo._id
-      },
+      name: 'listRecords',
       success(res) {
-        var userInfo = res.result.data
-        that.setDataForUserInfo(userInfo)
+        that.setDataForRecords(res.result.data)
       }
     })
 
@@ -234,16 +234,13 @@ Page({
           digitNum: data.digitNum
         },
         success(res) {
-          console.log(`main.yongche.js call yongche success -- ${JSON.stringify(res)}`)
           /**
-           * 1. 点击‘开始用车’按钮，添加record记录，更新che,user 成功
-           * 2. Loading 和显示所有此车的记录
+           * 1. 点击‘开始用车’按钮，添加record记录，更新che里程
+           * 2. 从record中，Loading 和显示所有此车的记录
            */
-          //that.setDataForUserInfo(res.result.realTimeUser)
+          that.setDataForRecords(res.result.data)
         },
-        fail(res) {
-          console.log(`main.yongche.js call yongche fail -- ${JSON.stringify(res)}`)
-        }
+        fail: console.log
       })
     }
   }
