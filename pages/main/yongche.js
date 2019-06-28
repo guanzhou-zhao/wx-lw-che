@@ -68,6 +68,11 @@ Page({
    * 
    * user {isDriving:true, drivingDetailList:[{cheId, record: {}}] }
    */
+  /**
+   * 1. 查询record where openId, isDriving
+   *    a. 如果有正在用车的记录，列出
+   *    b. 如果没有用车记录，显示form...
+   */
   onShow: function() {
     var that = this
     // call getUser to get latest user data
@@ -86,7 +91,7 @@ Page({
       name: 'listChe',
       success(res) {
         console.log(`main.yongche.js onshow() `)
-        var cheList = res.result.cheList
+        var cheList = res.result.data
         if (that.data.cheSelected) {
           var tempChe = cheList.find((c) => {
             return c._id == that.data.cheSelected._id

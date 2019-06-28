@@ -36,8 +36,13 @@ Page({
       name: 'listChe',
       success(res) {
         console.log('vehicle.list.js onShow() ' + JSON.stringify(res))
+        
+        var cheList = res.result.data
+        for (var i = 0; i < cheList.length; i++) {
+          cheList[i].cheString = JSON.stringify(cheList[i])
+        }
         that.setData({
-          cheList: res.result.cheList
+          cheList
         })
       },
       fail(res) {
