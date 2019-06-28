@@ -82,6 +82,11 @@ Page({
     // call listRecord to get records of this user.
     wx.cloud.callFunction({
       name: 'listRecords',
+      data: {
+        query: {
+          openId: app.globalData.userInfo.openId
+        }
+      },
       success(res) {
         that.setDataForRecords(res.result.data)
       }

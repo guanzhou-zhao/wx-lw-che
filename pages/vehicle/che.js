@@ -199,12 +199,14 @@ Page({
       }
     });
     /**
-     * getRecord for tab 0
+     * listRecords for tab 0
      */
     wx.cloud.callFunction({
-      name: 'getRecord',
+      name: 'listRecords',
       data: {
-        cheId: options.cheId
+        query: {
+          cheId: options.cheId
+        }
       },
       success(res) {
         var records = res.result.data.reduce((pv, cv) => {

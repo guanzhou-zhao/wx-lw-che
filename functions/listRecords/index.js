@@ -8,9 +8,6 @@ const db = cloud.database()
 exports.main = async (event, context) => {
 
   var query = event.query || {}
-  if (!event.isAll) {
-    query.openId = event.userInfo.openId
-  }
 
   return await db.collection('record').where(query).get()
 }
