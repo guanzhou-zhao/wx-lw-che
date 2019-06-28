@@ -15,7 +15,7 @@
             <view class="weui-panel">
               <view class="weui-panel__bd">
                 <view class="weui-media-box weui-media-box_text">
-                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.user.nickName}} </view>
+                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.user.nickName}} {{item.isDriving ? '正在用':''}}</view>
                   <view class="weui-media-box__desc">
                     轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}},
                     <view wx:if="{{item.isWrong}}" wx:for="{{item.errorMsgList}}" wx:key="{{index}}" wx:for-item="errorMsg">
@@ -84,7 +84,7 @@
             </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-
+          
         </view>
       </view>
     </view>

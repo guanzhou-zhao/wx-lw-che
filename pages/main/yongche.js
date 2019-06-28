@@ -15,9 +15,8 @@ Page({
     wheelNum: '',
     digitNum: '',
 
-    showForm: false, // by default, don't show form
+    showForm: false // by default, don't show form
 
-    moment,
   },
 
   /**

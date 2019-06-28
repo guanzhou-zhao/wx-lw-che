@@ -78,7 +78,7 @@
         <view class="weui-panel">
           <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_text">
-              <navigator url="/pages/vehicle/che?cheId={{item.cheId}}" class="weui-media-box__title weui-media-box__title_in-text">{{item.che.plate}} 点我</navigator>
+              <navigator url="/pages/vehicle/che?cheId={{item.cheId}}" class="weui-media-box__title weui-media-box__title_in-text">{{item.che.plate}} {{item.isDriving ? '正在用':''}} 点我</navigator>
               <view class="weui-media-box__desc">
                 轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}},
                 <view wx:if="{{item.isWrong}}" wx:for="{{item.errorMsgList}}" wx:key="{{index}}" wx:for-item="errorMsg">

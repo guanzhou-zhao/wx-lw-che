@@ -1,6 +1,7 @@
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 const app = getApp()
 wx.cloud.init()
+const moment = require('../../utils/moment.min.js')
 const allUsers = app.globalData.allUsers
 Page({
 
@@ -210,6 +211,7 @@ Page({
       },
       success(res) {
         var records = res.result.data.reduce((pv, cv) => {
+          cv.timeAtFormat = moment(cv.timeAt).format('D MMM YYYY h:m A')
           cv.user = app.globalData.allUsers[cv.openId]
           pv.push(cv)
           return pv
