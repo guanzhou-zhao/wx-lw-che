@@ -210,16 +210,7 @@ Page({
         }
       },
       success(res) {
-        var records = res.result.data.reduce((pv, cv) => {
-          cv.timeAtFormat = moment(cv.timeAt).format('D MMM YYYY h:m A')
-          cv.user = app.globalData.allUsers[cv.openId]
-          pv.push(cv)
-          return pv
-        }, [])
-
-        that.setData({
-          records
-        })
+        that.setDataForRecords(res.result.data)
       },
       fail: console.error
     })
@@ -240,6 +231,30 @@ Page({
         that.setDataForImages(che.images)
       },
       fail: console.error
+    })
+  },
+
+  setDataForRecords: function(originRecords) {
+    
+    var records = originRecords.reduce((pv, cv) => {
+      cv.timeAtFormat = moment(cv.timeAt).format('D MMM YY H:m')
+      cv.user = app.globalData.allUsers[cv.openId]
+      pv.push(cv)
+      return pv
+    }, [])
+
+    var openId = app.globalData.userInfo.openId
+    var operateRecords = originRecords.reduce((pv, cv)=>{
+      // push records that is belong to openId, and isDriving
+      if (cv.openId == openId && cv.isDriving) {
+        pv.push(cv)
+      }
+      return pv
+    },[])
+
+    this.setData({
+      records,
+      operateRecords
     })
   },
 

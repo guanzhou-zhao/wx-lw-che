@@ -76,15 +76,22 @@
           <view class="weui-uploader__files">
             <view wx:if="{{hasImages}}" wx:for="{{images}}" wx:key="{{this}}" wx:for-item="image" bindtap="previewImage" id="{{image.tempFileURL}}" class="weui-uploader__file">
 
-                  <image class="weui-uploader__img" src="{{image.tempFileURL}}" />
-                  <view class="img_desc">{{image.imageDesc}}</view>
-                  <view class="upload_by">{{image.uploadBy}}</view>
-                
+              <image class="weui-uploader__img" src="{{image.tempFileURL}}" />
+              <view class="img_desc">{{image.imageDesc}}</view>
+              <view class="upload_by">{{image.uploadBy}}</view>
+
             </view>
-            </view>
+          </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-          
+          <view class="weui-cells weui-cells_after-title">
+            <view wx:for="{{operateRecords}}" wx:key="{{this}}" class="weui-cell">
+              <view class="weui-cell__bd">
+                {{item.che.plate}}  {{item.category}} {{item.timeAtFormat}}
+                <button class="weui-btn mini-btn" type="primary" size="mini">{{item.isTuan?'下团':'还车'}}</button>
+              </view>
+            </view>
+          </view>
         </view>
       </view>
     </view>
