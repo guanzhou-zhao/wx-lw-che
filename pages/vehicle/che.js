@@ -16,7 +16,11 @@ Page({
 
     showImageUploadForm: false,
     files: [],
-    imageDesc: ''
+    imageDesc: '',
+
+    showReturnForm: false,
+    park: '',
+    msg: '',
   },
   bindImageUploadTap: function(e) {
     var that = this
@@ -101,6 +105,80 @@ Page({
     }
 
   },
+
+  bindReturnCheTap: function(e) {
+    var recordId = e.currentTarget.id
+    var records = this.data.records
+    var operatingRecord = records.find((r)=>r._id==recordId)
+    this.setData({
+      operatingRecord,
+      showReturnForm: true,
+      wheelNum: operatingRecord.che.wheelNum,
+      digitNum: operatingRecord.che.digitNum,
+    })
+  },
+
+  bindWheelNumInput: function(e) {
+    this.setData({
+      wheelNum: e.detail.value
+    })
+  },
+
+  bindDigitNumInput: function(e) {
+    this.setData({
+      digitNum: e.detail.value
+    })
+  },
+
+  bindParkInput: function(e) {
+    this.setData({
+      park: e.detail.value
+    })
+  },
+
+  bindMsgInput: function(e) {
+    this.setData({
+      msg: e.detail.value
+    })
+  },
+
+  bindCancelReturnTap: function(e) {
+    this.setData({
+      showReturnForm: false
+    })
+  },
+
+  bindReturnSubmit: function(e) {
+    var that = this
+    var data = {
+      recordId: this.data.operatingRecord,
+      cheId: this.data.cheId,
+      wheelNum: this.data.wheelNum,
+      digitNum: this.data.digitNum,
+      park: this.data.park,
+    }
+    if (this.data.msg && this.data.msg.length>0) {
+      data.msg = this.data.msg
+    }
+    if (!this.data.park || this.data.park.length < 1) {
+      wx.showToast({
+        title: '请填停车场地',
+        icon: 'none',
+        duration: 3000
+      })
+    } else {
+      wx.cloud.callFunction({
+        name: 'returnChe',
+        data,
+        success(res) {
+          console.log(res)
+          that.setDataForRecords(res.data)
+        },
+        fail: console.error
+      })
+    }
+  },
+
   longtapUploadingImage: function(e) {
     this.data.files.splice(e.currentTarget.dataset.idx, 1)
     this.setData({

@@ -84,11 +84,69 @@
           </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+        <view wx:if="{{showReturnForm}}">
+          <view class="weui-cells__title">下团/还车：</view>
+          <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">车牌</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input disabled='true' class="weui-input" value='{{operatingRecord.che.plate}}' />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">{{operatingRecord.isTuan?'团号':'用途'}}</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input disabled='true' class="weui-input" value='{{operatingRecord.category}}' />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">轮毂里程</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" bindinput='bindWheelNumInput' value='{{wheelNum}}' placeholder="请输入轮毂里程" />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">仪表盘里程</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" bindinput='bindDigitNumInput' value="{{digitNum}}" placeholder="请输入仪表盘里程" />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">停车场地</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindtap='bindParkInput' class="weui-input" value='{{park}}' />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">留言</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindtap='bindMsgInput' class="weui-input" value='{{msg}}' />
+              </view>
+            </view>
+          </view>
+          <!--<view class="weui-cells__tips">底部说明文字底部说明文字</view>-->
+          <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" bindtap="bindReturnSubmit">{{item.isTuan?'下团':'还车'}}</button>
+            <button bindtap='bindCancelReturnTap' class="weui-btn" type="warn">取消</button>
+          </view>
+          </view>
           <view class="weui-cells weui-cells_after-title">
             <view wx:for="{{operateRecords}}" wx:key="{{this}}" class="weui-cell">
               <view class="weui-cell__bd">
-                {{item.che.plate}}  {{item.category}} {{item.timeAtFormat}}
-                <button class="weui-btn mini-btn" type="primary" size="mini">{{item.isTuan?'下团':'还车'}}</button>
+                {{item.che.plate}} {{item.category}} {{item.timeAtFormat}}
+                <button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.isTuan?'下团':'还车'}}</button>
               </view>
             </view>
           </view>
