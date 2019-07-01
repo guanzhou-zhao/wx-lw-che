@@ -124,7 +124,7 @@
                 <view class="weui-label">停车场地</view>
               </view>
               <view class="weui-cell__bd">
-                <input bindtap='bindParkInput' class="weui-input" value='{{park}}' />
+                <input bindinput='bindParkInput'  value='{{park}}'class="weui-input" />
               </view>
             </view>
             <view class="weui-cell weui-cell_input">
@@ -132,7 +132,7 @@
                 <view class="weui-label">留言</view>
               </view>
               <view class="weui-cell__bd">
-                <input bindtap='bindMsgInput' class="weui-input" value='{{msg}}' />
+                <input value='{{msg}}' bindinput='bindMsgInput' class="weui-input"  />
               </view>
             </view>
           </view>

@@ -151,7 +151,7 @@ Page({
   bindReturnSubmit: function(e) {
     var that = this
     var data = {
-      recordId: this.data.operatingRecord,
+      record: this.data.operatingRecord,
       cheId: this.data.cheId,
       wheelNum: this.data.wheelNum,
       digitNum: this.data.digitNum,
@@ -167,14 +167,30 @@ Page({
         duration: 3000
       })
     } else {
+      wx.showLoading({
+        title: '处理中'
+      })
       wx.cloud.callFunction({
         name: 'returnChe',
         data,
         success(res) {
-          console.log(res)
-          that.setDataForRecords(res.data)
+          that.setDataForRecords(res.result.data)
+          that.setData({
+            park:'',
+            msg:'',
+            operatingRecord: null,
+            showReturnForm: false,
+            wheelNum: '',
+            digitNum: '',
+          })
+          wx.showToast({
+            title: '完成',
+          })
         },
-        fail: console.error
+        fail: console.error,
+        complete() {
+          wx.hideLoading()
+        }
       })
     }
   },
