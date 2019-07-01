@@ -29,7 +29,7 @@
           <view class="weui-label">轮毂里程</view>
         </view>
         <view class="weui-cell__bd {{cheObject.wheelNum != updatedChe.wheelNum ? 'data-changed' : ''}}">
-          <input value="{{updatedChe.wheelNum}}" bindchange="bindWheelNumChange" class="weui-input" />
+          <input type='number' value="{{updatedChe.wheelNum}}" bindchange="bindWheelNumChange" class="weui-input" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -37,7 +37,7 @@
           <view class="weui-label">仪表盘里程</view>
         </view>
         <view class="weui-cell__bd {{cheObject.digitNum != updatedChe.digitNum ? 'data-changed' : ''}}">
-          <input value="{{updatedChe.digitNum}}" bindchange="bindDigitNumChange" class="weui-input" />
+          <input type='number' value="{{updatedChe.digitNum}}" bindchange="bindDigitNumChange" class="weui-input" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -45,7 +45,7 @@
           <view class="weui-label">RUC公里数</view>
         </view>
         <view class="weui-cell__bd {{cheObject.rucNum != updatedChe.rucNum ? 'data-changed' : ''}}">
-          <input value="{{updatedChe.rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
+          <input type='number' value="{{updatedChe.rucNum}}" bindchange="bindRucNumChange" class="weui-input" placeholder="" />
         </view>
 
       </view>
@@ -54,7 +54,7 @@
           <view class="weui-label">保养公里数</view>
         </view>
         <view class="weui-cell__bd {{cheObject.mtNum != updatedChe.mtNum ? 'data-changed' : ''}}">
-          <input value="{{updatedChe.mtNum}}" bindchange="bindMtNumChange" class="weui-input" placeholder="" />
+          <input type='number' value="{{updatedChe.mtNum}}" bindchange="bindMtNumChange" class="weui-input" placeholder="" />
         </view>
 
       </view>
@@ -63,7 +63,7 @@
           <view class="weui-label">四轮定位里程</view>
         </view>
         <view class="weui-cell__bd {{cheObject.allignmentNum != updatedChe.allignmentNum ? 'data-changed' : ''}}">
-          <input value="{{updatedChe.allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
+          <input type='number' value="{{updatedChe.allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
         </view>
 
       </view>

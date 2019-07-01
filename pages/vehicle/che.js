@@ -183,9 +183,6 @@ Page({
             wheelNum: '',
             digitNum: '',
           })
-          wx.showToast({
-            title: '完成',
-          })
         },
         fail: console.error,
         complete() {

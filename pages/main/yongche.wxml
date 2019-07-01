@@ -55,7 +55,7 @@
             <view class="weui-label">轮毂里程</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" bindinput='bindWheelNumInput' value='{{wheelNum}}' placeholder="请输入轮毂里程" />
+            <input type='number' class="weui-input" bindinput='bindWheelNumInput' value='{{wheelNum}}' placeholder="请输入轮毂里程" />
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -63,7 +63,7 @@
             <view class="weui-label">仪表盘里程</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" bindinput='bindDigitNumInput' value="{{digitNum}}" placeholder="请输入仪表盘里程" />
+            <input type='number' class="weui-input" bindinput='bindDigitNumInput' value="{{digitNum}}" placeholder="请输入仪表盘里程" />
           </view>
         </view>
       </view>
