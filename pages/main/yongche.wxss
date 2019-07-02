@@ -3,5 +3,19 @@
 } */
 
 .che-selected {
-  color: #07C160;
+  color: #07c160;
+}
+
+.che-operate {
+  display: inline-block;
+  line-height: 2.3;
+  font-size: 13px;
+  padding: 0 1.34em;
+  color: #fff;
+  background-color: #1aad19;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  overflow: hidden;
 }
