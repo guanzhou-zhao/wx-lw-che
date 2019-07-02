@@ -19,3 +19,8 @@
   border-radius: 5px;
   overflow: hidden;
 }
+
+.error-msg {
+  margin-top: 5px;
+  color: #ce3c39;
+}

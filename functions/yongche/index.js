@@ -3,10 +3,6 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 const db = cloud.database()
-const DAYS_30 = 1000 * 60 * 60 * 24 * 30
-const RUC_2000 = 2000
-const MT_3000 = 3000
-const ALIGN_5000 = 5000
 /**
  * 开始用车时：
  * 1. 添加用车记录record
@@ -26,33 +22,15 @@ exports.main = async(event, context) => {
    *  1. 在record中save isWrong
    *  2. 在record中save whatIsWrongList 列出anything wrong
    */
-  var isWrong = false
-  var errorMsgList = []
-  var today = new Date()
-  if ((cheSelected.rucNum - event.wheelNum) < RUC_2000) {
-    isWrong = true
-    errorMsgList.push(`RUC里程少于${RUC_2000}km`)
-  }
-  if ((cheSelected.mtNum - event.digitNum) < RUC_2000) {
-    isWrong = true
-    errorMsgList.push(`保养里程少于${RUC_2000}km`)
-  }
-  if ((cheSelected.allignmentNum - event.digitNum) < RUC_2000) {
-    isWrong = true
-    errorMsgList.push(`四轮定位里程少于${RUC_2000}km`)
-  }
-  if ((new Date(cheSelected.rucDate) - today) < DAYS_30) {
-    isWrong = true
-    errorMsgList.push(`路税日期少于30天`)
-  }
-  if ((new Date(cheSelected.cofDate) - today) < DAYS_30) {
-    isWrong = true
-    errorMsgList.push(`COF日期少于30天`)
-  }
-  if ((new Date(cheSelected.docDate) - today) < DAYS_30) {
-    isWrong = true
-    errorMsgList.push(`DOC日期少于30天`)
-  }
+
+  var checkExpireResult = (await cloud.callFunction({
+    name: 'checkExpireForChe',
+    data: {
+      che: cheSelected,
+      wheelNum: event.wheelNum,
+      digitNum: event.digitNum,
+    }
+  })).result
   // delete images before save che in record
   delete cheSelected.images
   var newRecord = {
@@ -65,8 +43,7 @@ exports.main = async(event, context) => {
     timeAt: new Date(),
     wheelNum: event.wheelNum,
     digitNum: event.digitNum,
-    isWrong,
-    errorMsgList
+    ...checkExpireResult
   }
   await db.collection('record').add({
     data: newRecord

@@ -80,9 +80,9 @@
             <view class="weui-media-box weui-media-box_text">
               <view class="weui-media-box__title weui-media-box__title_in-text">{{item.code=='return' ? (item.isTuan ? '下团': '还车') : (item.isTuan ? '上团': '用车')}} {{item.che.plate}} <navigator wx:if="{{item.isDriving}}" url="/pages/vehicle/che?cheId={{item.cheId}}" class="che-operate">车记录</navigator></view>
               <view class="weui-media-box__desc">
-                轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}},
-                <view wx:if="{{item.isWrong}}" wx:for="{{item.errorMsgList}}" wx:key="{{index}}" wx:for-item="errorMsg">
-                  {{errorMsg}}<view wx:if="{{item.errorMsgList.length != index+1}}">,</view>
+                轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}}
+                <view wx:if="{{item.isWrong}}" class="error-msg">
+                  {{item.errorMsg}}
                 </view>
               </view>
               <view class="weui-media-box__info">

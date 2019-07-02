@@ -7,3 +7,7 @@
     line-height: 2.3em;
     color: #cfcfcf;
 }
+.error-msg {
+  margin-top: 5px;
+  color: #CE3C39;
+}
