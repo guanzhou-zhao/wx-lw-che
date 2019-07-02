@@ -40,9 +40,15 @@ Page({
   setDataForRecords: function(records) {
     var showForm = false
 
+    var currentYear = moment().year()
+    var formatStringWithYear = 'D MMM YY H:mm'
+    var formatString = 'D MMM H:mm'
     if (records.length > 0) {
       for (var i=0; i<records.length; i++) {
-        records[i].timeAtFormat = moment(records[i].timeAt).format('D MMM YYYY h:m A')
+        var timeAt = moment(records[i].timeAt)
+        var isSameYear = timeAt.year() == currentYear
+
+        records[i].timeAtFormat = timeAt.format(isSameYear ? formatString : formatStringWithYear)
       }
     } else {
       showForm = true

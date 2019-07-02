@@ -326,9 +326,13 @@ Page({
   },
 
   setDataForRecords: function(originRecords) {
-    
+    var currentYear = moment().year()
+    var formatStringWithYear = 'D MMM YY H:mm'
+    var formatString = 'D MMM H:mm'
     var records = originRecords.reduce((pv, cv) => {
-      cv.timeAtFormat = moment(cv.timeAt).format('D MMM YY H:m')
+      var timeAt = moment(cv.timeAt)
+      var isSameYear = timeAt.year() == currentYear
+      cv.timeAtFormat = timeAt.format(isSameYear? formatString : formatStringWithYear)
       cv.user = app.globalData.allUsers[cv.openId]
       pv.push(cv)
       return pv
