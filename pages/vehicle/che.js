@@ -329,17 +329,44 @@ Page({
     var currentYear = moment().year()
     var formatStringWithYear = 'D MMM YY H:mm'
     var formatString = 'D MMM H:mm'
+    var codeExpress = {
+      'tuan': {
+        display: '上团',
+        catDisplay: '团号',
+        oppositeDisplay: '下团'
+      },
+      'yongche': {
+        isYongChe: true,
+        display: '用车',
+        catDisplay: '用途',
+        oppositeDisplay: '还车'
+      },
+      'r_tuan': {
+        display: '下团',
+        catDisplay: '团号'
+      },
+      'r_yongche': {
+        isYongChe: true,
+        display: '还车',
+        catDisplay: '用途'
+      },
+    }
     var records = originRecords.reduce((pv, cv) => {
       var timeAt = moment(cv.timeAt)
       var isSameYear = timeAt.year() == currentYear
       cv.timeAtFormat = timeAt.format(isSameYear? formatString : formatStringWithYear)
       cv.user = app.globalData.allUsers[cv.openId]
+
+      cv = {
+        ...cv,
+        ...(codeExpress[cv.code])
+      }
       pv.push(cv)
       return pv
     }, [])
 
     var openId = app.globalData.userInfo.openId
-    var operateRecords = originRecords.reduce((pv, cv)=>{
+    var operateRecords = records.reduce((pv, cv)=>{
       // push records that is belong to openId, and isDriving
       if (cv.openId == openId && cv.isDriving) {
         pv.push(cv)

@@ -28,8 +28,7 @@ exports.main = async(event, context) => {
       }
     })).result
     var dataForNewRecord = {
-      code: 'return',
-      isTuan: record.isTuan,
+      code: `r_${record.code}`,
       category: record.category,
       startRecordId: record._id,
       timeAt: new Date(),

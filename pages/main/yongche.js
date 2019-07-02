@@ -39,7 +39,26 @@ Page({
    */
   setDataForRecords: function(records) {
     var showForm = false
-
+    var codeExpress = {
+      'tuan': {
+        display: '上团',
+        catDisplay: '团号'
+      },
+      'yongche': {
+        isYongChe: true,
+        display: '用车',
+        catDisplay: '用途'
+      },
+      'r_tuan': {
+        display: '下团',
+        catDisplay: '团号'
+      },
+      'r_yongche': {
+        isYongChe: true,
+        display: '还车',
+        catDisplay: '用途'
+      },
+    }
     var currentYear = moment().year()
     var formatStringWithYear = 'D MMM YY H:mm'
     var formatString = 'D MMM H:mm'
@@ -49,6 +68,10 @@ Page({
         var isSameYear = timeAt.year() == currentYear
 
         records[i].timeAtFormat = timeAt.format(isSameYear ? formatString : formatStringWithYear)
+        records[i] = {
+          ...records[i],
+          ...(codeExpress[records[i].code])
+        }
       }
     } else {
       showForm = true

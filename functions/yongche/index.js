@@ -35,7 +35,7 @@ exports.main = async(event, context) => {
   delete cheSelected.images
   var newRecord = {
     isDriving: true, // 标记此次用车是否已结束
-    isTuan: event.isTuan,
+    code: event.isTuan ? 'tuan' : 'yongche',
     category: event.category, //团号或其它用途
     cheId: cheSelected._id,
     che: cheSelected, // 保存上团时，车的状态

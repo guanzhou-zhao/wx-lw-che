@@ -15,7 +15,8 @@
             <view class="weui-panel">
               <view class="weui-panel__bd">
                 <view class="weui-media-box weui-media-box_text">
-                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.user.nickName}} {{item.code=='return' ? (item.isTuan ? '下团': '还车') : (item.isTuan ? '上团': '用车')}}</view>
+                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.display}}{{item.isYongChe? 
+                  '('+item.category+')' : ''}} {{item.user.nickName}}</view>
                   <view class="weui-media-box__desc">
                     轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}}
                     <view wx:if="{{item.isWrong}}" class="error-msg">
@@ -23,7 +24,7 @@
                     </view>
                   </view>
                   <view class="weui-media-box__info">
-                    <view class="weui-media-box__info__meta">{{item.isTuan?'团号:':'用途:'}}{{item.category}}</view>
+                    <view wx:if="{{!item.isYongChe}}" class="weui-media-box__info__meta">{{item.catDisplay}}{{item.category}}</view>
                     <view class="weui-media-box__info__meta">{{item.timeAtFormat}}</view>
                   </view>
                 </view>
@@ -97,7 +98,7 @@
             </view>
             <view class="weui-cell weui-cell_input">
               <view class="weui-cell__hd">
-                <view class="weui-label">{{operatingRecord.isTuan?'团号':'用途'}}</view>
+                <view class="weui-label">{{operatingRecord.catDisplay}}</view>
               </view>
               <view class="weui-cell__bd">
                 <input disabled='true' class="weui-input" value='{{operatingRecord.category}}' />
@@ -138,15 +139,15 @@
           </view>
           <!--<view class="weui-cells__tips">底部说明文字底部说明文字</view>-->
           <view class="weui-btn-area">
-            <button class="weui-btn" type="primary" bindtap="bindReturnSubmit">{{item.isTuan?'下团':'还车'}}</button>
+            <button class="weui-btn" type="primary" bindtap="bindReturnSubmit">{{operatingRecord.oppositeDisplay}}</button>
             <button bindtap='bindCancelReturnTap' class="weui-btn" type="warn">取消</button>
           </view>
           </view>
           <view class="weui-cells weui-cells_after-title">
             <view wx:for="{{operateRecords}}" wx:key="{{this}}" class="weui-cell">
               <view class="weui-cell__bd">
-                {{item.che.plate}} {{item.category}} {{item.timeAtFormat}}
-                <button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.isTuan?'下团':'还车'}}</button>
+                {{item.display + '(' + item.category + ')'}} {{item.timeAtFormat}}
+                <button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.oppositeDisplay}}</button>
               </view>
             </view>
           </view>
