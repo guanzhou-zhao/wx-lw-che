@@ -86,5 +86,5 @@ exports.main = async(event, context) => {
     data: dataForUpdateChe
   })
 
-  return await db.collection('record').where({openId: event.userInfo.openId}).get()
+  return await db.collection('record').where({ openId: event.userInfo.openId }).orderBy('timeAt', 'desc').get()
 }
