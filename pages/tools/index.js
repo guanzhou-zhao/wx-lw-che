@@ -14,7 +14,7 @@ Page({
       },
       {
         url: '/pages/vehicle/list',
-        name: '车列表维护'
+        name: '车列表'
       }
     ]
   },

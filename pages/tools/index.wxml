@@ -1,6 +1,6 @@
 <view class="page">
     <view class="page__hd">
-        <view class="page__title">工具和消息</view>
+        <view class="page__title">管理维护</view>
     </view>
     <view class="page__bd">
         <view class="weui-grids">

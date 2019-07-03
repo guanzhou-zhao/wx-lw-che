@@ -3,6 +3,7 @@
     "pages/loading/loading",
     "pages/main/yongche",
     "pages/tools/index",
+    "pages/tools/adminupdate",
     "pages/user/register",
     "pages/user/admin",
     "pages/vehicle/add",
@@ -29,7 +30,7 @@
       },
       {
         "pagePath": "pages/tools/index",
-        "text": "工具和消息"
+        "text": "管理维护"
       } 
     ]
   },
