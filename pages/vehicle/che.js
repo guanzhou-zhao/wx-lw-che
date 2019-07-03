@@ -317,7 +317,8 @@ Page({
       success(res) {
         var che = res.result.data
         that.setData({
-          che
+          che,
+          'tabs[0]': che.plate + that.data.tabs[0]
         })
         that.setDataForImages(che.images)
       },
