@@ -78,7 +78,7 @@
         <view class="weui-panel">
           <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_text">
-              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.display}} {{item.isYongChe? item.category : ''}} {{item.che.plate}} <navigator wx:if="{{item.isDriving}}" url="/pages/vehicle/che?cheId={{item.cheId}}" class="che-operate">车记录</navigator></view>
+              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.display}} {{item.isYongChe? item.category : ''}} {{item.isDriving?'':item.che.plate}} <navigator wx:if="{{item.isDriving}}" url="/pages/vehicle/che?cheId={{item.cheId}}" class="che-operate">{{item.che.plate}}</navigator></view>
               <view class="weui-media-box__desc">
                 轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}}
                 <view wx:if="{{item.isWrong}}" class="error-msg">
