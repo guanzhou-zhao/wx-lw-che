@@ -1,4 +1,4 @@
-// pages/tools/adminupdate.js
+wx.cloud.init()
 Page({
 
   /**
@@ -8,6 +8,20 @@ Page({
     accounts: ["RUC", "路税", "DOC"],
     accountIndex: 0,
     currentValue: "2016-09-01",
+  },
+  bindConfirmTap: function(e) {
+    var accountsToPropertyName = ['rucNum', 'rucDate', 'docDate']
+    var that = this
+    wx.cloud.callFunction({
+      name: 'updateCheProperty',
+      data: {
+        cheId: this.data.cheId,
+        propertyName: accountsToPropertyName[that.data.accountIndex],
+        currentValue: that.data.currentValue,
+        newValue: that.data.newValue
+      },
+      complete: console.log
+    })
   },
   bindAccountChange: function (e) {
     this.setData({
