@@ -197,7 +197,7 @@ Page({
     var filter = e.detail.value.trim()
     this.setData({
       filteredCheList: this.data.cheList.reduce((pv, che) => {
-        if (filter.length > 0 && che.plate.includes(filter)) {
+        if (filter.length > 0 && che.plate.toUpperCase().includes(filter.toUpperCase())) {
           pv.push(che)
         }
         return pv
