@@ -4,6 +4,7 @@
     "pages/main/yongche",
     "pages/tools/index",
     "pages/tools/adminupdate",
+    "pages/tools/driverupdate",
     "pages/user/register",
     "pages/user/admin",
     "pages/vehicle/add",
