@@ -216,6 +216,7 @@ Page({
   setDataForImages: function(images) {
 
     var hasImages= images ?images.length > 0 : false
+    if(!hasImages) return
     var imageFileIDs = images.reduce((pv, cv)=> {
       pv.push(cv.fileID)
       return pv
@@ -293,21 +294,7 @@ Page({
         });
       }
     });
-    /**
-     * listRecords for tab 0
-     */
-    wx.cloud.callFunction({
-      name: 'listRecords',
-      data: {
-        query: {
-          cheId: options.cheId
-        }
-      },
-      success(res) {
-        that.setDataForRecords(res.result.data)
-      },
-      fail: console.error
-    })
+    
 
     /**
      * getChe for tab 1 图片tab
@@ -327,26 +314,39 @@ Page({
           'tabs[0]': che.plate + that.data.tabs[0]
         })
         that.setDataForImages(che.images)
+
+        /**
+     * listRecords for tab 0
+     */
+        wx.cloud.callFunction({
+          name: 'listRecords',
+          data: {
+            query: {
+              cheId: options.cheId
+            }
+          },
+          success(res)  {
+            that.setDataForRecords(res.result.data)
+          },
+          fail: console.error
+        })
       },
       fail: console.error
     })
   },
 
-  setDataForRecords: function(originRecords) {
-    var currentYear = moment().year()
-    var formatStringWithYear = 'D MMM YY H:mm'
-    var formatString = 'D MMM H:mm'
+  setDataForRecords: function (records) {
+    var that = this
+    var showForm = false
     var codeExpress = {
       'tuan': {
         display: '上团',
-        catDisplay: '团号',
-        oppositeDisplay: '下团'
+        catDisplay: '团号'
       },
       'yongche': {
         isYongChe: true,
         display: '用车',
-        catDisplay: '用途',
-        oppositeDisplay: '还车'
+        catDisplay: '用途'
       },
       'r_tuan': {
         display: '下团',
@@ -357,35 +357,138 @@ Page({
         display: '还车',
         catDisplay: '用途'
       },
+      'update_plate': {
+        display: '换车牌'
+      },
+      'update_rucNum': {
+        display: '更新RUC到'
+      },
+      'update_mtNum': {
+        display: '保养'
+      },
+      'update_allignmentNum': {
+        display: '四轮定位'
+      },
+      'update_cofDate': {
+        display: 'COF日期更新为'
+      },
+      'update_docDate': {
+        display: '更新DOC卡日期到'
+      },
+      'update_rucDate': {
+        display: '路税买到'
+      },
+      'fix_tyre': {
+        display: '轮胎维修'
+      },
+      'fix_fix': {
+        display: '维修'
+      }
     }
-    var records = originRecords.reduce((pv, cv) => {
-      var timeAt = moment(cv.timeAt)
-      var isSameYear = timeAt.year() == currentYear
-      cv.timeAtFormat = timeAt.format(isSameYear? formatString : formatStringWithYear)
-      cv.user = app.globalData.allUsers[cv.openId]
+    var currentYear = moment().year()
+    var formatStringWithYear = 'D MMM YY H:mm'
+    var formatString = 'D MMM H:mm'
+    if (records.length > 0) {
+      for (var i = 0; i < records.length; i++) {
+        // 修改时间格式
+        var timeAt = moment(records[i].timeAt)
+        var isSameYear = timeAt.year() == currentYear
+        records[i].timeAtFormat = timeAt.format(isSameYear ? formatString : formatStringWithYear)
+        // 判断记录类型
+        if (records[i].code.includes('update_')) {
+          records[i].recordType = 'update'
+          records[i].newValue = records[i].newValue.slice(0, 10)
+        } else if (records[i].code.includes('fix_')) {
+          records[i].recordType = 'fix'
+        } else if (records[i].code.includes('r_')) {
+          records[i].recordType = 'return'
+        } else {
+          records[i].recordType = 'yongche'
+        }
+        // 对更新记录，添加che对象
+        if (!records[i].che) {
+          records[i].che = that.data.che
+        }
+        // 对记录添加user 对象
+        records[i].user = app.globalData.allUsers[records[i].openId]
 
-      cv = {
-        ...cv,
-        ...(codeExpress[cv.code])
+        records[i] = {
+          ...records[i],
+          ...(codeExpress[records[i].code])
+        }
       }
-      pv.push(cv)
-      return pv
-    }, [])
+      var openId = app.globalData.userInfo.openId
+      var operateRecords = records.reduce((pv, cv) => {
+        // push records that is belong to openId, and isDriving
+        if (cv.openId == openId && cv.isDriving) {
+          pv.push(cv)
+        }
+        return pv
+      }, [])
 
-    var openId = app.globalData.userInfo.openId
-    var operateRecords = records.reduce((pv, cv)=>{
-      // push records that is belong to openId, and isDriving
-      if (cv.openId == openId && cv.isDriving) {
-        pv.push(cv)
-      }
-      return pv
-    },[])
 
+    } else {
+      showForm = true
+    }
     this.setData({
       records,
-      operateRecords
+      showForm
     })
   },
+  // setDataForRecords: function(originRecords) {
+  //   var currentYear = moment().year()
+  //   var formatStringWithYear = 'D MMM YY H:mm'
+  //   var formatString = 'D MMM H:mm'
+  //   var codeExpress = {
+  //     'tuan': {
+  //       display: '上团',
+  //       catDisplay: '团号',
+  //       oppositeDisplay: '下团'
+  //     },
+  //     'yongche': {
+  //       isYongChe: true,
+  //       display: '用车',
+  //       catDisplay: '用途',
+  //       oppositeDisplay: '还车'
+  //     },
+  //     'r_tuan': {
+  //       display: '下团',
+  //       catDisplay: '团号'
+  //     },
+  //     'r_yongche': {
+  //       isYongChe: true,
+  //       display: '还车',
+  //       catDisplay: '用途'
+  //     },
+  //   }
+  //   var records = originRecords.reduce((pv, cv) => {
+  //     var timeAt = moment(cv.timeAt)
+  //     var isSameYear = timeAt.year() == currentYear
+  //     cv.timeAtFormat = timeAt.format(isSameYear? formatString : formatStringWithYear)
+  //     cv.user = app.globalData.allUsers[cv.openId]
+
+  //     cv = {
+  //       ...cv,
+  //       ...(codeExpress[cv.code])
+  //     }
+  //     pv.push(cv)
+  //     return pv
+  //   }, [])
+
+  //   var openId = app.globalData.userInfo.openId
+  //   var operateRecords = records.reduce((pv, cv)=>{
+  //     // push records that is belong to openId, and isDriving
+  //     if (cv.openId == openId && cv.isDriving) {
+  //       pv.push(cv)
+  //     }
+  //     return pv
+  //   },[])
+
+  //   this.setData({
+  //     records,
+  //     operateRecords
+  //   })
+  // },
 
   tabClick: function(e) {
     this.setData({
