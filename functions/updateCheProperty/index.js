@@ -9,7 +9,7 @@ const db = cloud.database()
  */
 exports.main = async (event, context) => {
 
-
+  var code;
   if (!event.isFixChe) {
     if (event.propertyName == 'rucDate' || event.propertyName == 'docDate' || event.propertyName == 'cofDate') {
       event.newValue = new Date(event.newValue)
@@ -23,11 +23,15 @@ exports.main = async (event, context) => {
     await db.collection('che').doc(event.cheId).update({
       data: dataForUpdateChe
     })
+
+    code = `update_${event.propertyName}`
+  } else {
+    code = `fix_${event.propertyName}`
   }
 
 
   var newRecord = {
-    code: `update_${event.propertyName}`,
+    code,
     cheId: event.cheId,
     openId: event.userInfo.openId,
     timeAt: new Date(),
