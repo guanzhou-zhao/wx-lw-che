@@ -11,7 +11,6 @@ exports.main = async (event, context) => {
   cloud.updateConfig({
     env: ENV
   })
-  const wxContext = cloud.getWXContext()
 
   // get all users
   var userCountResult = await db.collection('user').count()
@@ -28,6 +27,6 @@ exports.main = async (event, context) => {
     event,
     openid: OPENID,
     appid: APPID,
-    wxContext: wxContext
+    env: ENV
   }
 }
