@@ -27,6 +27,7 @@ App({
     wx.cloud.callFunction({
       name: 'listUser'
     }).then((res)=>{
+      console.log(`call listUser() env ${res.result.env}`)
       that.globalData.allUsers = res.result.users.reduce((pv, cv)=> {
         pv[cv.openId] = cv
         return pv
