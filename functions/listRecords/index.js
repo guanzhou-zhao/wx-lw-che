@@ -9,5 +9,5 @@ exports.main = async (event, context) => {
 
   var query = event.query || {}
 
-  return await db.collection('record').where(query).orderBy('isDriving', 'desc').orderBy('timeAt', 'desc').get()
+  return await db.collection('record').where(query).orderBy('timeAt', 'desc').get()
 }
