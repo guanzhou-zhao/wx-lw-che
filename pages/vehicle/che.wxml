@@ -166,8 +166,7 @@
           <view class="weui-cells weui-cells_after-title">
             <view wx:for="{{operateRecords}}" wx:key="{{this}}" class="weui-cell">
               <view class="weui-cell__bd">
-                {{item.display + '(' + item.category + ')'}} {{item.timeAtFormat}}
-                <button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.oppositeDisplay}}</button>
+                {{item.display + '(' + item.category + ')'}} {{item.timeAtFormat}}<button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.oppositeDisplay}}</button>
               </view>
             </view>
           </view>

@@ -338,15 +338,18 @@ Page({
   setDataForRecords: function (records) {
     var that = this
     var showForm = false
+    var operateRecords
     var codeExpress = {
       'tuan': {
         display: '上团',
-        catDisplay: '团号'
+        catDisplay: '团号',
+        oppositeDisplay: '下团'
       },
       'yongche': {
         isYongChe: true,
         display: '用车',
-        catDisplay: '用途'
+        catDisplay: '用途',
+        oppositeDisplay: '还车'
       },
       'r_tuan': {
         display: '下团',
@@ -418,7 +421,7 @@ Page({
         }
       }
       var openId = app.globalData.userInfo.openId
-      var operateRecords = records.reduce((pv, cv) => {
+      operateRecords = records.reduce((pv, cv) => {
         // push records that is belong to openId, and isDriving
         if (cv.openId == openId && cv.isDriving) {
           pv.push(cv)
@@ -432,7 +435,8 @@ Page({
     }
     this.setData({
       records,
-      showForm
+      showForm,
+      operateRecords
     })
   },
   // setDataForRecords: function(originRecords) {
