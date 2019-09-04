@@ -6,6 +6,11 @@ const db = cloud.database()
 const MAX_LIMIT = 20
 // 云函数入口函数
 exports.main = async (event, context) => {
+  const { ENV, OPENID, APPID } = cloud.getWXContext()
+  // 更新默认配置，将默认访问环境设为当前云函数所在环境
+  cloud.updateConfig({
+    env: ENV
+  })
   const wxContext = cloud.getWXContext()
 
   // get all users
@@ -21,8 +26,8 @@ exports.main = async (event, context) => {
   return {
     users,
     event,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
-    unionid: wxContext.UNIONID,
+    openid: OPENID,
+    appid: APPID,
+    wxContext: wxContext
   }
 }
