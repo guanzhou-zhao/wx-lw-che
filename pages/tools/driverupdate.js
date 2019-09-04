@@ -12,6 +12,11 @@ Page({
   bindConfirmTap: function (e) {
     var accountsToPropertyName = ['tyre', 'fix', "mtNum", "cofDate", "allignmentNum", "plate"]
     var that = this
+    wx.showToast({
+      title: '提交中',
+      icon: 'loading',
+      duration: 3000
+    })
     wx.cloud.callFunction({
       name: 'updateCheProperty',
       data: {
@@ -21,7 +26,21 @@ Page({
         currentValue: that.data.currentValue,
         newValue: that.data.newValue
       },
-      complete: console.log
+      success() {
+        wx.showToast({
+          title: '提交完成',
+          icon: 'success',
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) {wx.navigateBack() },
+        })
+      },
+      fail() {
+        wx.showToast({
+          title: 'something wrong',
+          icon: 'none'
+        })
+      }
     })
   },
   bindAccountChange: function (e) {
