@@ -152,6 +152,113 @@
             </view>
           </view>
         </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 3}}">
+
+          <view class="weui-cells__title">更新车辆信息：</view>
+          <view class="weui-cells weui-cells_after-title">
+            <view class="_margin-bottom">
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">车牌号</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input disabled='true' class="weui-input" value="{{che.plate}}" />
+                </view>
+
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_select">
+              <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">车型</view>
+              </view>
+              <view class="weui-cell__bd">
+                <picker disabled='true'  value="{{modelIndex}}" range="{{models}}">
+                  <view class="weui-select">{{models[modelIndex]}}</view>
+                </picker>
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__hd">
+                <view class="weui-label">轮毂里程</view>
+              </view>
+              <view class="weui-cell__bd {{cheObject.wheelNum != che.wheelNum ? 'data-changed' : ''}}">
+                <input  disabled='true' type='number' value="{{che.wheelNum}}" class="weui-input" />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__hd">
+                <view class="weui-label">仪表盘里程</view>
+              </view>
+              <view class="weui-cell__bd ">
+                <input disabled='true' type='number' value="{{che.digitNum}}" class="weui-input" />
+              </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">RUC公里数</view>
+              </view>
+              <view class="weui-cell__bd ">
+                <input disabled='true' type='number' value="{{che.rucNum}}" class="weui-input" placeholder="" />
+              </view>
+
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">保养公里数</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input disabled='true' type='number' value="{{che.mtNum}}" class="weui-input" placeholder="" />
+              </view>
+
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">四轮定位里程</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input disabled='true' type='number' value="{{che.allignmentNum}}" class="weui-input" placeholder="" />
+              </view>
+
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">COF日期</view>
+              </view>
+              <view class="weui-cell__bd ">
+                <picker disabled='true' mode="date" value="{{che.cofDate}}" start="2015-09-01" end="2050-09-01" >
+                  <view class="weui-input">{{che.cofDate}}</view>
+                </picker>
+              </view>
+
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">DOC日期</view>
+              </view>
+              <view class="weui-cell__bd ">
+                <picker  disabled='true' mode="date" value="{{che.docDate}}" start="2015-09-01" end="2050-09-01" >
+                  <view class="weui-input">{{che.docDate}}</view>
+                </picker>
+              </view>
+
+            </view>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">路税日期</view>
+              </view>
+              <view class="weui-cell__bd ">
+                <picker disabled='true' mode="date" value="{{che.rucDate}}" start="2015-09-01" end="2050-09-01" >
+                  <view class="weui-input">{{che.rucDate}}</view>
+                </picker>
+              </view>
+
+            </view>
+          </view>
+          <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" bindtap="bindUpdate">更新</button>
+          </view>
+
+        </view>
       </view>
     </view>
   </view>

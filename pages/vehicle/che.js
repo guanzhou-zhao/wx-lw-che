@@ -9,10 +9,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabs: ["记录", "图片", "操作"],
+    tabs: ["记录", "图片", "操作", "详情"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
+
+    models: ["中通", "Rosa", "奔驰20", "奔驰12", "海狮", "Alpha"],
+    modelIndex: 0,
 
     showImageUploadForm: false,
     files: [],
@@ -316,6 +319,9 @@ Page({
       },
       success(res) {
         var che = res.result.data
+        che.cofDate = che.cofDate.slice(0, 10)
+        che.docDate = che.docDate.slice(0, 10)
+        che.rucDate = che.rucDate.slice(0, 10)
         that.setData({
           che,
           'tabs[0]': che.plate + that.data.tabs[0]
