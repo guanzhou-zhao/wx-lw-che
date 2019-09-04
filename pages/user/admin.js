@@ -111,7 +111,6 @@ Page({
    * 
    */
   approveApply: function(event) {
-    console.log("admin.js approveApply() user clicked " + JSON.stringify(this.data.users[event.target.dataset.i]))
     var userClicked = this.data.users[event.target.dataset.i]
     var that = this
 

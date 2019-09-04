@@ -19,8 +19,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log("register.js onload  " + JSON.stringify(app.globalData.validateUserResult))
-
     this.setData({
       ...app.globalData.validateUserResult,
     })
@@ -110,7 +108,6 @@ Page({
         duration: 3000
       });
     } else {
-      console.log('createOrUpdateApply that.data' + JSON.stringify(that.data))
       wx.cloud.callFunction({
         name: 'createOrUpdateApply',
         data: {
@@ -118,7 +115,6 @@ Page({
           isAppliedUser: that.data.isAppliedUser
         }
       }).then(res => {
-        console.log('register.js getAuth() createOrUpdateApply():: ' + JSON.stringify(res))
         var toastMsg = '新留言已提交'
         if (res.result.newUser.hasOwnProperty('_id')) {
           this.setData({
