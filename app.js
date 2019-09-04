@@ -50,7 +50,7 @@ App({
    
       if (res.result.isAuthUser) {
         wx.switchTab({
-          url: '/pages/tools/index'
+          url: 'pages/main/yongche'
         })
       } else {
         wx.redirectTo({
