@@ -1,5 +1,5 @@
 //app.js
-wx.cloud.init()
+wx.cloud.init({ env: 'lw-che-product-6q033'})
 const db = wx.cloud.database()
 App({
   onShow: function() {
