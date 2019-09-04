@@ -75,12 +75,17 @@
 
     <view>
       <view wx:for="{{records}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
-        <view class="weui-panel">
+        <!-- 显示用车记录-->
+        <view class="weui-panel" wx:if="{{item.recordType != 'update' && item.recordType!= 'fix'}}">
           <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_text">
               <view class="weui-media-box__title weui-media-box__title_in-text">{{item.display}} {{item.isYongChe? item.category : ''}} {{item.isDriving?'':item.che.plate}} <navigator wx:if="{{item.isDriving}}" url="/pages/vehicle/che?cheId={{item.cheId}}" class="che-operate">{{item.che.plate}}</navigator></view>
               <view class="weui-media-box__desc">
                 轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}}
+                <view wx:if="{{item.recordType == 'return'}}">
+                  <view>车停在：{{item.park}}</view>
+                  <view>留言：{{item.msg}}</view>
+                </view>
                 <view wx:if="{{item.isWrong}}" class="error-msg">
                   {{item.errorMsg}}
                 </view>
@@ -92,6 +97,23 @@
             </view>
           </view>
         </view>
+        <!--显示更新记录， 更新和维修 -->
+        <view class="weui-panel" wx:else>
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.che.plate}} {{item.display}} </view>
+              <view class="weui-media-box__desc">
+                {{item.newValue}}
+              </view>
+              <view class="weui-media-box__info">
+                <view wx:if="{{!item.isYongChe}}" class="weui-media-box__info__meta">{{item.catDisplay}}{{item.category}}</view>
+                <view class="weui-media-box__info__meta">{{item.timeAtFormat}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+
       </view>
     </view>
   </view>

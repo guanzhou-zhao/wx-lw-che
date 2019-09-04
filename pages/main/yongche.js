@@ -38,6 +38,7 @@ Page({
    * 1. if records.length < 0, showForm true
    */
   setDataForRecords: function(records) {
+    var that = this
     var showForm = false
     var codeExpress = {
       'tuan': {
@@ -58,16 +59,60 @@ Page({
         display: '还车',
         catDisplay: '用途'
       },
+      'update_plate': {
+        display: '换车牌'
+      },
+      'update_rucNum': {
+        display: '更新RUC到'
+      },
+      'update_mtNum': {
+        display: '保养'
+      },
+      'update_allignmentNum': {
+        display: '四轮定位'
+      },
+      'update_cofDate': {
+        display: 'COF日期更新为'
+      },
+      'update_docDate': {
+        display: '更新DOC卡日期到'
+      },
+      'update_rucDate': {
+        display: '路税买到'
+      },
+      'fix_tyre': {
+        display: '轮胎维修'
+      },
+      'fix_fix': {
+        display: '维修'
+      }
     }
     var currentYear = moment().year()
     var formatStringWithYear = 'D MMM YY H:mm'
     var formatString = 'D MMM H:mm'
     if (records.length > 0) {
       for (var i=0; i<records.length; i++) {
+        // 修改时间格式
         var timeAt = moment(records[i].timeAt)
         var isSameYear = timeAt.year() == currentYear
-
         records[i].timeAtFormat = timeAt.format(isSameYear ? formatString : formatStringWithYear)
+        // 判断记录类型
+        if (records[i].code.includes('update_')) {
+          records[i].recordType = 'update'
+          records[i].newValue = records[i].newValue.slice(0, 10)
+        } else if (records[i].code.includes('fix_')){
+          records[i].recordType = 'fix'
+        } else if (records[i].code.includes('r_')) {
+          records[i].recordType = 'return'
+        } else {
+          records[i].recordType = 'yongche'
+        }
+        // 对更新记录，添加che对象
+        if (!records[i].che) {
+          records[i].che = that.data.cheList.find((element) => element._id == records[i].cheId)
+        }
+        
+
         records[i] = {
           ...records[i],
           ...(codeExpress[records[i].code])
@@ -107,18 +152,6 @@ Page({
   onShow: function() {
     var that = this
 
-    // call listRecord to get records of this user.
-    wx.cloud.callFunction({
-      name: 'listRecords',
-      data: {
-        query: {
-          openId: app.globalData.userInfo.openId
-        }
-      },
-      success(res) {
-        that.setDataForRecords(res.result.data)
-      }
-    })
 
     wx.cloud.callFunction({
       name: 'listChe',
@@ -136,6 +169,19 @@ Page({
 
         that.setData({
           cheList
+        })
+
+        // call listRecord to get records of this user.
+        wx.cloud.callFunction({
+          name: 'listRecords',
+          data: {
+            query: {
+              openId: app.globalData.userInfo.openId
+            }
+          },
+          success(res) {
+            that.setDataForRecords(res.result.data)
+          }
         })
       }
     })
