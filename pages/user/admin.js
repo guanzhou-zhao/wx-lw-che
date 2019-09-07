@@ -2,6 +2,7 @@
 const app = getApp()
 wx.cloud.init()
 const db = wx.cloud.database()
+const validateUser = require('../../utils/validateUser.js')
 Page({
 
   /**
@@ -57,6 +58,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    validateUser()
     var that = this
     wx.cloud.callFunction({
       name: 'listUser',
@@ -131,25 +133,5 @@ Page({
       }
     })
     
-    // db.collection('usera').add({
-    //   // data 字段表示需新增的 JSON 数据
-    //   data: {
-    //     ...event.target.dataset.user,
-    //     tag: 'Y',
-    //     approvedBy: app.globalData.validateUserResult.userInfo
-    //   },
-    //   success(res) {
-    //     // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
-    //     that.data.users[event.target.dataset.i] = {
-    //       approvedBy: app.globalData.validateUserResult.userInfo,
-    //       tag: 'Y',
-    //       ...that.data.users[event.target.dataset.i]
-    //     }
-
-    //     that.setData({
-    //       users: that.data.users
-    //     })
-    //   }
-    // })
   }
 })

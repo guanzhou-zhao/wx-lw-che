@@ -1,4 +1,5 @@
 const app = getApp()
+const validateUser = require('../../utils/validateUser.js')
 wx.cloud.init()
 const moment = require('../../utils/moment.min.js')
 Page({
@@ -23,6 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    validateUser()
     this.setData({
       userInfo: app.globalData.userInfo
     })

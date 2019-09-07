@@ -5,7 +5,7 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async(event, context) => {
-  const { OPENID } = cloud.getWXContext()
+  const { ENV, OPENID } = cloud.getWXContext()
   const db = cloud.database()
   var validateResult = {
     isAppliedUser: false
@@ -22,5 +22,8 @@ exports.main = async(event, context) => {
 
   })
 
-  return validateResult
+  return {
+    validateResult,
+    context: cloud.getWXContext()
+  }
 }
