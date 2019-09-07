@@ -1,18 +1,10 @@
 //app.js
-wx.cloud.init({ env: 'lw-che-product-6q033'})
-const db = wx.cloud.database()
+wx.cloud.init()
 App({
   onShow: function() {
-    if (!this.globalData.hasValidated) {
-
-      this.validateUser()
-    }
+    
   },
   onLaunch: function() {
-    // 展示本地存储能力
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
     this.validateUser()
     this.getAllUsers()
     this.globalData.hasValidated = true
@@ -45,10 +37,10 @@ App({
        * res.result = {isAppliedUser, userInfo, isAuthUser}
        */
 
-      that.globalData.validateUserResult = res.result
-      that.globalData.userInfo = res.result.userInfo
-   
-      if (res.result.isAuthUser) {
+      that.globalData.validateUserResult = res.result.validateResult
+      that.globalData.userInfo = res.result.validateResult.userInfo
+      console.log(`validateUser() result ${JSON.stringify(res.result)}`)
+      if (res.result.validateResult.isAuthUser) {
         wx.switchTab({
           url: '/pages/main/yongche'
         })
