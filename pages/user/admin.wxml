@@ -7,7 +7,8 @@
       </view>
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
         <view class="weui-media-box__title">{{item.nickName}}
-        <button wx:if="{{item.tag != 'Y'}}" data-user="{{item}}" data-i="{{index}}" bindtap="approveApply" class="weui-btn mini-btn" type="primary" size="mini">批准</button>
+        <button wx:if="{{!item.tag}}" data-user="{{item}}" data-i="{{index}}" bindtap="approveApply" class="weui-btn mini-btn" type="primary" size="mini">批准</button>
+        <view class="approved-by" wx:if="{{item.tag=='V'}}">访客用户 </view>
         <view class="approved-by" wx:if="{{item.approvedBy}}"> approved by: {{allUsers[item.approvedBy].nickName}} </view>
         </view>
         <view class="weui-media-box__desc">{{item.msg}}</view>
