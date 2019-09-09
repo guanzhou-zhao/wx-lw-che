@@ -12,7 +12,11 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    buttonText: '申请进入'
+    buttonText: '申请进入',
+
+    showVisitorLogin: false,
+    visitorUsername: "",
+    visitorPassword: ""
   },
 
   /**
@@ -48,7 +52,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    if (app.globalData.validateUserResult && app.globalData.validateUserResult.isAuthUser) {
+      wx.switchTab({
+        url: '/pages/main/yongche',
+      })
+    }
   },
 
   /**
@@ -136,6 +144,76 @@ Page({
   setMsg: function(e) {
     this.setData({
       'userInfo.msg': e.detail.value
+    })
+  },
+  toggleVisitorLogin: function(e) {
+    this.setData({
+      'showVisitorLogin': !this.data.showVisitorLogin
+    })
+  },
+  visitorLogin: function(e) {
+    var that = this
+    if (this.data.visitorUsername == "" || this.data.visitorPassword=="") {
+      wx.showToast({
+        title: '用户名或密码不能为空',
+        icon: 'none',
+        duration: 2000
+      })
+      // if username, password are not empty, send to cloud function
+    } else if (!this.data.userInfo.avatarUrl) {
+        wx.showToast({
+          title: '请点击“获取头像昵称”按钮',
+          icon: 'none',
+          duration: 3000
+        });
+    } else {
+      wx.showLoading({
+        title: '正在验证用户',
+        mask: true
+      })
+      wx.cloud.callFunction({
+        name: 'visitorLogin',
+        data: {
+          visitorUsername: that.data.visitorUsername,
+          visitorPassword: that.data.visitorPassword,
+          myUserInfo: that.data.userInfo
+        },
+        success: res => {
+          var result = res.result
+          if (result.isAuthUser) {
+
+            console.log(`call visiterLogin res ${JSON.stringify(result)}`)
+            app.globalData.userInfo = result.userInfo
+            app.globalData.validateUserResult = result
+            wx.switchTab({
+              url: '/pages/main/yongche'
+            })
+          }
+        },
+        fail: err => {
+          console.log(err)
+          wx.showToast({
+            title: 'something went wrong',
+            icon: 'none',
+            duration:2000
+          })
+        },
+        complete: () => {
+          wx.hideLoading()
+        }
+      })
+    }
+  },
+  visitorUsernameInput: function(e) {
+    var { value, cursor, keyCode } = e.detail
+    this.setData({
+      'visitorUsername': value.trim()
+    })
+  },
+  visitorPasswordInput: function(e) {
+    var { value, cursor, keyCode } = e.detail
+    this.setData({
+      'visitorPassword': value.trim()
     })
   }
 })
