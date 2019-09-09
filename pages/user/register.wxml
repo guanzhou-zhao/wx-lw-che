@@ -18,3 +18,25 @@
 <button class="weui-btn" type="primary" bindtap="getAuth">
 {{buttonText}}
 </button>
+<button bindtap="toggleVisitorLogin" class="weui-btn" type="default">{{showVisitorLogin ? '关闭':''}}访客登录</button>
+      <view wx:if="{{showVisitorLogin}}">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">用户名</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input bindinput="visitorUsernameInput" class="weui-input" placeholder="请输入用户名"/>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">密码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input bindinput="visitorPasswordInput" password="true" class="weui-input" placeholder="请输入密码"/>
+                </view>
+            </view>
+        </view>
+        <button bindtap="visitorLogin" class="weui-btn mini-btn" type="primary" size="mini">登录</button>
+        </view>
