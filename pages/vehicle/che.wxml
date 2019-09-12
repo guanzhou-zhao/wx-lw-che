@@ -16,8 +16,7 @@
             <view class="weui-panel" wx:if="{{item.recordType != 'update' && item.recordType!= 'fix'}}">
               <view class="weui-panel__bd">
                 <view class="weui-media-box weui-media-box_text">
-                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.display}}{{item.isYongChe? 
-                  '('+item.category+')' : ''}} {{item.user.nickName}}</view>
+                  <view class="weui-media-box__title weui-media-box__title_in-text">{{item.display}}{{item.isYongChe? '('+item.category+')' : ''}} {{item.user.nickName}}</view>
                   <view class="weui-media-box__desc">
                     轮毂里程：{{item.wheelNum}}, 仪表盘里程：{{item.digitNum}}
                     <view wx:if="{{item.recordType == 'return'}}">
@@ -105,68 +104,69 @@
           </view>
         </view>
         <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-        <view wx:if="{{showReturnForm}}">
-          <view class="weui-cells__title">下团/还车：</view>
-          <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_input">
-              <view class="weui-cell__hd">
-                <view class="weui-label">车牌</view>
+          <view wx:if="{{showReturnForm}}">
+            <view class="weui-cells__title">下团/还车：</view>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">车牌</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input disabled='true' class="weui-input" value='{{operatingRecord.che.plate}}' />
+                </view>
               </view>
-              <view class="weui-cell__bd">
-                <input disabled='true' class="weui-input" value='{{operatingRecord.che.plate}}' />
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">{{operatingRecord.catDisplay}}</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input disabled='true' class="weui-input" value='{{operatingRecord.category}}' />
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">轮毂里程</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input type='number' class="weui-input" bindinput='bindWheelNumInput' value='{{wheelNum}}' placeholder="请输入轮毂里程" />
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">仪表盘里程</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input type='number' class="weui-input" bindinput='bindDigitNumInput' value="{{digitNum}}" placeholder="请输入仪表盘里程" />
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">停车场地</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input bindinput='bindParkInput' value='{{park}}' class="weui-input" />
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">留言</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input value='{{msg}}' bindinput='bindMsgInput' class="weui-input" />
+                </view>
               </view>
             </view>
-            <view class="weui-cell weui-cell_input">
-              <view class="weui-cell__hd">
-                <view class="weui-label">{{operatingRecord.catDisplay}}</view>
-              </view>
-              <view class="weui-cell__bd">
-                <input disabled='true' class="weui-input" value='{{operatingRecord.category}}' />
-              </view>
+            <!--<view class="weui-cells__tips">底部说明文字底部说明文字</view>-->
+            <view class="weui-btn-area">
+              <button class="weui-btn" type="primary" bindtap="bindReturnSubmit">{{operatingRecord.oppositeDisplay}}</button>
+              <button bindtap='bindCancelReturnTap' class="weui-btn" type="warn">取消</button>
             </view>
-            <view class="weui-cell weui-cell_input">
-              <view class="weui-cell__hd">
-                <view class="weui-label">轮毂里程</view>
-              </view>
-              <view class="weui-cell__bd">
-                <input type='number' class="weui-input" bindinput='bindWheelNumInput' value='{{wheelNum}}' placeholder="请输入轮毂里程" />
-              </view>
-            </view>
-            <view class="weui-cell weui-cell_input">
-              <view class="weui-cell__hd">
-                <view class="weui-label">仪表盘里程</view>
-              </view>
-              <view class="weui-cell__bd">
-                <input type='number' class="weui-input" bindinput='bindDigitNumInput' value="{{digitNum}}" placeholder="请输入仪表盘里程" />
-              </view>
-            </view>
-            <view class="weui-cell weui-cell_input">
-              <view class="weui-cell__hd">
-                <view class="weui-label">停车场地</view>
-              </view>
-              <view class="weui-cell__bd">
-                <input bindinput='bindParkInput'  value='{{park}}'class="weui-input" />
-              </view>
-            </view>
-            <view class="weui-cell weui-cell_input">
-              <view class="weui-cell__hd">
-                <view class="weui-label">留言</view>
-              </view>
-              <view class="weui-cell__bd">
-                <input value='{{msg}}' bindinput='bindMsgInput' class="weui-input"  />
-              </view>
-            </view>
-          </view>
-          <!--<view class="weui-cells__tips">底部说明文字底部说明文字</view>-->
-          <view class="weui-btn-area">
-            <button class="weui-btn" type="primary" bindtap="bindReturnSubmit">{{operatingRecord.oppositeDisplay}}</button>
-            <button bindtap='bindCancelReturnTap' class="weui-btn" type="warn">取消</button>
-          </view>
           </view>
           <view class="weui-cells weui-cells_after-title">
             <view wx:for="{{operateRecords}}" wx:key="{{this}}" class="weui-cell">
               <view class="weui-cell__bd">
-                {{item.display + '(' + item.category + ')'}} {{item.timeAtFormat}}<button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.oppositeDisplay}}</button>
+                {{item.display + '(' + item.category + ')'}} {{item.timeAtFormat}}
+                <button id="{{item._id}}" bindtap='bindReturnCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{item.oppositeDisplay}}</button>
               </view>
             </view>
           </view>
@@ -190,7 +190,7 @@
                 <view class="weui-label">车型</view>
               </view>
               <view class="weui-cell__bd">
-                <picker disabled='true'  value="{{modelIndex}}" range="{{models}}">
+                <picker disabled='true' value="{{modelIndex}}" range="{{models}}">
                   <view class="weui-select">{{models[modelIndex]}}</view>
                 </picker>
               </view>
@@ -200,7 +200,7 @@
                 <view class="weui-label">轮毂里程</view>
               </view>
               <view class="weui-cell__bd {{cheObject.wheelNum != che.wheelNum ? 'data-changed' : ''}}">
-                <input  disabled='true' type='number' value="{{che.wheelNum}}" class="weui-input" />
+                <input disabled='true' type='number' value="{{che.wheelNum}}" class="weui-input" />
               </view>
             </view>
             <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -243,7 +243,7 @@
                 <view class="weui-label">COF日期</view>
               </view>
               <view class="weui-cell__bd ">
-                <picker disabled='true' mode="date" value="{{che.cofDate}}" start="2015-09-01" end="2050-09-01" >
+                <picker disabled='true' mode="date" value="{{che.cofDate}}" start="2015-09-01" end="2050-09-01">
                   <view class="weui-input">{{che.cofDate}}</view>
                 </picker>
               </view>
@@ -254,7 +254,7 @@
                 <view class="weui-label">DOC日期</view>
               </view>
               <view class="weui-cell__bd ">
-                <picker  disabled='true' mode="date" value="{{che.docDate}}" start="2015-09-01" end="2050-09-01" >
+                <picker disabled='true' mode="date" value="{{che.docDate}}" start="2015-09-01" end="2050-09-01">
                   <view class="weui-input">{{che.docDate}}</view>
                 </picker>
               </view>
@@ -265,9 +265,18 @@
                 <view class="weui-label">路税日期</view>
               </view>
               <view class="weui-cell__bd ">
-                <picker disabled='true' mode="date" value="{{che.rucDate}}" start="2015-09-01" end="2050-09-01" >
+                <picker disabled='true' mode="date" value="{{che.rucDate}}" start="2015-09-01" end="2050-09-01">
                   <view class="weui-input">{{che.rucDate}}</view>
                 </picker>
+              </view>
+
+            </view>
+            <view wx:if="{{che.base}}" class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">{{che.base == 'S' ? '南岛车':'北岛车'}}</view>
+              </view>
+              <view class="weui-cell__bd">
+              <view class="weui-input"></view>
               </view>
 
             </view>
