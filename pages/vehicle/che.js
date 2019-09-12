@@ -195,8 +195,14 @@ Page({
             wheelNum: '',
             digitNum: '',
           })
+          wx.navigateBack()
         },
-        fail: console.error,
+        fail() {
+          wx.showToast({
+            title: 'callFunction fail',
+            duration: 3000
+          })
+        },
         complete() {
           wx.hideLoading()
         }
