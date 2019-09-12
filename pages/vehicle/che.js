@@ -369,6 +369,9 @@ Page({
       'update_rucNum': {
         display: '更新RUC到'
       },
+      'update_base': {
+        display: '更改基地到'
+      },
       'update_mtNum': {
         display: '保养'
       },
@@ -404,6 +407,7 @@ Page({
         if (records[i].code.includes('update_')) {
           records[i].recordType = 'update'
           records[i].newValue = records[i].newValue.slice(0, 10)
+          records[i].newValue = records[i].newValue == 'S' ? '南岛' : (records[i].newValue == 'N' ? '北岛' : records[i].newValue)
         } else if (records[i].code.includes('fix_')) {
           records[i].recordType = 'fix'
         } else if (records[i].code.includes('r_')) {
