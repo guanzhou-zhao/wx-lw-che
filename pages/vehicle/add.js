@@ -21,7 +21,8 @@ Page({
     allignmentNum: 0,
     cofDate: "2018-09-01",
     docDate: "2018-09-01",
-    rucDate: "2018-09-01"
+    rucDate: "2018-09-01",
+    isSouth: true
   },
 
   /**
@@ -140,6 +141,10 @@ Page({
         duration: 3000
       });
     } else {
+      wx.showLoading({
+        title: '处理中',
+        mask: true
+      });
       var che = {
         plate: this.data.plate,
         model: this.data.model,
@@ -161,7 +166,7 @@ Page({
           wx.navigateBack({
             delta: 1,
             success(s) {
-              console.log('addChe success, navigateBack to che list')
+              wx.hideLoading()
             }
           })
         },
