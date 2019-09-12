@@ -79,6 +79,11 @@ Page({
   onShareAppMessage: function () {
 
   },
+  bindCheLocationChange: function(e) {
+    this.setData({
+      isSouth: e.detail.value
+    })
+  },
   bindModelChange: function (e) {
     console.log('picker account 发生选择改变，携带值为', e.detail.value);
 
@@ -134,7 +139,6 @@ Page({
   },
   bindAdd: function (e) {
     if (this.data.plate.trim().length < 1) {
-      submitErrorMsg + '请认真填写车牌号'
       wx.showToast({
         title: '请认真填写车牌号',
         icon: 'none',
