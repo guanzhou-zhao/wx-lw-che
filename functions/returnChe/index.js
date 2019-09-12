@@ -38,7 +38,7 @@ exports.main = async(event, context) => {
       cheId: event.cheId,
       che: che,
       wheelNum: event.wheelNum,
-      digitNum: event.wheelNum,
+      digitNum: event.digitNum,
       startWheelNum: record.wheelNum,
       startDigitNum: record.digitNum,
       ...checkExpireResult
