@@ -40,7 +40,8 @@ Page({
       })
     } else {
       wx.showLoading({
-        title: '上传中'
+        title: '上传中',
+        mask: true
       })
       var files = that.data.files
       // var promise
@@ -172,7 +173,8 @@ Page({
       })
     } else {
       wx.showLoading({
-        title: '处理中'
+        title: '处理中',
+        mask:true
       })
       wx.cloud.callFunction({
         name: 'returnChe',
