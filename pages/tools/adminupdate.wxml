@@ -12,7 +12,15 @@
           </picker>
         </view>
       </view>
-      <view class="weui-cell weui-cell_input">
+      <view wx:if="{{accountIndex==3}}" class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">{{newValue=='S' ? '南岛车':'北岛车'}}</view>
+        </view>
+        <view class="weui-cell__bd">
+          <switch class="weui-input" bindchange='bindNewValueChange' checked="{{currentValue=='S'}}" />
+        </view>
+      </view>
+      <view wx:if="{{accountIndex!=3}}" class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">当前{{accounts[accountIndex]}}</view>
         </view>
@@ -20,7 +28,7 @@
           <input disabled='true' class="weui-input" value='{{currentValue}}' />
         </view>
       </view>
-      <view class="weui-cell weui-cell_input">
+      <view wx:if="{{accountIndex!=3}}" class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">更新到</view>
         </view>

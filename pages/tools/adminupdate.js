@@ -6,12 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    accounts: ["RUC", "路税", "DOC"],
+    accounts: ["RUC", "路税", "DOC", "车所属基地"],
     accountIndex: 0,
     currentValue: "2016-09-01",
   },
   bindConfirmTap: function(e) {
-    var accountsToPropertyName = ['rucNum', 'rucDate', 'docDate']
+    var accountsToPropertyName = ['rucNum', 'rucDate', 'docDate', 'base']
     var that = this
 
     wx.showToast({
@@ -58,7 +58,7 @@ Page({
   },
   bindNewValueChange: function(e) {
     this.setData({
-      newValue: e.detail.value
+      newValue: (typeof e.detail.value == "boolean" ? (e.detail.value ? 'S' : 'N') : e.detail.value)
     })
   },
   /**
@@ -81,6 +81,8 @@ Page({
       value = this.data.rucDate
     } else if (accountIndex == 2) {
       value = this.data.docDate
+    } else if (accountIndex == 3) {
+      value = this.data.base
     }
     this.setData({
       currentValue: value,
