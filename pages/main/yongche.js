@@ -304,6 +304,10 @@ Page({
       //  2. 其他人上团选车的时候可以显示谁在开
       //更新数据库 添加 record
       //  1. 在车记录列表显示，谁，什么时间，用途，更新里程与否。
+      wx.showLoading({
+        title:'处理中',
+        mask: true
+      })
       console.log(`main.yongche.js call yongche --- --`)
       wx.cloud.callFunction({
         name: 'yongche',
@@ -320,6 +324,7 @@ Page({
            * 2. 从record中，Loading 和显示所有此车的记录
            */
           that.setDataForRecords(res.result.data)
+          wx.hideLoading()
         },
         fail: console.log
       })
