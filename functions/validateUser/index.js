@@ -17,7 +17,8 @@ exports.main = async(event, context) => {
       validateResult.isAppliedUser = true
         validateResult.userInfo = res.data[0]
 
-      validateResult.isAuthUser = (validateResult.userInfo.tag && validateResult.userInfo.tag == 'Y')
+      validateResult.isAuthUser =  validateResult.userInfo.tag == 'Y' || validateResult.userInfo.tag == 'A'
+      validateResult.isAdmin = validateResult.userInfo.tag == 'A'
     }
 
   })

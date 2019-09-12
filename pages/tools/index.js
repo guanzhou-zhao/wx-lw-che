@@ -8,16 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    grids: [
-      {
-        url: '/pages/user/admin',
-        name: '用户管理'
-      },
-      {
-        url: '/pages/vehicle/list',
-        name: '车列表'
-      }
-    ]
+    grids: []
   },
 
   /**
@@ -38,7 +29,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    validateUser()
+    validateUser.isAuthUser()
+    var that = this
+    if (app.globalData.validateUserResult.isAdmin) {
+      that.data.grids = grids.unshift(
+        {
+          url: '/pages/user/admin',
+          name: '用户管理'
+        },
+        {
+          url: '/pages/vehicle/list',
+          name: '车列表'
+        })
+      that.setData({
+        grids: that.data.grids
+      })
+    }
   },
 
   /**

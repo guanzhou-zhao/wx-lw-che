@@ -21,6 +21,7 @@ exports.main = async (event, context) => {
     
       //如果在用户列表，可以不处理
     isAuthUser = true
+    isAdmin = true
       //如果不在用户列表，添加此用户到用户列表
     if (users && users.length < 1) {
         userInfo = {...event.myUserInfo}
@@ -39,6 +40,7 @@ exports.main = async (event, context) => {
 
   return {
     isAuthUser,
+    isAdmin,
     userInfo
   }
 }
