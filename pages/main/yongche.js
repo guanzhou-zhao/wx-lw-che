@@ -158,7 +158,9 @@ Page({
   onShow: function() {
     var that = this
 
-
+    wx.showLoading({
+      title: '加载中'
+    })
     wx.cloud.callFunction({
       name: 'listChe',
       success(res) {
@@ -187,6 +189,13 @@ Page({
           },
           success(res) {
             that.setDataForRecords(res.result.data)
+            wx.hideLoading()
+          },
+          fail(err) {
+            wx.showToast({
+              title:"数据加载失败",
+              icon: 'none'
+            })
           }
         })
       }
