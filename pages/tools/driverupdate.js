@@ -16,6 +16,7 @@ Page({
     wx.showToast({
       title: '提交中',
       icon: 'loading',
+      mask: true,
       duration: 3000
     })
     wx.cloud.callFunction({
