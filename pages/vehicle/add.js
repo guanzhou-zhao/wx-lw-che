@@ -159,7 +159,8 @@ Page({
         allignmentNum: Number(this.data.allignmentNum),
         cofDate: this.data.cofDate,
         docDate: this.data.docDate,
-        rucDate: this.data.rucDate
+        rucDate: this.data.rucDate,
+        base: this.data.isSouth ? 'S' : 'N'
       }
       wx.cloud.callFunction({
         name: 'addChe',
