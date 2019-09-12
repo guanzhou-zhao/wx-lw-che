@@ -11,6 +11,9 @@
       </view>
       <view class="weui-tab__panel">
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <view wx:if="{{showDriverUpdateButton}}" class="weui-btn-area">
+            <button class="weui-btn" type="primary" bindtap="driverUpdate">更新车信息</button>
+          </view>
           <view wx:for="{{records}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
             <!-- 显示用车记录-->
             <view class="weui-panel" wx:if="{{item.recordType != 'update' && item.recordType!= 'fix'}}">
@@ -276,7 +279,7 @@
                 <view class="weui-label">{{che.base == 'S' ? '南岛车':'北岛车'}}</view>
               </view>
               <view class="weui-cell__bd">
-              <view class="weui-input"></view>
+                <view class="weui-input"></view>
               </view>
 
             </view>

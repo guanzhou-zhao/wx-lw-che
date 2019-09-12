@@ -25,6 +25,7 @@ Page({
     showReturnForm: false,
     park: '',
     msg: '',
+
   },
   bindImageUploadTap: function(e) {
     var that = this
@@ -152,7 +153,12 @@ Page({
       showReturnForm: false
     })
   },
-
+  driverUpdate: function(e) {
+    var that = this.data
+    wx.navigateTo({
+      url: `/pages/tools/driverupdate?cheId=${that.che._id}&plate=${that.che.plate}&allignmentNum=${that.che.allignmentNum}&mtNum=${that.che.mtNum}&cofDate=${that.che.cofDate}`
+    })
+  },
   bindReturnSubmit: function(e) {
     var that = this
     var data = {
@@ -286,7 +292,8 @@ Page({
   onLoad: function(options) {
     this.setData({
       cheId: options.cheId,
-      userInfo: app.globalData.userInfo
+      userInfo: app.globalData.userInfo,
+      showDriverUpdateButton: !app.globalData.validateUserResult.isAdmin
     })
     var that = this;
     wx.getSystemInfo({
@@ -297,45 +304,6 @@ Page({
         });
       }
     });
-    
-
-    /**
-     * getChe for tab 1 图片tab
-     */
-    wx.cloud.callFunction({
-      name: 'getChe',
-      data: {
-        cheId: that.data.cheId
-      },
-      success(res) {
-        var che = res.result.data
-        che.cofDate = che.cofDate.slice(0, 10)
-        che.docDate = che.docDate.slice(0, 10)
-        che.rucDate = che.rucDate.slice(0, 10)
-        that.setData({
-          che,
-          'tabs[0]': che.plate + that.data.tabs[0]
-        })
-        that.setDataForImages(che.images)
-
-        /**
-     * listRecords for tab 0
-     */
-        wx.cloud.callFunction({
-          name: 'listRecords',
-          data: {
-            query: {
-              cheId: options.cheId
-            }
-          },
-          success(res)  {
-            that.setDataForRecords(res.result.data)
-          },
-          fail: console.error
-        })
-      },
-      fail: console.error
-    })
   },
 
   setDataForRecords: function (records) {
@@ -519,7 +487,49 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    var that = this
     validateUser.isAuthUser()
+    wx.showLoading({
+      title: '加载中',
+    })
+    /**
+     * getChe for tab 1 图片tab
+     */
+    wx.cloud.callFunction({
+      name: 'getChe',
+      data: {
+        cheId: that.data.cheId
+      },
+      success(res) {
+        var che = res.result.data
+        che.cofDate = che.cofDate.slice(0, 10)
+        che.docDate = che.docDate.slice(0, 10)
+        che.rucDate = che.rucDate.slice(0, 10)
+        that.setData({
+          che,
+          'tabs[0]': che.plate + '记录'
+        })
+        that.setDataForImages(che.images)
+
+        /**
+     * listRecords for tab 0
+     */
+        wx.cloud.callFunction({
+          name: 'listRecords',
+          data: {
+            query: {
+              cheId: that.data.cheId
+            }
+          },
+          success(res) {
+            that.setDataForRecords(res.result.data)
+            wx.hideLoading()
+          },
+          fail: console.error
+        })
+      },
+      fail: console.error
+    })
   },
 
   /**
