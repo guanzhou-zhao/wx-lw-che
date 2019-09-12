@@ -17,34 +17,6 @@ Page({
    */
   onLoad: function(options) {
     
-    // db.collection('user').get({
-    //   success(res) {
-    //     // res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条
-    //     var allUsers = res.data
-    //     db.collection('usera').get({
-    //       success(result) {
-    //         var approvedUsers = result.data
-    //         console.log("admin.js onload() approvedUsers " + JSON.stringify(result))
-    //         for (var i = 0; i < allUsers.length; i++) {
-    //           for (var j = 0; j < approvedUsers.length; j++) {
-    //             if (allUsers[i].openId == approvedUsers[j].openId) {
-    //               allUsers[i] = {
-    //                 ...allUsers[i],
-    //                 ...approvedUsers[j]
-    //               }
-    //               approvedUsers.splice(j, 1)
-    //             }
-    //           }
-    //         }
-
-    //         console.log("admin.js onload() allUsers " + JSON.stringify(allUsers))
-    //         that.setData({
-    //           users: allUsers
-    //         })
-    //       }
-    //     })
-    //   }
-    // })
   },
 
   /**
@@ -115,7 +87,10 @@ Page({
   approveApply: function(event) {
     var userClicked = this.data.users[event.target.dataset.i]
     var that = this
-
+    wx.showLoading({
+      title: '处理中',
+      mask: true
+    })
     wx.cloud.callFunction({
       name: 'updateUser',
       data: {
@@ -130,6 +105,9 @@ Page({
       },
       fail(res) {
         console.log(`admin.js approveApply() call fail ${JSON.stringify(res)}`)
+      },
+      complete() {
+        wx.hideLoading()
       }
     })
     
