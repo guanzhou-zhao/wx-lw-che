@@ -84,6 +84,43 @@ Page({
   onShareAppMessage: function() {
 
   },
+  bindBaseChange: function(e) {
+    var userId = e.target.dataset.userid
+
+    var userClicked = this.data.users[e.target.dataset.i]
+    if (userClicked._id != userId) {
+      wx.showToast({
+        title: 'something went wrong!!',
+        duration: 5000
+      })
+    }
+    var that = this
+    wx.showLoading({
+      title: '处理中',
+      mask: true
+    })
+    wx.cloud.callFunction({
+      name: 'updateUser',
+      data: {
+        userId: userClicked._id,
+        payload: {
+          base: e.detail.value ? 'S' : 'N'
+        }
+      },
+      success(res) {
+        var pName = `users[${e.target.dataset.i}].base`
+        that.setData({
+          [pName]: e.detail.value ? 'S' : 'N'
+        })
+      },
+      fail(res) {
+        console.log(`admin.js approveApply() call fail ${JSON.stringify(res)}`)
+      },
+      complete() {
+        wx.hideLoading()
+      }
+    })
+  },
   bindAdminchange: function(e) {
     var userId = e.target.dataset.userid
 

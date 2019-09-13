@@ -20,9 +20,9 @@
             </view>
           </view>
           <view wx:if="{{item.tag=='Y'}}" class="weui-cell weui-cell_switch lw-cell">
-            <view class="weui-cell__bd">南岛</view>
+            <view class="weui-cell__bd">{{item.base!='N'?'南岛':'北岛'}}{{!item.base?'?':''}}</view>
             <view class="weui-cell__ft">
-              <switch checked />
+              <switch data-userid="{{item._id}}" data-i="{{index}}" bindchange="bindBaseChange" checked="{{item.base!='N'}}" />
             </view>
           </view>
         </view>
