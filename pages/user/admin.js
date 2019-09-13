@@ -31,6 +31,9 @@ Page({
    */
   onShow: function() {
     validateUser.isAdmin()
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     wx.cloud.callFunction({
       name: 'listUser',
@@ -42,7 +45,8 @@ Page({
       },
       fail(res) {
         console.log(`user.admin.js onshow call listuser fail: ${JSON.stringify(res)}`)
-      }
+      },
+      complete: wx.hideLoading
     })
   },
 
