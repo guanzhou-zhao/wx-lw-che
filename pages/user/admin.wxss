@@ -3,3 +3,24 @@
 .approved-by {
   color: antiquewhite;
 }
+
+.lw-cells {
+  display: flex;
+  display: -webkit-flex;
+  margin-top: 0;
+  font-size:12px;
+}
+
+.lw-cells:after {
+  border:none;
+}
+
+.lw-cells:before {
+  border:none;
+}
+.lw-cell:before {
+  border:none;
+}
+.lw-cell{
+  padding-right:0;
+}
