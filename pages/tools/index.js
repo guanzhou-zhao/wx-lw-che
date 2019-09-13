@@ -32,7 +32,7 @@ Page({
     validateUser.isAuthUser()
     var that = this
     if (app.globalData.validateUserResult.isAdmin) {
-      that.data.grids = grids.unshift(
+      that.data.grids.unshift(
         {
           url: '/pages/user/admin',
           name: '用户管理'
