@@ -12,11 +12,11 @@
           <view class="approved-by" wx:if="{{item.approvedBy}}"> approved by: {{allUsers[item.approvedBy].nickName}} </view>
         </view>
 
-        <view wx:if="{{item.tag!='V'}}" class="weui-cells lw-cells">
+        <view wx:if="{{item.tag && item.tag!='V'}}" class="weui-cells lw-cells">
           <view class="weui-cell weui-cell_switch lw-cell">
-            <view class="weui-cell__bd">管理员</view>
+            <view class="weui-cell__bd">{{item.tag=='A'?'管理员':'司机'}}</view>
             <view class="weui-cell__ft">
-              <switch checked />
+              <switch data-userid="{{item._id}}" data-i="{{index}}" bindchange="bindAdminchange" checked="{{item.tag=='A'}}" />
             </view>
           </view>
           <view wx:if="{{item.tag=='Y'}}" class="weui-cell weui-cell_switch lw-cell">
