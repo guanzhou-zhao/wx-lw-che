@@ -9,16 +9,10 @@ exports.main = async (event, context) => {
 
   return await db.collection('user').doc(event.userId).update({
     data: {
-      tag: event.tag,
+      ...event.payload,
       approvedBy: wxContext.OPENID,
       approvedAt: new Date()
     }
   })
 
-  // return {
-  //   event,
-  //   openid: ,
-  //   appid: wxContext.APPID,
-  //   unionid: wxContext.UNIONID,
-  // }
 }
