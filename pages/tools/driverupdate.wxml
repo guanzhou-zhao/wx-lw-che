@@ -29,7 +29,7 @@
             <view class="weui-input">{{newValue}}</view>
           </picker>
           <input wx:if="{{accountIndex==2||accountIndex==4}}" type='number' bindinput='bindNewValueChange' class="weui-input" value='{{newValue}}' />
-          <input wx:if="{{accountIndex==5}}" type='number' bindinput='bindNewValueChange' class="weui-input" value='{{newValue}}' />
+          <input wx:if="{{accountIndex==5}}" bindinput='bindNewValueChange' class="weui-input" value='{{newValue}}' />
           
         </view>
       </view>
