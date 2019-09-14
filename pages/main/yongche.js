@@ -259,9 +259,13 @@ Page({
 
   bindPlateFilterInput: function(e) {
     var filter = e.detail.value.trim()
+    var numberPartInPlate
+    var found
     this.setData({
       filteredCheList: this.data.cheList.reduce((pv, che) => {
-        if (filter.length > 0 && che.plate.toUpperCase().includes(filter.toUpperCase())) {
+        found = che.plate.match(/\d+/)
+        numberPartInPlate = found?found[0]:null
+        if (filter.toUpperCase() == che.plate.toUpperCase || filter == numberPartInPlate) {
           pv.push(che)
         }
         return pv
