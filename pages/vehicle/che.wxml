@@ -12,7 +12,7 @@
       <view class="weui-tab__panel">
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
           <view wx:if="{{showDriverUpdateButton}}" class="weui-btn-area">
-            <button class="weui-btn" type="primary" bindtap="driverUpdate">更新车信息</button>
+            <button class="weui-btn" type="primary" bindtap="driverUpdate">车维修保养</button>
           </view>
           <view wx:for="{{records}}" wx:key="{{index}}" class="weui-cells weui-cells_after-title">
             <!-- 显示用车记录-->
