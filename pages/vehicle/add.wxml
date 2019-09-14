@@ -60,7 +60,7 @@
           <view class="weui-label">四轮定位里程</view>
         </view>
         <view class="weui-cell__bd">
-          <input value="{{allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
+          <input type='number' value="{{allignmentNum}}" bindchange="bindAllignmentNumChange" class="weui-input" placeholder="" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
