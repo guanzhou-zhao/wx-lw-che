@@ -6,9 +6,11 @@ const db = cloud.database()
 const lwUsername = "lw"
 const lwPassword = "lwJC90ATLQD24Ee"
 // 云函数入口函数
-exports.main = async (event, context) => {
-  const {OPENID} = cloud.getWXContext()
-  var isAuthUser =false
+exports.main = async(event, context) => {
+  const {
+    OPENID
+  } = cloud.getWXContext()
+  var isAuthUser = false
   var userInfo
   //判断用户名密码是否正确
   //正确，如下
@@ -18,25 +20,36 @@ exports.main = async (event, context) => {
     var users = (await db.collection('user').where({
       openId: OPENID
     }).get()).data
-    
-      //如果在用户列表，可以不处理
+
+    //如果在用户列表，可以不处理
     isAuthUser = true
     isAdmin = true
     isVisitor = true
-      //如果不在用户列表，添加此用户到用户列表
-    if (users && users.length < 1) {
-        userInfo = {...event.myUserInfo}
-        userInfo.openId = OPENID
-        userInfo.tag = 'V'
-        userInfo._id = (await db.collection('user').add({
-          data: userInfo
-        }))._id
-      } else {
-        userInfo = users[0]
+    //如果不在用户列表，添加此用户到用户列表
+    if (users.length < 1) {
+      userInfo = { ...event.myUserInfo
       }
+      userInfo.openId = OPENID
+      userInfo.tag = 'V'
+      userInfo._id = (await db.collection('user').add({
+        data: userInfo
+      }))._id
+    } else {
+      userInfo = { ...users[0]
+      }
+
+      if (!userInfo.tag) {
+        await db.collection('user').doc(users[0]._id).update({
+          data: {
+            tag: 'V'
+          }
+        })
+        userInfo.tag = 'V'
+      }
+    }
     //返回validateUserResult
   }
-    
+
   //错误 isAuthUser = false
 
   return {
