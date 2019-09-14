@@ -163,6 +163,9 @@ Page({
     })
     wx.cloud.callFunction({
       name: 'listChe',
+      data: {
+        validateUserResult: app.globalData.validateUserResult
+      },
       success(res) {
         console.log(`main.yongche.js onshow() `)
         var cheList = res.result.data

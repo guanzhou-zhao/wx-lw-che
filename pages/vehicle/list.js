@@ -36,6 +36,9 @@ Page({
     var that = this
     wx.cloud.callFunction({
       name: 'listChe',
+      data: {
+        validateUserResult: app.globalData.validateUserResult
+      },
       success(res) {
         console.log('vehicle.list.js onShow() ' + JSON.stringify(res))
         
