@@ -1,8 +1,15 @@
 
-var app = getApp()
-
 module.exports = {
-  isAuthUser() {
+  validateUser(app) {
+    wx.cloud.callFunction({
+      name: 'validateUser'
+    }).then(res => {
+      app.globalData.validateUserResult = res.result.validateResult
+      app.globalData.userInfo = res.result.validateResult.userInfo
+      console.log('update validate info')
+    })
+  },
+  isAuthUser(app) {
     if (!app.globalData.validateUserResult || !app.globalData.validateUserResult.isAuthUser) {
       console.log('utils/validateUser fail')
       wx.redirectTo({
@@ -12,7 +19,7 @@ module.exports = {
       console.log('utils/validateUser pass')
     }
   },
-  isAdmin() {
+  isAdmin(app) {
     if (!app.globalData.validateUserResult || !app.globalData.validateUserResult.isAdmin) {
       console.log('utils/validateUser not admin')
       wx.switchTab({

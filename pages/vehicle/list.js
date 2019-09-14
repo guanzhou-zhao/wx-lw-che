@@ -29,7 +29,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    validateUser.isAdmin()
+    validateUser.isAdmin(app)
     this.setData({
       cheList: []
     })
@@ -40,7 +40,6 @@ Page({
         validateUserResult: app.globalData.validateUserResult
       },
       success(res) {
-        console.log('vehicle.list.js onShow() ' + JSON.stringify(res))
         
         var cheList = res.result.data
         for (var i = 0; i < cheList.length; i++) {

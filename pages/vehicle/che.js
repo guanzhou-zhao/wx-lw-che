@@ -494,7 +494,7 @@ Page({
    */
   onShow: function() {
     var that = this
-    validateUser.isAuthUser()
+    validateUser.isAuthUser(app)
     wx.showLoading({
       title: '加载中',
     })

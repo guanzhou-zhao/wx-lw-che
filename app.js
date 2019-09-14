@@ -1,13 +1,16 @@
 //app.js
 wx.cloud.init()
+const validateUser = require('./utils/validateUser.js')
 App({
   onShow: function() {
-    
+    validateUser.validateUser(this)
   },
   onLaunch: function() {
     this.validateUser()
     this.getAllUsers()
     this.globalData.hasValidated = true
+  },
+  onHide: function() {
   },
   globalData: {
     userInfo: null,
@@ -19,7 +22,7 @@ App({
     wx.cloud.callFunction({
       name: 'listUser'
     }).then((res)=>{
-      console.log(`call listUser() env ${res.result.env}`)
+      console.log(`env ${res.result.env.slice(0,6)}`)
       that.globalData.allUsers = res.result.users.reduce((pv, cv)=> {
         pv[cv.openId] = cv
         return pv
@@ -39,8 +42,11 @@ App({
 
       that.globalData.validateUserResult = res.result.validateResult
       that.globalData.userInfo = res.result.validateResult.userInfo
-      console.log(`validateUser() result ${JSON.stringify(res.result)}`)
-      if (res.result.validateResult.isAuthUser) {
+      if (res.result.validateResult.isAdmin) {
+        wx.switchTab({
+          url: '/pages/tools/index'
+        })
+      } else if (res.result.validateResult.isAuthUser) {
         wx.switchTab({
           url: '/pages/main/yongche'
         })
@@ -50,8 +56,5 @@ App({
         })
       }
     })
-
-
-
   }
 })

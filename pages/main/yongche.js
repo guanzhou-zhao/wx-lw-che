@@ -24,7 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    validateUser.isAuthUser()
+    validateUser.isAuthUser(app)
     this.setData({
       userInfo: app.globalData.userInfo
     })
@@ -156,6 +156,7 @@ Page({
    *    b. 如果没有用车记录，显示form...
    */
   onShow: function() {
+    validateUser.validateUser(app)
     var that = this
 
     wx.showLoading({
@@ -167,7 +168,7 @@ Page({
         validateUserResult: app.globalData.validateUserResult
       },
       success(res) {
-        console.log(`main.yongche.js onshow() `)
+        console.log(`yongche onshow() `)
         var cheList = res.result.data
         if (that.data.cheSelected) {
           var tempChe = cheList.find((c) => {
