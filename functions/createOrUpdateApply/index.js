@@ -10,15 +10,7 @@ exports.main = async(event, context) => {
   var newUser
   
   if (event.myUserInfo.hasOwnProperty('_id')) {
-    var userId = event.myUserInfo._id
-    delete event.myUserInfo._id
-    await db.collection('user').doc(userId).update({
-      data: {
-        msg: event.myUserInfo.msg
-      }
-    }).then(res => {
-      newUser = res
-    })
+    newUser={}
   } else {
     await db.collection('user').add({
       data: {

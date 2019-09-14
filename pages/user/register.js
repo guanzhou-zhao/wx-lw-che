@@ -2,7 +2,7 @@
 //获取应用实例
 const app = getApp()
 wx.cloud.init()
-var buttonTextApplied = '修改留言（申请已提交）'
+var buttonTextApplied = '申请已提交'
 Page({
 
   /**
@@ -28,7 +28,6 @@ Page({
     })
     if (app.globalData.validateUserResult.isAppliedUser) {
       this.setData({
-        msg: app.globalData.validateUserResult.userInfo.msg,
         hasUserInfo: true,
         buttonText: buttonTextApplied,
       })
@@ -123,7 +122,8 @@ Page({
           isAppliedUser: that.data.isAppliedUser
         }
       }).then(res => {
-        var toastMsg = '新留言已提交'
+        console.log(`createOrUpdateApply ${JSON.stringify(res.result)}`)
+        var toastMsg = '申请已提交'
         if (res.result.newUser.hasOwnProperty('_id')) {
           this.setData({
             'userInfo._id': res.result.newUser._id
@@ -140,11 +140,6 @@ Page({
         })
       })
     }
-  },
-  setMsg: function(e) {
-    this.setData({
-      'userInfo.msg': e.detail.value
-    })
   },
   toggleVisitorLogin: function(e) {
     this.setData({

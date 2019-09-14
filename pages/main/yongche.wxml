@@ -10,7 +10,6 @@
         </view>
         <view class="weui-cell__bd">
           <view>{{userInfo.nickName}}</view>
-          <view style="font-size: 13px;color: #888888;">{{userInfo.msg}}</view>
         </view>
         <view class="weui-cell__bd">
           <button bindtap='bindSearchCheTap' class="weui-btn mini-btn" type="primary" size="mini">{{showForm?'关闭表单':'搜索车'}}</button>
