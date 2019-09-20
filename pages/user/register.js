@@ -115,6 +115,11 @@ Page({
         duration: 3000
       });
     } else {
+      wx.showToast({
+        title: '处理中',
+        icon: 'none',
+        mask: true
+      });
       wx.cloud.callFunction({
         name: 'createOrUpdateApply',
         data: {
