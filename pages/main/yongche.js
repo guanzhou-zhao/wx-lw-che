@@ -31,17 +31,14 @@ Page({
   },
 
   bindSearchCheTap: function(e) {
-      this.setData({
-        showForm: !this.data.showForm
-      })
+    this.setData({
+      showForm: !this.data.showForm
+    })
 
   },
-  /**
-   * 1. if records.length < 0, showForm true
-   */
+ 
   setDataForRecords: function(records) {
     var that = this
-    var showForm = false
     var codeExpress = {
       'tuan': {
         display: '上团',
@@ -95,41 +92,38 @@ Page({
     var currentYear = moment().year()
     var formatStringWithYear = 'D MMM YY H:mm'
     var formatString = 'D MMM H:mm'
-    if (records.length > 0) {
-      for (var i=0; i<records.length; i++) {
-        // 修改时间格式
-        var timeAt = moment(records[i].timeAt)
-        var isSameYear = timeAt.year() == currentYear
-        records[i].timeAtFormat = timeAt.format(isSameYear ? formatString : formatStringWithYear)
-        // 判断记录类型
-        if (records[i].code.includes('update_')) {
-          records[i].recordType = 'update'
-          records[i].newValue = records[i].newValue.slice(0, 10)
-          records[i].newValue = records[i].newValue == 'S' ? '南岛' : (records[i].newValue == 'N' ? '北岛' : records[i].newValue)
-        } else if (records[i].code.includes('fix_')){
-          records[i].recordType = 'fix'
-        } else if (records[i].code.includes('r_')) {
-          records[i].recordType = 'return'
-        } else {
-          records[i].recordType = 'yongche'
-        }
-        // 对更新记录，添加che对象
-        if (!records[i].che) {
-          records[i].che = that.data.cheList.find((element) => element._id == records[i].cheId)
-        }
-        
 
-        records[i] = {
-          ...records[i],
-          ...(codeExpress[records[i].code])
-        }
+    for (var i = 0; i < records.length; i++) {
+      // 修改时间格式
+      var timeAt = moment(records[i].timeAt)
+      var isSameYear = timeAt.year() == currentYear
+      records[i].timeAtFormat = timeAt.format(isSameYear ? formatString : formatStringWithYear)
+      // 判断记录类型
+      if (records[i].code.includes('update_')) {
+        records[i].recordType = 'update'
+        records[i].newValue = records[i].newValue.slice(0, 10)
+        records[i].newValue = records[i].newValue == 'S' ? '南岛' : (records[i].newValue == 'N' ? '北岛' : records[i].newValue)
+      } else if (records[i].code.includes('fix_')) {
+        records[i].recordType = 'fix'
+      } else if (records[i].code.includes('r_')) {
+        records[i].recordType = 'return'
+      } else {
+        records[i].recordType = 'yongche'
       }
-    } else {
-      showForm = true
+      // 对更新记录，添加che对象
+      if (!records[i].che) {
+        records[i].che = that.data.cheList.find((element) => element._id == records[i].cheId)
+      }
+
+
+      records[i] = {
+        ...records[i],
+        ...(codeExpress[records[i].code])
+      }
     }
+
     this.setData({
-      records,
-      showForm
+      records
     })
   },
   /**
@@ -197,7 +191,7 @@ Page({
           },
           fail(err) {
             wx.showToast({
-              title:"数据加载失败",
+              title: "数据加载失败",
               icon: 'none'
             })
           }
@@ -265,7 +259,7 @@ Page({
     this.setData({
       filteredCheList: this.data.cheList.reduce((pv, che) => {
         found = che.plate.match(/\d+/)
-        numberPartInPlate = found?found[0]:null
+        numberPartInPlate = found ? found[0] : null
         if (filter.toUpperCase() == che.plate.toUpperCase || filter == numberPartInPlate) {
           pv.push(che)
         }
@@ -326,7 +320,7 @@ Page({
       //更新数据库 添加 record
       //  1. 在车记录列表显示，谁，什么时间，用途，更新里程与否。
       wx.showLoading({
-        title:'处理中',
+        title: '处理中',
         mask: true
       })
       console.log(`main.yongche.js call yongche --- --`)
@@ -346,6 +340,9 @@ Page({
            */
           that.setDataForRecords(res.result.data)
           wx.hideLoading()
+          that.setData({
+            showForm: false
+          })
         },
         fail: console.log
       })
