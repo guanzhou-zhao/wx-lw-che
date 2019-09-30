@@ -36,7 +36,7 @@ Page({
     })
 
   },
- 
+
   setDataForRecords: function(records) {
     var that = this
     var codeExpress = {
@@ -310,6 +310,16 @@ Page({
     } else if (data.wheelNum.length < 1 || data.digitNum.length < 1) {
       wx.showToast({
         title: '两个里程都必须填',
+        icon: 'none',
+        duration: 3000
+      })
+    } else if (this.data.records.findIndex((r)=>{
+      let recordTime = moment(r.timeAt)
+      let today = moment(new Date())
+      return r.isDriving && r.cheId == this.data.cheSelected.cheId && (recordTime.year() == today.year() && recordTime.dayOfYear()==today.dayOfYear)
+    })) {
+      wx.showToast({
+        title: '您已经在使用此车',
         icon: 'none',
         duration: 3000
       })
