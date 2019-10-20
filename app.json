@@ -16,7 +16,8 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "LW 上团车辆检查",
     "navigationBarBackgroundColor": "#f8f8f8",
-    "backgroundColor": "#f8f8f8"
+    "backgroundColor": "#f8f8f8",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#000",

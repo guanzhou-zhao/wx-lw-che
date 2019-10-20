@@ -28,8 +28,57 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo
     })
-  },
 
+    this.loadCheAndRecords();
+  },
+  loadCheAndRecords: function() {
+    var that = this
+
+    wx.showLoading({
+      title: '加载中'
+    })
+    wx.cloud.callFunction({
+      name: 'listChe',
+      data: {
+        validateUserResult: app.globalData.validateUserResult
+      },
+      success(res) {
+        var cheList = res.result.data
+        if (that.data.cheSelected) {
+          var tempChe = cheList.find((c) => {
+            return c._id == that.data.cheSelected._id
+          })
+          that.setData({
+            cheSelected: tempChe
+          })
+        }
+
+        that.setData({
+          cheList
+        })
+
+        // call listRecord to get records of this user.
+        wx.cloud.callFunction({
+          name: 'listRecords',
+          data: {
+            query: {
+              openId: app.globalData.userInfo.openId
+            }
+          },
+          success(res) {
+            that.setDataForRecords(res.result.data)
+            wx.hideLoading()
+          },
+          fail(err) {
+            wx.showToast({
+              title: "数据加载失败",
+              icon: 'none'
+            })
+          }
+        })
+      }
+    })
+  },
   bindSearchCheTap: function(e) {
     this.setData({
       showForm: !this.data.showForm
@@ -151,6 +200,27 @@ Page({
    */
   onShow: function() {
     validateUser.validateUser(app)
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function() {
     var that = this
 
     wx.showLoading({
@@ -162,7 +232,6 @@ Page({
         validateUserResult: app.globalData.validateUserResult
       },
       success(res) {
-        console.log(`yongche onshow() `)
         var cheList = res.result.data
         if (that.data.cheSelected) {
           var tempChe = cheList.find((c) => {
@@ -198,34 +267,14 @@ Page({
         })
       }
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    console.log('onReachBottom ')
   },
 
   /**
@@ -317,7 +366,7 @@ Page({
       let recordTime = moment(r.timeAt)
       let today = moment(new Date())
       return r.isDriving && r.cheId == this.data.cheSelected.cheId && (recordTime.year() == today.year() && recordTime.dayOfYear()==today.dayOfYear)
-    })) {
+    })!=-1) {
       wx.showToast({
         title: '您已经在使用此车',
         icon: 'none',
