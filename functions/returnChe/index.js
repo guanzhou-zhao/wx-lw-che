@@ -72,7 +72,5 @@ exports.main = async(event, context) => {
     })
 
   }
-  return await db.collection('record').where({
-    cheId: event.cheId
-  }).orderBy('timeAt', 'desc').get()
+  return await db.collection('record').where({ openId: event.userInfo.openId }).orderBy('timeAt', 'desc').get()
 }

@@ -195,6 +195,7 @@ Page({
             wheelNum: '',
             digitNum: '',
           })
+          app.globalData.userRecords = res.result.data
           wx.navigateBack()
         },
         fail() {
