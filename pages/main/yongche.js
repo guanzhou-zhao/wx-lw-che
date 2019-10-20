@@ -200,7 +200,9 @@ Page({
    */
   onShow: function() {
     validateUser.validateUser(app)
-    
+    if (app.globalData.userRecords && (app.globalData.userRecords[0].timeAt > this.data.records[0].timeAt)) {
+      this.setDataForRecords(app.globalData.userRecords)
+    }
   },
 
   /**
@@ -365,8 +367,7 @@ Page({
     } else if (this.data.records.findIndex((r)=>{
       let recordTime = moment(r.timeAt)
       let today = moment(new Date())
-      return r.isDriving && r.cheId == this.data.cheSelected.cheId && (recordTime.year() == today.year() && recordTime.dayOfYear()==today.dayOfYear)
-    })!=-1) {
+      return r.isDriving && r.cheId == this.data.cheSelected._id && recordTime.year() == today.year() && recordTime.dayOfYear()==today.dayOfYear()})!=-1) {
       wx.showToast({
         title: '您已经在使用此车',
         icon: 'none',
