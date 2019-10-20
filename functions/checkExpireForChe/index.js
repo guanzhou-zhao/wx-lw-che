@@ -37,11 +37,11 @@ exports.main = async (event, context) => {
     isWrong = true
     errorMsg += `COF:${cofDate.getDate()} ${months[cofDate.getMonth()]} ${cofDate.getFullYear()} 剩余${Math.floor((cofDate - today) / DAY_1)}天, `
   }
-  var docDate = new Date(che.docDate)
-  if ((docDate - today) < DAYS_30) {
-    isWrong = true
-    errorMsg += `DOC:${docDate.getDate()} ${months[docDate.getMonth()]} ${docDate.getFullYear()} 剩余${Math.floor((docDate - today) / DAY_1)}天`
-  }
+  // var docDate = new Date(che.docDate)
+  // if ((docDate - today) < DAYS_30) {
+  //   isWrong = true
+  //   errorMsg += `DOC:${docDate.getDate()} ${months[docDate.getMonth()]} ${docDate.getFullYear()} 剩余${Math.floor((docDate - today) / DAY_1)}天`
+  // }
 
   return {
     isWrong,
