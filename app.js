@@ -6,23 +6,14 @@ App({
     validateUser.validateUser(this)
     const updateManager = wx.getUpdateManager()
 
-    updateManager.onCheckForUpdate(function (res) {
+    updateManager.onCheckForUpdate(function(res) {
       // 请求完新版本信息的回调
       console.log('new release:' + res.hasUpdate)
-      if (res.hasUpdate) {
-        updateManager.onUpdateReady(function () {
-          wx.showModal({
-            title: '更新提示',
-            content: '新版本已经准备好，是否重启应用？',
-            success(res) {
-              if (res.confirm) {
-                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-                updateManager.applyUpdate()
-              }
-            }
-          })
-        })
-      }
+    })
+    updateManager.onUpdateReady(function() {
+
+      // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+      updateManager.applyUpdate()
     })
   },
   onLaunch: function() {
@@ -30,8 +21,7 @@ App({
     this.getAllUsers()
     this.globalData.hasValidated = true
   },
-  onHide: function() {
-  },
+  onHide: function() {},
   globalData: {
     userInfo: null,
     isAuthUser: false,
@@ -41,9 +31,9 @@ App({
     var that = this
     wx.cloud.callFunction({
       name: 'listUser'
-    }).then((res)=>{
+    }).then((res) => {
       console.log(`env ${res.result.env.slice(0,6)}`)
-      that.globalData.allUsers = res.result.users.reduce((pv, cv)=> {
+      that.globalData.allUsers = res.result.users.reduce((pv, cv) => {
         pv[cv.openId] = cv
         return pv
       }, {})
