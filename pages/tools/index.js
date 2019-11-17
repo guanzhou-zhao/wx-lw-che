@@ -25,6 +25,10 @@ Page({
         {
           url: '/pages/vehicle/list',
           name: '车列表'
+        },
+        {
+          url: '/pages/vehicle/tablelist',
+          name: '车列表2'
         })
       that.setData({
         grids: that.data.grids
