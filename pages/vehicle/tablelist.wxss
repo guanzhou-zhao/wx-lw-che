@@ -1,0 +1,51 @@
+.table {
+  /* border-collapse 属性设置表格的边框是否被合并为一个单一的边框，解决相邻单元格边框未合并导致有些边框变粗的视觉效果 */
+  border-collapse: collapse;
+  overflow: auto;
+  margin: auto;
+  display: block;
+  border-spacing: 2px;
+}
+
+.table-tr {
+  display: table-row;
+  height: 1em;
+}
+
+.table-th {
+  display: table-cell;
+  font-weight: bold;
+  border: 1px solid black;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #ccc;
+  height:1em;
+  white-space: nowrap;
+}
+.table-th-active {
+  background-color: darkorange;
+}
+.table-td {
+  display: table-cell;
+  border: 1px solid black;
+  text-align: center;
+  vertical-align: middle;
+  height: 1em;
+  width: auto;
+  line-height: 1.2em;
+  padding: 0.2em;
+  white-space: nowrap;
+}
+
+.table-td.bg-yellow {
+  background-color: yellow;
+}
+.table-td.bg-red {
+  background-color: red;
+}
+.table-td.bg-azure {
+  background-color: azure;
+}
+.table-td.bg-mistyrose {
+  background-color: mistyrose;
+}
