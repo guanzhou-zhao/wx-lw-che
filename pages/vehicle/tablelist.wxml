@@ -7,25 +7,25 @@
 <view class="table">
   <view class="table-tr">
     <view class="table-th">车牌</view>
-    <view class="table-th {{orderCol=='wheelNum'?'table-th-active':''}}" bindtap="sortChe" data-col="wheelNum">轮毂</view>
-    <view class="table-th {{orderCol=='digitNum'?'table-th-active':''}}" bindtap="sortChe" data-col="digitNum">仪表盘</view>
     <view class="table-th {{orderCol=='rucNumLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="rucNumLeft">RUC</view>
-    <view class="table-th {{orderCol=='rucDateLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="rucDateLeft">路税</view>
-    <view class="table-th {{orderCol=='cofDateLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="cofDateLeft">COF</view>
+    <!-- <view class="table-th {{orderCol=='rucDateLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="rucDateLeft">路税</view>
+    <view class="table-th {{orderCol=='cofDateLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="cofDateLeft">COF</view> -->
     <view class="table-th {{orderCol=='mtNumLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="mtNumLeft">保养</view>
     <view class="table-th {{orderCol=='allignmentNumLeft'?'table-th-active':''}}" bindtap="sortChe" data-col="allignmentNumLeft">四轮定位</view>
+    <view class="table-th {{orderCol=='wheelNum'?'table-th-active':''}}" bindtap="sortChe" data-col="wheelNum">轮毂</view>
+    <view class="table-th {{orderCol=='digitNum'?'table-th-active':''}}" bindtap="sortChe" data-col="digitNum">仪表盘</view>
   </view>
   <block wx:if='{{isDisplayLeft}}'>
     <block wx:for='{{cheArray}}' wx:key='*this' wx:for-item='che'>
       <view class="table-tr">
         <view class="table-td {{che.base=='S'?'bg-azure':'bg-mistyrose'}}">{{che.plate}}</view>
-        <view class="table-td">{{che.wheelNum}}</view>
-        <view class="table-td">{{che.digitNum}}</view>
         <view class="table-td {{che.rucNumLeft < 2000 ? 'bg-red' : che.rucNumLeft < 3000 ? 'bg-yellow' : ''}}">{{che.rucNumLeft}}</view>
-        <view class="table-td {{che.rucDateLeft<30?'bg-red':''}}">{{che.rucDateLeft}}</view>
-        <view class="table-td {{che.cofDateLeft<30?'bg-red':''}}">{{che.cofDateLeft}}</view>
+        <!-- <view class="table-td {{che.rucDateLeft<30?'bg-red':''}}">{{che.rucDateLeft}}</view>
+        <view class="table-td {{che.cofDateLeft<30?'bg-red':''}}">{{che.cofDateLeft}}</view> -->
         <view class="table-td {{che.mtNumLeft<5000?'bg-red':''}}">{{che.mtNumLeft}}</view>
         <view class="table-td {{che.allignmentNumLeft<5000?'bg-red':''}}">{{che.allignmentNumLeft}}</view>
+        <view class="table-td">{{che.wheelNum}}</view>
+        <view class="table-td">{{che.digitNum}}</view>
       </view>
     </block>
   </block>
@@ -33,13 +33,13 @@
     <block wx:for='{{cheArray}}' wx:key='*this' wx:for-item='che'>
       <view class="table-tr">
         <view class="table-td {{che.base=='S'?'bg-azure':'bg-mistyrose'}}">{{che.plate}}</view>
-        <view class="table-td">{{che.wheelNum}}</view>
-        <view class="table-td">{{che.digitNum}}</view>
         <view class="table-td {{che.rucNum-che.wheelNum < 2000 ? 'bg-red' : che.rucNum-che.wheelNum < 3000 ? 'bg-yellow' : ''}}">{{che.rucNum}}</view>
-        <view class="table-td {{che.rucDateLeft<30?'bg-red':''}}">{{che.rucDateF}}</view>
-        <view class="table-td {{che.cofDateLeft<30?'bg-red':''}}">{{che.cofDateF}}</view>
+        <!-- <view class="table-td {{che.rucDateLeft<30?'bg-red':''}}">{{che.rucDateF}}</view>
+        <view class="table-td {{che.cofDateLeft<30?'bg-red':''}}">{{che.cofDateF}}</view> -->
         <view class="table-td {{che.mtNumLeft<5000?'bg-red':''}}">{{che.mtNum}}</view>
         <view class="table-td {{che.allignmentNumLeft<5000?'bg-red':''}}">{{che.allignmentNum}}</view>
+        <view class="table-td">{{che.wheelNum}}</view>
+        <view class="table-td">{{che.digitNum}}</view>
       </view>
     </block>
   </block>
