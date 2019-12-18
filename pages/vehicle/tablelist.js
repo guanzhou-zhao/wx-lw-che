@@ -14,6 +14,15 @@ Page({
       isDisplayLeft: e.detail.value
     })
   },
+
+  bindCellTap(event) {
+    let cheid = event.target.dataset.cheid
+    let propname = event.target.dataset.propname
+    this.setData({
+      cheid,
+      propname
+    })
+  },
   getCheArray() {
     let that = this;
     wx.cloud.callFunction({

@@ -49,3 +49,7 @@
 .table-td.bg-mistyrose {
   background-color: mistyrose;
 }
+.table-cell-input {
+	border: 1px solid black;
+  border-radius: 2px;
+}

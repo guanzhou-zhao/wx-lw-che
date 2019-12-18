@@ -19,7 +19,8 @@
     <block wx:for='{{cheArray}}' wx:key='*this' wx:for-item='che'>
       <view class="table-tr">
         <view class="table-td {{che.base=='S'?'bg-azure':'bg-mistyrose'}}">{{che.plate}}</view>
-        <view class="table-td {{che.rucNumLeft < 2000 ? 'bg-red' : che.rucNumLeft < 3000 ? 'bg-yellow' : ''}}">{{che.rucNumLeft}}</view>
+        <view class="table-td {{che.rucNumLeft < 2000 ? 'bg-red' : che.rucNumLeft < 3000 ? 'bg-yellow' : ''}}">{{che.rucNumLeft}}
+        </view>
         <!-- <view class="table-td {{che.rucDateLeft<30?'bg-red':''}}">{{che.rucDateLeft}}</view>
         <view class="table-td {{che.cofDateLeft<30?'bg-red':''}}">{{che.cofDateLeft}}</view> -->
         <view class="table-td {{che.mtNumLeft<5000?'bg-red':''}}">{{che.mtNumLeft}}</view>
@@ -30,10 +31,17 @@
     </block>
   </block>
   <block wx:else>
-    <block wx:for='{{cheArray}}' wx:key='*this' wx:for-item='che'>
+    <block wx:for='{{cheArray}}' wx:key='{{che._id}}' wx:for-item='che'>
       <view class="table-tr">
         <view class="table-td {{che.base=='S'?'bg-azure':'bg-mistyrose'}}">{{che.plate}}</view>
-        <view class="table-td {{che.rucNum-che.wheelNum < 2000 ? 'bg-red' : che.rucNum-che.wheelNum < 3000 ? 'bg-yellow' : ''}}">{{che.rucNum}}</view>
+        <view class="table-td {{che.rucNum-che.wheelNum < 2000 ? 'bg-red' : che.rucNum-che.wheelNum < 3000 ? 'bg-yellow' : ''}}">
+        <view wx:if='{{che._id==cheid && "rucNum"==propname}}'>
+          <input class="weui-input table-cell-input" placeholder="{{che.rucNum}}"/>
+          <button class="weui-btn mini-btn" type="primary" size="mini">保存</button>
+        </view>
+        <view bindtap="bindCellTap" data-cheid="{{che._id}}" data-propname="rucNum" wx:else>
+          {{che.rucNum}}
+        </view></view>
         <!-- <view class="table-td {{che.rucDateLeft<30?'bg-red':''}}">{{che.rucDateF}}</view>
         <view class="table-td {{che.cofDateLeft<30?'bg-red':''}}">{{che.cofDateF}}</view> -->
         <view class="table-td {{che.mtNumLeft<5000?'bg-red':''}}">{{che.mtNum}}</view>
